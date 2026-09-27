@@ -22,3 +22,37 @@ own-recordings:
   compilation_ok: true
   attribution_required: false
   credit: "{title}"
+
+# Dev pool for the M1 listening sign-off (owner-approved list, 2026-09-27).
+# CC BY 4.0. The FAQ allows YouTube use, monetized, with this exact credit, and has no restriction on
+# music-only or compilation videos, but doesn't name them explicitly either. His catalogue IS registered
+# in Content ID (https://incompetech.com/music/royalty-free/youtube-contentid.html): confirm how credited
+# uses are treated before publishing anything with these tracks.
+incompetech:
+  name: incompetech (Kevin MacLeod)
+  terms_url: https://incompetech.com/music/royalty-free/faq.html
+  checked: 2026-09-27
+  license: CC BY 4.0
+  compilation_ok: true
+  attribution_required: true
+  credit: "{title} Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
+
+# Freesound licenses per sound. Only CC0 1.0 sounds go in freesound-cc0/ folders (these are the public HQ previews).
+freesound-cc0:
+  name: Freesound
+  terms_url: https://creativecommons.org/publicdomain/zero/1.0/
+  checked: 2026-09-27
+  license: CC0 1.0
+  compilation_ok: true
+  attribution_required: false
+  credit: "{title} by {artist} (Freesound, CC0)"
+
+# Wikimedia Commons licenses per file. Only CC0 1.0 files go in wikimedia-cc0/ folders.
+wikimedia-cc0:
+  name: Wikimedia Commons
+  terms_url: https://creativecommons.org/publicdomain/zero/1.0/
+  checked: 2026-09-27
+  license: CC0 1.0
+  compilation_ok: true
+  attribution_required: false
+  credit: "{title} by {artist} (Wikimedia Commons, CC0)"
