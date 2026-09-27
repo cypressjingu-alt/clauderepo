@@ -1,0 +1,19 @@
+{
+  "name": "ambient",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Makes long ambient YouTube videos from a curated pool of music, ambience and visuals.",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "ambient": "src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
+  }
+}

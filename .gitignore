@@ -1,0 +1,23 @@
+.env
+data/
+.venv/
+node_modules/
+__pycache__/
+
+# media never goes in git
+*.mp3
+*.wav
+*.flac
+*.ogg
+*.opus
+*.m4a
+*.aac
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.f32

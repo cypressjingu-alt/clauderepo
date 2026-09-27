@@ -1,0 +1,24 @@
+# Source registry.
+#
+# A pool file's source is its second folder level, e.g. music/<genre>/<source>/file.mp3.
+# Files from a source that isn't listed here with compilation_ok: true are ingested but
+# never used. Only register a source after reading its terms page: it must explicitly allow
+# music-only, static-image or compilation videos. Creative Commons: CC0 and CC-BY only.
+#
+# <source-id>:
+#   name: Human-readable name (shows up in credits)
+#   terms_url: https://...            # the page that allows this format
+#   checked: 2026-09-27               # when someone last read those terms
+#   license: CC0 | CC-BY 4.0 | <custom license name>
+#   compilation_ok: true
+#   attribution_required: false
+#   credit: "{title} by {artist}"      # placeholders: {title} {artist} {source} {license}
+
+own-recordings:
+  name: Cypress
+  terms_url: null
+  checked: 2026-09-27
+  license: Owner's own recording
+  compilation_ok: true
+  attribution_required: false
+  credit: "{title}"

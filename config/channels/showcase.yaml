@@ -1,0 +1,5 @@
+id: showcase
+name: Showcase
+loudness_lufs: -14     # program loudness; a niche can set its own (sleep ambience runs quieter)
+cooldown_days: 30      # a track isn't reused on this channel for this long; relaxed least-recently-used first when the pool runs short
+shorts_per_video: 2

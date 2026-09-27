@@ -1,0 +1,15 @@
+id: rainy-tokyo-cafe
+name: Rainy Tokyo Café
+format: layered
+music: [jazz, lofi]
+ambience:
+  bed: rain
+  bed_level_db: -16          # relative to the music
+  events:
+    - { type: cafe-cups, every: [40s, 150s], gain_db: [-18, -8] }
+    - { type: distant-thunder, every: [120s, 480s], gain_db: [-14, -6] }
+visual: tokyo-night
+motion: still
+length: [1h, 3h]
+weight: 3
+thumbnail: { font: "C:/Windows/Fonts/segoeuib.ttf", colors: ["#ffe9f3", "#1b0f24"] }

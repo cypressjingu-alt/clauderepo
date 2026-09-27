@@ -1,0 +1,14 @@
+id: thunder-night
+name: Thunderstorm Night
+format: ambience
+ambience:
+  bed: rain
+  events:
+    # gain_db is relative to the program loudness
+    - { type: distant-thunder, every: [120s, 480s], gain_db: [-6, 2] }
+visual: storm-window
+motion: still
+length: [8h, 10h]
+loudness: -20              # sleep ambience runs quieter than music
+weight: 2
+thumbnail: { font: "C:/Windows/Fonts/segoeuib.ttf", colors: ["#dfe7f2", "#05070d"] }
