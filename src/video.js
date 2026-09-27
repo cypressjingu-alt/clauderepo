@@ -69,7 +69,7 @@ export async function thumbnail(seg, title, style = {}, dir) {
   const font = path.resolve(ROOT, style.font ?? 'C:/Windows/Fonts/segoeuib.ttf');
   if (!fs.existsSync(font)) throw new Error(`thumbnail font not found: ${font}`);
   const [fg, shadow] = style.colors ?? ['#ffffff', '#000000'];
-  const lines = wrap(title);
+  const lines = title.split(' · ').flatMap(part => wrap(part)); // break at the separator first
   // ponytail: text width estimated from character count; measure glyphs (e.g. @napi-rs/canvas) if titles overflow.
   const size = Math.min(120, Math.floor(1150 / (Math.max(...lines.map(l => l.length)) * 0.56)));
   const txt = path.join(dir, 'work', 'title.txt');
