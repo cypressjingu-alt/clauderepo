@@ -16,7 +16,7 @@ function decode(file, from = 0) {
     '-map', '0:a:0', '-f', 'f32le', '-ac', '2', '-ar', String(SR), 'pipe:1'], { stdio: ['ignore', 'pipe', 'pipe'] });
   let err = '';
   p.stderr.on('data', d => (err += d));
-  p.on('close', code => { if (code && !p.killed) console.error(`decode failed for ${file}: ${err.trim()}`); }); // killed = we stopped reading on purpose
+  p.on('close', code => { if (code && !p.stopped) console.error(`decode failed for ${file}: ${err.trim()}`); }); // stopped = we quit reading on purpose
   return p;
 }
 
@@ -46,7 +46,7 @@ class Decoder {
     this.buf = this.buf.subarray(n);
     return out;
   }
-  close() { this.p.stdout.destroy(); this.p.kill(); }
+  close() { this.p.stopped = true; this.p.stdout.destroy(); this.p.kill(); }
 }
 
 async function decodeAll(file) {
