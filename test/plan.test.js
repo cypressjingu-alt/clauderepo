@@ -98,6 +98,17 @@ test('beds rotate with crossfades on long ambience', () => {
   assert.ok(Math.abs(p.bed.at(-1).start + p.bed.at(-1).dur - p.duration) < 0.01);
 });
 
+test('quiet masters are loudness-matched only as far as 3 dB of limiting allows', () => {
+  const db = pool(0);
+  const ins = db.prepare(`INSERT INTO assets (kind, tag, source_id, path, sha256, duration, lufs, true_peak, bpm, key, energy, artist, title)
+    VALUES ('music', 'jazz', 'good', ?, ?, 300, ?, ?, 100, 'C major', 0.5, 'A', ?)`);
+  for (let i = 0; i < 5; i++) ins.run(`music/jazz/good/q${i}.mp3`, `q${i}`, i ? -14 : -30, i ? -1 : -9, i ? 'Loud' : 'Quiet');
+  const p = plan(db, { recipe: recipe({ format: 'playlist' }), channel, reg, seed: 1 });
+  const quiet = p.music.segments.find(s => s.title === 'Quiet');
+  assert.equal(quiet.gain_db, 10); // -2 ceiling + 3 dB limiting - (-9 peak), not the 16 dB full match
+  assert.ok(p.music.segments.filter(s => s.title === 'Loud').every(s => s.gain_db === 0));
+});
+
 test('camelot numbers', () => {
   assert.deepEqual(camelot('C major'), { num: 8, minor: false });
   assert.deepEqual(camelot('A minor'), { num: 8, minor: true });

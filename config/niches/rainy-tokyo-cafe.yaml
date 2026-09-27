@@ -11,5 +11,6 @@ ambience:
 visual: tokyo-night
 motion: still
 length: [1h, 3h]
+loudness: -16              # jazz: see lobby-jazz
 weight: 3
 thumbnail: { font: "C:/Windows/Fonts/segoeuib.ttf", colors: ["#ffe9f3", "#1b0f24"] }

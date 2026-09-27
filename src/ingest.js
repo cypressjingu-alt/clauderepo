@@ -42,9 +42,10 @@ async function examine(abs, kind) {
     if (IMAGE.test(abs)) row.duration = null;
     return row;
   }
-  const m = await measure(abs);
+  const m = await measure(abs, { peaks: true });
   row.lufs = m.lufs > -69 ? m.lufs : null; // too short or too quiet for a gated measurement
   row.true_peak = m.truePeak;
+  row.peak_p99 = m.peakP99;
   const first = m.silences[0], last = m.silences.at(-1), d = row.duration;
   row.lead_silence = first && first.start <= 0.05 ? (first.end ?? d) : 0;
   row.trail_silence = last && (last.end == null || last.end >= d - 0.05) && last.start > row.lead_silence ? d - last.start : 0;
@@ -52,7 +53,7 @@ async function examine(abs, kind) {
   return row;
 }
 
-const COLS = ['kind', 'tag', 'source_id', 'path', 'size', 'mtime', 'sha256', 'duration', 'lufs', 'true_peak', 'lead_silence',
+const COLS = ['kind', 'tag', 'source_id', 'path', 'size', 'mtime', 'sha256', 'duration', 'lufs', 'true_peak', 'peak_p99', 'lead_silence',
   'trail_silence', 'width', 'height', 'artist', 'title', 'credit_guessed'];
 const bind = row => Object.fromEntries(COLS.map(c => [c, row[c] ?? null]));
 

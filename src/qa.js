@@ -4,11 +4,12 @@ import { FFPROBE } from './config.js';
 import { measure, probe, run } from './ff.js';
 import { SR, loopPath } from './audio.js';
 
-// A bed loop's wrap point must look like any other moment of the bed: no sample jump
-// bigger than the bed's own 99.9th-percentile step, and no level dip or bump.
+// A bed loop's wrap point must look like any other moment of the bed: no sample jump bigger than
+// 3x the bed's own 99.9th-percentile step (a click), and the 250 ms around it within 6 dB of the
+// median level of the surrounding 10 s (a dropout). Real rain swings a few dB between 250 ms windows by itself.
 export function seam(file) {
   const fd = fs.openSync(file, 'r');
-  const frames = fs.fstatSync(fd).size / 8, W = Math.min(SR / 2, Math.floor(frames / 4));
+  const frames = fs.fstatSync(fd).size / 8, W = Math.min(5 * SR, Math.floor(frames / 4));
   const buf = new Float32Array(W * 4), b = Buffer.from(buf.buffer);
   fs.readSync(fd, b, 0, W * 8, (frames - W) * 8); // last W frames, then the first W: the wrap is at W
   fs.readSync(fd, b, W * 8, W * 8, 0);
@@ -19,12 +20,13 @@ export function seam(file) {
     const steps = Float64Array.from({ length: 2 * W - 1 }, (_, i) => Math.abs(x(i + 1) - x(i))).sort();
     const typical = Math.max(steps[Math.floor(steps.length * 0.999)], 1e-4);
     for (let i = W - 24; i < W + 24; i++) jump = Math.max(jump, Math.abs(x(i + 1) - x(i)) / typical);
-    const win = 960, rms = s => Math.sqrt(Array.from({ length: win }, (_, i) => x(s + i) ** 2).reduce((a, v) => a + v, 0) / win);
+    const win = Math.min(SR / 4, Math.floor(W / 4));
+    const rms = s => { let a = 0; for (let i = 0; i < win; i++) a += x(s + i) ** 2; return Math.sqrt(a / win); };
     const levels = Array.from({ length: Math.floor(2 * W / win) }, (_, k) => rms(k * win)).sort((p, q) => p - q);
     const median = levels[Math.floor(levels.length / 2)] || 1e-9;
     rmsDb = Math.max(rmsDb, Math.abs(20 * Math.log10((rms(W - win / 2) || 1e-9) / median)));
   }
-  return { pass: jump <= 3 && rmsDb <= 3, jump: +jump.toFixed(2), rms_db: +rmsDb.toFixed(2) };
+  return { pass: jump <= 3 && rmsDb <= 6, jump: +jump.toFixed(2), rms_db: +rmsDb.toFixed(2) };
 }
 
 export async function qa(dir, plan) {

@@ -43,6 +43,15 @@ const lastUsed = (db, channel) => new Map(db.prepare(
   .map(r => [r.asset_id, Date.parse(r.t)]));
 
 const body = a => Math.max(0, (a.duration ?? 0) - (a.lead_silence ?? 0) - (a.trail_silence ?? 0));
+// Loudness-match, but never push a quiet master so hard that the -2 dBFS limiter shaves more than
+// 3 dB off its usual peaks: such a track plays a little under target instead of sounding squashed.
+// "Usual" = the 1%-of-seconds peak, so a single stray spike (a bump in a rain recording) can't hold a file back.
+// Beds may take 6 dB: shaving drop transients off noise-like rain is far less audible than on music.
+const MAX_LIMITING_DB = { music: 3, bed: 6 };
+const gainFor = (a, target) => {
+  const peak = a.peak_p99 ?? a.true_peak;
+  return Math.min(target - (a.lufs ?? target), peak == null ? Infinity : -2 + MAX_LIMITING_DB[a.kind] - peak);
+};
 const r3 = x => Math.round(x * 1000) / 1000;
 const credit = a => ({ asset_id: a.id, path: a.path, source_id: a.source_id, artist: a.artist, title: a.title });
 
@@ -88,7 +97,7 @@ function planMusic(db, { recipe, channel, reg, r, target, now, loudness, alerts 
     start = i ? start + body(picked[i - 1]) - xfs[i] : 0;
     return {
       ...credit(t), in: t.lead_silence ?? 0, dur: r3(body(t)), start: r3(start), fade_in: xfs[i], fade_out: xfs[i + 1] ?? 0,
-      gain_db: r3(loudness - (t.lufs ?? loudness)), bpm: t.bpm, key: t.key, energy: t.energy,
+      gain_db: r3(gainFor(t, loudness)), bpm: t.bpm, key: t.key, energy: t.energy,
     };
   });
   return { segments, duration: r3(end) };
@@ -117,7 +126,7 @@ function planBeds(db, { recipe, reg, r, duration, loudness, level }) {
     return {
       ...credit(b), sha256: b.sha256, in: b.lead_silence ?? 0, body: r3(body(b) - 0.5), offset: r3(r()),
       start: r3(start), dur: r3(end - start), fade_in: first ? 0 : BED_XF, fade_out: lastSeg ? 0 : BED_XF,
-      gain_db: r3(loudness + level - (b.lufs ?? loudness)),
+      gain_db: r3(gainFor(b, loudness + level)),
     };
   });
 }

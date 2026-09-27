@@ -19,6 +19,7 @@ export function open(file) {
       fingerprint TEXT,
       duration REAL,                   -- null for still images
       lufs REAL, true_peak REAL,
+      peak_p99 REAL,                   -- sample peak exceeded in only 1% of 1-second windows
       lead_silence REAL DEFAULT 0, trail_silence REAL DEFAULT 0,
       bpm REAL, key TEXT, energy REAL, analyzed INTEGER DEFAULT 0,
       width INTEGER, height INTEGER,
@@ -41,6 +42,10 @@ export function open(file) {
       created_at TEXT, delivered_at TEXT
     );
   `);
+  // Added after the first dev DBs existed: add the column, and clear mtimes so the next ingest re-measures every file.
+  if (!db.prepare('PRAGMA table_info(assets)').all().some(c => c.name === 'peak_p99')) {
+    db.exec('ALTER TABLE assets ADD COLUMN peak_p99 REAL; UPDATE assets SET mtime = NULL;');
+  }
   return db;
 }
 

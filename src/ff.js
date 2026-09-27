@@ -23,10 +23,12 @@ export async function probe(file) {
   return JSON.parse(out);
 }
 
-// One decode pass: integrated loudness, true peak, and silent stretches.
-export async function measure(file, { silenceDb = -50, silenceMin = 0.5 } = {}) {
+// One decode pass: integrated loudness, true peak, silent stretches and, with `peaks`,
+// the sample peak of every 1-second window (so one stray spike doesn't define a file's headroom).
+export async function measure(file, { silenceDb = -50, silenceMin = 0.5, peaks = false } = {}) {
+  const perSecond = peaks ? ',aresample=48000,asetnsamples=n=48000:p=0,astats=metadata=1:reset=1:measure_perchannel=none:measure_overall=Peak_level,ametadata=mode=print:key=lavfi.astats.Overall.Peak_level' : '';
   const { err } = await ffmpeg(['-i', file, '-map', '0:a:0', '-af',
-    `ebur128=peak=true:framelog=verbose,silencedetect=n=${silenceDb}dB:d=${silenceMin}`, '-f', 'null', '-']);
+    `ebur128=peak=true:framelog=verbose,silencedetect=n=${silenceDb}dB:d=${silenceMin}${perSecond}`, '-f', 'null', '-']);
   const last = re => {
     const m = [...err.matchAll(re)].at(-1);
     return m && m[1] !== '-inf' ? +m[1] : null;
@@ -36,7 +38,9 @@ export async function measure(file, { silenceDb = -50, silenceMin = 0.5 } = {}) 
     if (m[1] === 'start') silences.push({ start: +m[2], end: null });
     else if (silences.length) silences.at(-1).end = +m[2];
   }
-  return { lufs: last(/I:\s+(-?[\d.]+|-inf) LUFS/g), truePeak: last(/Peak:\s+(-?[\d.]+|-inf) dBFS/g), silences };
+  const secs = [...err.matchAll(/Peak_level=(-?[\d.]+)/g)].map(m => +m[1]).sort((a, b) => b - a);
+  const peakP99 = secs.length ? secs[Math.floor(secs.length * 0.01)] : null; // exceeded in only 1% of seconds
+  return { lufs: last(/I:\s+(-?[\d.]+|-inf) LUFS/g), truePeak: last(/Peak:\s+(-?[\d.]+|-inf) dBFS/g), silences, peakP99 };
 }
 
 // Roblox rule (the laptop's 8 GB): renders, publishing and analysis never run next to

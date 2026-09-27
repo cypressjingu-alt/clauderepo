@@ -9,6 +9,6 @@ ambience:
 visual: storm-window
 motion: still
 length: [8h, 10h]
-loudness: -20              # sleep ambience runs quieter than music
+loudness: -24              # sleep ambience; rain's sharp drop transients sit ~28 dB above its loudness, so -20 needs heavy limiting
 weight: 2
 thumbnail: { font: "C:/Windows/Fonts/segoeuib.ttf", colors: ["#dfe7f2", "#05070d"] }
