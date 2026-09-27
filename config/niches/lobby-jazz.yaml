@@ -5,7 +5,7 @@ music: [jazz]
 visual: hotel-lobby
 motion: effects            # slow zoom in and back out
 effect: { zoom: 0.06 }
-length: [1h, 3h]
+length: [1h15m, 1h45m]     # owner: 1 h minimum, 1 h 30 ideal
 loudness: -16              # acoustic jazz masters peak near 0 dBTP at -16..-18 LUFS; -14 would need heavy limiting
 weight: 2
 thumbnail: { font: "C:/Windows/Fonts/georgiab.ttf", colors: ["#f5e6c8", "#1a1208"] }

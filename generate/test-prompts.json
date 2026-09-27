@@ -1,0 +1,7 @@
+[
+  { "name": "Lobby Piano Trio", "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, warm, relaxed, elegant hotel lobby, instrumental", "bpm": 92, "duration": 240, "seed": 11 },
+  { "name": "Cafe Bossa", "caption": "bossa nova, nylon string guitar, soft brushes, mellow tenor saxophone, cozy cafe, gentle, instrumental", "bpm": 120, "duration": 240, "seed": 12 },
+  { "name": "Rainy Night Lofi", "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, rainy night, instrumental", "bpm": 78, "duration": 240, "seed": 13 },
+  { "name": "Late Night Ballad", "caption": "late night jazz ballad, solo piano, gentle, romantic, spacious, slow, instrumental", "bpm": 66, "duration": 240, "seed": 14 },
+  { "name": "Study Jazz Guitar", "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, calm, study music, instrumental", "bpm": 85, "duration": 240, "seed": 15 }
+]

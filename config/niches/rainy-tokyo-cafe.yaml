@@ -10,7 +10,7 @@ ambience:
     - { type: distant-thunder, every: [120s, 480s], gain_db: [-14, -6] }
 visual: tokyo-night
 motion: still
-length: [1h, 3h]
+length: [1h15m, 1h45m]     # owner: 1 h minimum, 1 h 30 ideal
 loudness: -16              # jazz: see lobby-jazz
 weight: 3
 thumbnail: { font: "C:/Windows/Fonts/segoeuib.ttf", colors: ["#ffe9f3", "#1b0f24"] }
