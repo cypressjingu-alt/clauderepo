@@ -1,0 +1,2402 @@
+[
+ {
+  "name": "Silver Station",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, romantic, gentle, quiet bookstore, instrumental",
+  "bpm": 71,
+  "duration": 210,
+  "seed": 2022270953
+ },
+ {
+  "name": "Midnight Rooftops",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, dreamy, peaceful, sunday morning, instrumental",
+  "bpm": 102,
+  "duration": 240,
+  "seed": 824583602
+ },
+ {
+  "name": "Hazy Tides",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, warm, relaxed, snowy window, instrumental",
+  "bpm": 60,
+  "duration": 240,
+  "seed": 1349582883
+ },
+ {
+  "name": "Silver Hours",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, mellow, late night, cozy cafe, instrumental",
+  "bpm": 114,
+  "duration": 180,
+  "seed": 955756350
+ },
+ {
+  "name": "Dusty Letters",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, nostalgic, soft, sunday morning, instrumental",
+  "bpm": 115,
+  "duration": 210,
+  "seed": 1954390875
+ },
+ {
+  "name": "Slow Window",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, dreamy, peaceful, rainy evening, instrumental",
+  "bpm": 139,
+  "duration": 270,
+  "seed": 2060347521
+ },
+ {
+  "name": "Crimson Letters",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, elegant, calm, sunday morning, instrumental",
+  "bpm": 128,
+  "duration": 270,
+  "seed": 1952698383
+ },
+ {
+  "name": "Copper Window",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, mellow, late night, quiet bookstore, instrumental",
+  "bpm": 117,
+  "duration": 270,
+  "seed": 1609703944
+ },
+ {
+  "name": "Late Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, cozy, intimate, snowy window, instrumental",
+  "bpm": 94,
+  "duration": 180,
+  "seed": 66160521
+ },
+ {
+  "name": "Quiet Hours",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, mellow, late night, candlelit restaurant, instrumental",
+  "bpm": 101,
+  "duration": 240,
+  "seed": 318709005
+ },
+ {
+  "name": "Crimson Stairs",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, mellow, late night, quiet bookstore, instrumental",
+  "bpm": 127,
+  "duration": 240,
+  "seed": 1787468595
+ },
+ {
+  "name": "Amber Evening",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, romantic, gentle, snowy window, instrumental",
+  "bpm": 86,
+  "duration": 270,
+  "seed": 901871279
+ },
+ {
+  "name": "Copper Parlor",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, cozy, intimate, rooftop at dusk, instrumental",
+  "bpm": 122,
+  "duration": 210,
+  "seed": 609987233
+ },
+ {
+  "name": "Moonlit Balcony",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, warm, relaxed, cozy cafe, instrumental",
+  "bpm": 128,
+  "duration": 180,
+  "seed": 1170995107
+ },
+ {
+  "name": "Velvet Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, romantic, gentle, cozy cafe, instrumental",
+  "bpm": 101,
+  "duration": 240,
+  "seed": 1229602507
+ },
+ {
+  "name": "Slow Hours",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, nostalgic, soft, snowy window, instrumental",
+  "bpm": 106,
+  "duration": 240,
+  "seed": 1629103000
+ },
+ {
+  "name": "Blue Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, warm, relaxed, cozy cafe, instrumental",
+  "bpm": 128,
+  "duration": 270,
+  "seed": 752076170
+ },
+ {
+  "name": "Candlelit Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, nostalgic, soft, city at night, instrumental",
+  "bpm": 110,
+  "duration": 270,
+  "seed": 242870461
+ },
+ {
+  "name": "Quiet Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, nostalgic, soft, candlelit restaurant, instrumental",
+  "bpm": 120,
+  "duration": 180,
+  "seed": 2136382967
+ },
+ {
+  "name": "Lazy Pages",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, cozy, intimate, autumn afternoon, instrumental",
+  "bpm": 104,
+  "duration": 270,
+  "seed": 2013215601
+ },
+ {
+  "name": "Amber Avenue",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, romantic, gentle, autumn afternoon, instrumental",
+  "bpm": 104,
+  "duration": 210,
+  "seed": 771852943
+ },
+ {
+  "name": "Velvet Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, nostalgic, soft, rooftop at dusk, instrumental",
+  "bpm": 93,
+  "duration": 270,
+  "seed": 721576412
+ },
+ {
+  "name": "Amber Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, dreamy, peaceful, candlelit restaurant, instrumental",
+  "bpm": 130,
+  "duration": 240,
+  "seed": 1352217548
+ },
+ {
+  "name": "Velvet Lanterns",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, nostalgic, soft, rainy evening, instrumental",
+  "bpm": 100,
+  "duration": 270,
+  "seed": 1680349446
+ },
+ {
+  "name": "Copper Corner",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, romantic, gentle, cozy cafe, instrumental",
+  "bpm": 111,
+  "duration": 180,
+  "seed": 750438338
+ },
+ {
+  "name": "Candlelit Evening",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, nostalgic, soft, snowy window, instrumental",
+  "bpm": 94,
+  "duration": 210,
+  "seed": 992289394
+ },
+ {
+  "name": "Moonlit Hours",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, dreamy, peaceful, rainy evening, instrumental",
+  "bpm": 99,
+  "duration": 180,
+  "seed": 581582543
+ },
+ {
+  "name": "Paper Carousel",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, nostalgic, soft, cozy cafe, instrumental",
+  "bpm": 121,
+  "duration": 180,
+  "seed": 1410560761
+ },
+ {
+  "name": "Early Carousel",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, warm, relaxed, rainy evening, instrumental",
+  "bpm": 91,
+  "duration": 210,
+  "seed": 1482724913
+ },
+ {
+  "name": "Candlelit Balcony",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, nostalgic, soft, quiet bookstore, instrumental",
+  "bpm": 129,
+  "duration": 240,
+  "seed": 448586560
+ },
+ {
+  "name": "Moonlit Rooftops",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, cozy, intimate, city at night, instrumental",
+  "bpm": 107,
+  "duration": 180,
+  "seed": 160813825
+ },
+ {
+  "name": "Paper Stairs",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, dreamy, peaceful, snowy window, instrumental",
+  "bpm": 135,
+  "duration": 180,
+  "seed": 361966114
+ },
+ {
+  "name": "Candlelit Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, mellow, late night, city at night, instrumental",
+  "bpm": 104,
+  "duration": 210,
+  "seed": 843014315
+ },
+ {
+  "name": "Gentle Station",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, romantic, gentle, autumn afternoon, instrumental",
+  "bpm": 101,
+  "duration": 240,
+  "seed": 1537710601
+ },
+ {
+  "name": "Candlelit Ribbon",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, mellow, late night, rooftop at dusk, instrumental",
+  "bpm": 105,
+  "duration": 180,
+  "seed": 1829166653
+ },
+ {
+  "name": "Candlelit Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, bright, easy, sunday morning, instrumental",
+  "bpm": 100,
+  "duration": 240,
+  "seed": 407809015
+ },
+ {
+  "name": "Slow Umbrella",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, romantic, gentle, rooftop at dusk, instrumental",
+  "bpm": 124,
+  "duration": 210,
+  "seed": 1301933220
+ },
+ {
+  "name": "Warm Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, dreamy, peaceful, snowy window, instrumental",
+  "bpm": 90,
+  "duration": 210,
+  "seed": 1671737085
+ },
+ {
+  "name": "Paper Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, dreamy, peaceful, city at night, instrumental",
+  "bpm": 67,
+  "duration": 270,
+  "seed": 516456084
+ },
+ {
+  "name": "Misty Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, cozy, intimate, quiet bookstore, instrumental",
+  "bpm": 112,
+  "duration": 180,
+  "seed": 488809594
+ },
+ {
+  "name": "Quiet Corner",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, bright, easy, autumn afternoon, instrumental",
+  "bpm": 91,
+  "duration": 210,
+  "seed": 96595241
+ },
+ {
+  "name": "Soft Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, warm, relaxed, candlelit restaurant, instrumental",
+  "bpm": 101,
+  "duration": 180,
+  "seed": 1061845718
+ },
+ {
+  "name": "Warm Parlor",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, bright, easy, quiet bookstore, instrumental",
+  "bpm": 78,
+  "duration": 210,
+  "seed": 204506704
+ },
+ {
+  "name": "Silver Letters",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, nostalgic, soft, candlelit restaurant, instrumental",
+  "bpm": 121,
+  "duration": 270,
+  "seed": 811521768
+ },
+ {
+  "name": "Gentle Window",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, cozy, intimate, candlelit restaurant, instrumental",
+  "bpm": 67,
+  "duration": 270,
+  "seed": 1174715446
+ },
+ {
+  "name": "Dusty Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, cozy, intimate, autumn afternoon, instrumental",
+  "bpm": 101,
+  "duration": 240,
+  "seed": 1065866910
+ },
+ {
+  "name": "Early Tides",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, cozy, intimate, cozy cafe, instrumental",
+  "bpm": 111,
+  "duration": 180,
+  "seed": 1712495195
+ },
+ {
+  "name": "Dusty Parlor",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, dreamy, peaceful, city at night, instrumental",
+  "bpm": 108,
+  "duration": 270,
+  "seed": 1820880620
+ },
+ {
+  "name": "Late Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, cozy, intimate, sunday morning, instrumental",
+  "bpm": 90,
+  "duration": 210,
+  "seed": 1704527581
+ },
+ {
+  "name": "Warm Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, warm, relaxed, sunday morning, instrumental",
+  "bpm": 84,
+  "duration": 180,
+  "seed": 1212778743
+ },
+ {
+  "name": "Warm Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, mellow, late night, rainy evening, instrumental",
+  "bpm": 90,
+  "duration": 270,
+  "seed": 1400489760
+ },
+ {
+  "name": "Dusty Avenue",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, warm, relaxed, elegant hotel lobby, instrumental",
+  "bpm": 102,
+  "duration": 180,
+  "seed": 1127222439
+ },
+ {
+  "name": "Dusty Pages",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, warm, relaxed, quiet bookstore, instrumental",
+  "bpm": 61,
+  "duration": 270,
+  "seed": 195501990
+ },
+ {
+  "name": "Copper Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, warm, relaxed, autumn afternoon, instrumental",
+  "bpm": 130,
+  "duration": 210,
+  "seed": 1599046962
+ },
+ {
+  "name": "Amber Balcony",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, cozy, intimate, autumn afternoon, instrumental",
+  "bpm": 97,
+  "duration": 240,
+  "seed": 1355197533
+ },
+ {
+  "name": "Crimson Balcony",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, mellow, late night, candlelit restaurant, instrumental",
+  "bpm": 92,
+  "duration": 180,
+  "seed": 1262559352
+ },
+ {
+  "name": "Hazy Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, bright, easy, sunday morning, instrumental",
+  "bpm": 75,
+  "duration": 180,
+  "seed": 1943573631
+ },
+ {
+  "name": "Misty Evening",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, nostalgic, soft, snowy window, instrumental",
+  "bpm": 112,
+  "duration": 270,
+  "seed": 1975514698
+ },
+ {
+  "name": "Misty Rooftops",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, mellow, late night, rooftop at dusk, instrumental",
+  "bpm": 133,
+  "duration": 180,
+  "seed": 540265436
+ },
+ {
+  "name": "Soft Lanterns",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, elegant, calm, rainy evening, instrumental",
+  "bpm": 59,
+  "duration": 210,
+  "seed": 1835172467
+ },
+ {
+  "name": "Faded Parlor",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, warm, relaxed, elegant hotel lobby, instrumental",
+  "bpm": 90,
+  "duration": 270,
+  "seed": 1076163774
+ },
+ {
+  "name": "Faded Porch",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, elegant, calm, city at night, instrumental",
+  "bpm": 102,
+  "duration": 210,
+  "seed": 1141312518
+ },
+ {
+  "name": "Golden Rooftops",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, dreamy, peaceful, rainy evening, instrumental",
+  "bpm": 108,
+  "duration": 270,
+  "seed": 1639393709
+ },
+ {
+  "name": "Moonlit Station",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, warm, relaxed, snowy window, instrumental",
+  "bpm": 83,
+  "duration": 180,
+  "seed": 536889108
+ },
+ {
+  "name": "Quiet Umbrella",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, elegant, calm, quiet bookstore, instrumental",
+  "bpm": 102,
+  "duration": 270,
+  "seed": 124903142
+ },
+ {
+  "name": "Copper Umbrella",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, bright, easy, rainy evening, instrumental",
+  "bpm": 93,
+  "duration": 270,
+  "seed": 1732846182
+ },
+ {
+  "name": "Golden Balcony",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, mellow, late night, cozy cafe, instrumental",
+  "bpm": 123,
+  "duration": 210,
+  "seed": 1079623689
+ },
+ {
+  "name": "Blue Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, bright, easy, city at night, instrumental",
+  "bpm": 122,
+  "duration": 270,
+  "seed": 2053630364
+ },
+ {
+  "name": "Misty Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, elegant, calm, rainy evening, instrumental",
+  "bpm": 95,
+  "duration": 270,
+  "seed": 1124736779
+ },
+ {
+  "name": "Late Lanterns",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, mellow, late night, rainy evening, instrumental",
+  "bpm": 86,
+  "duration": 240,
+  "seed": 835883378
+ },
+ {
+  "name": "Soft Tides",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, elegant, calm, sunday morning, instrumental",
+  "bpm": 122,
+  "duration": 210,
+  "seed": 1234600517
+ },
+ {
+  "name": "Hazy Harbor",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, warm, relaxed, quiet bookstore, instrumental",
+  "bpm": 135,
+  "duration": 240,
+  "seed": 896763898
+ },
+ {
+  "name": "Dusty Balcony",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, bright, easy, city at night, instrumental",
+  "bpm": 93,
+  "duration": 240,
+  "seed": 1607899441
+ },
+ {
+  "name": "Velvet Parlor",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, elegant, calm, rainy evening, instrumental",
+  "bpm": 90,
+  "duration": 240,
+  "seed": 1685144758
+ },
+ {
+  "name": "Hazy Hours",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, elegant, calm, autumn afternoon, instrumental",
+  "bpm": 117,
+  "duration": 270,
+  "seed": 975262823
+ },
+ {
+  "name": "Early Lanterns",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, nostalgic, soft, cozy cafe, instrumental",
+  "bpm": 137,
+  "duration": 180,
+  "seed": 289010973
+ },
+ {
+  "name": "Rainy Pages",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, dreamy, peaceful, rooftop at dusk, instrumental",
+  "bpm": 107,
+  "duration": 240,
+  "seed": 1683516693
+ },
+ {
+  "name": "Faded Hours",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, bright, easy, city at night, instrumental",
+  "bpm": 113,
+  "duration": 270,
+  "seed": 660111291
+ },
+ {
+  "name": "Moonlit Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, bright, easy, snowy window, instrumental",
+  "bpm": 91,
+  "duration": 210,
+  "seed": 62432339
+ },
+ {
+  "name": "Lazy Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, mellow, late night, candlelit restaurant, instrumental",
+  "bpm": 76,
+  "duration": 210,
+  "seed": 1947351620
+ },
+ {
+  "name": "Early Evening",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, romantic, gentle, sunday morning, instrumental",
+  "bpm": 133,
+  "duration": 180,
+  "seed": 1743172738
+ },
+ {
+  "name": "Early Harbor",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, mellow, late night, cozy cafe, instrumental",
+  "bpm": 116,
+  "duration": 240,
+  "seed": 143394413
+ },
+ {
+  "name": "Dusty Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, elegant, calm, candlelit restaurant, instrumental",
+  "bpm": 130,
+  "duration": 210,
+  "seed": 1098386861
+ },
+ {
+  "name": "Lazy Stairs",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, warm, relaxed, rooftop at dusk, instrumental",
+  "bpm": 108,
+  "duration": 270,
+  "seed": 1525311267
+ },
+ {
+  "name": "Golden Parlor",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, cozy, intimate, candlelit restaurant, instrumental",
+  "bpm": 104,
+  "duration": 270,
+  "seed": 1858632750
+ },
+ {
+  "name": "Golden Umbrella",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, nostalgic, soft, autumn afternoon, instrumental",
+  "bpm": 113,
+  "duration": 210,
+  "seed": 1714037146
+ },
+ {
+  "name": "Hazy Station",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, elegant, calm, quiet bookstore, instrumental",
+  "bpm": 88,
+  "duration": 210,
+  "seed": 17780850
+ },
+ {
+  "name": "Quiet Ribbon",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, dreamy, peaceful, cozy cafe, instrumental",
+  "bpm": 110,
+  "duration": 270,
+  "seed": 86155079
+ },
+ {
+  "name": "Velvet Corner",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, dreamy, peaceful, elegant hotel lobby, instrumental",
+  "bpm": 112,
+  "duration": 240,
+  "seed": 1494639012
+ },
+ {
+  "name": "Copper Harbor",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, elegant, calm, quiet bookstore, instrumental",
+  "bpm": 96,
+  "duration": 240,
+  "seed": 2084759346
+ },
+ {
+  "name": "Early Avenue",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, nostalgic, soft, snowy window, instrumental",
+  "bpm": 115,
+  "duration": 270,
+  "seed": 1294437340
+ },
+ {
+  "name": "Blue Carousel",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, dreamy, peaceful, quiet bookstore, instrumental",
+  "bpm": 89,
+  "duration": 270,
+  "seed": 1259000216
+ },
+ {
+  "name": "Slow Parlor",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, romantic, gentle, quiet bookstore, instrumental",
+  "bpm": 58,
+  "duration": 270,
+  "seed": 1580838484
+ },
+ {
+  "name": "Moonlit Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, bright, easy, sunday morning, instrumental",
+  "bpm": 92,
+  "duration": 240,
+  "seed": 2011168031
+ },
+ {
+  "name": "Blue Rooftops",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, elegant, calm, cozy cafe, instrumental",
+  "bpm": 107,
+  "duration": 180,
+  "seed": 823380009
+ },
+ {
+  "name": "Quiet Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, dreamy, peaceful, quiet bookstore, instrumental",
+  "bpm": 110,
+  "duration": 240,
+  "seed": 1365448858
+ },
+ {
+  "name": "Late Parlor",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, bright, easy, sunday morning, instrumental",
+  "bpm": 89,
+  "duration": 180,
+  "seed": 1038789633
+ },
+ {
+  "name": "Hazy Porch",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, romantic, gentle, sunday morning, instrumental",
+  "bpm": 109,
+  "duration": 180,
+  "seed": 2136756224
+ },
+ {
+  "name": "Soft Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, mellow, late night, city at night, instrumental",
+  "bpm": 62,
+  "duration": 240,
+  "seed": 2039313793
+ },
+ {
+  "name": "Moonlit Lobby",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, mellow, late night, snowy window, instrumental",
+  "bpm": 103,
+  "duration": 270,
+  "seed": 1484599564
+ },
+ {
+  "name": "Warm Avenue",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, nostalgic, soft, city at night, instrumental",
+  "bpm": 109,
+  "duration": 270,
+  "seed": 462706013
+ },
+ {
+  "name": "Soft Carousel",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, nostalgic, soft, sunday morning, instrumental",
+  "bpm": 77,
+  "duration": 180,
+  "seed": 278034980
+ },
+ {
+  "name": "Candlelit Stairs",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, romantic, gentle, candlelit restaurant, instrumental",
+  "bpm": 91,
+  "duration": 180,
+  "seed": 543793863
+ },
+ {
+  "name": "Slow Lanterns",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, dreamy, peaceful, cozy cafe, instrumental",
+  "bpm": 70,
+  "duration": 210,
+  "seed": 1791779885
+ },
+ {
+  "name": "Paper Porch",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, elegant, calm, sunday morning, instrumental",
+  "bpm": 99,
+  "duration": 180,
+  "seed": 1180248355
+ },
+ {
+  "name": "Gentle Lobby",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, nostalgic, soft, city at night, instrumental",
+  "bpm": 93,
+  "duration": 180,
+  "seed": 1577371629
+ },
+ {
+  "name": "Crimson Lobby",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, elegant, calm, quiet bookstore, instrumental",
+  "bpm": 102,
+  "duration": 210,
+  "seed": 1030175682
+ },
+ {
+  "name": "Warm Porch",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, cozy, intimate, cozy cafe, instrumental",
+  "bpm": 107,
+  "duration": 270,
+  "seed": 265833392
+ },
+ {
+  "name": "Faded Pages",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, mellow, late night, snowy window, instrumental",
+  "bpm": 90,
+  "duration": 270,
+  "seed": 249445335
+ },
+ {
+  "name": "Paper Lanterns",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, elegant, calm, rainy evening, instrumental",
+  "bpm": 87,
+  "duration": 210,
+  "seed": 358894828
+ },
+ {
+  "name": "Late Window",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, nostalgic, soft, snowy window, instrumental",
+  "bpm": 94,
+  "duration": 270,
+  "seed": 1360779468
+ },
+ {
+  "name": "Copper Station",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, bright, easy, autumn afternoon, instrumental",
+  "bpm": 96,
+  "duration": 180,
+  "seed": 1627311873
+ },
+ {
+  "name": "Moonlit Corner",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, mellow, late night, elegant hotel lobby, instrumental",
+  "bpm": 134,
+  "duration": 270,
+  "seed": 643953461
+ },
+ {
+  "name": "Misty Carousel",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, cozy, intimate, snowy window, instrumental",
+  "bpm": 118,
+  "duration": 240,
+  "seed": 1516685128
+ },
+ {
+  "name": "Moonlit Tides",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, nostalgic, soft, rainy evening, instrumental",
+  "bpm": 98,
+  "duration": 240,
+  "seed": 419426304
+ },
+ {
+  "name": "Faded Stairs",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, warm, relaxed, snowy window, instrumental",
+  "bpm": 117,
+  "duration": 210,
+  "seed": 2031227677
+ },
+ {
+  "name": "Hazy Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, mellow, late night, quiet bookstore, instrumental",
+  "bpm": 115,
+  "duration": 240,
+  "seed": 573501075
+ },
+ {
+  "name": "Misty Corner",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, cozy, intimate, autumn afternoon, instrumental",
+  "bpm": 86,
+  "duration": 270,
+  "seed": 518966317
+ },
+ {
+  "name": "Midnight Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, romantic, gentle, rooftop at dusk, instrumental",
+  "bpm": 111,
+  "duration": 270,
+  "seed": 1148395268
+ },
+ {
+  "name": "Blue Lobby",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, warm, relaxed, snowy window, instrumental",
+  "bpm": 68,
+  "duration": 210,
+  "seed": 1385264986
+ },
+ {
+  "name": "Dusty Corner",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, bright, easy, rooftop at dusk, instrumental",
+  "bpm": 121,
+  "duration": 270,
+  "seed": 708758969
+ },
+ {
+  "name": "Blue Porch",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, romantic, gentle, rainy evening, instrumental",
+  "bpm": 132,
+  "duration": 240,
+  "seed": 483243597
+ },
+ {
+  "name": "Quiet Lanterns",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, warm, relaxed, rooftop at dusk, instrumental",
+  "bpm": 115,
+  "duration": 180,
+  "seed": 485863897
+ },
+ {
+  "name": "Candlelit Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, mellow, late night, sunday morning, instrumental",
+  "bpm": 110,
+  "duration": 180,
+  "seed": 1661699612
+ },
+ {
+  "name": "Amber Window",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, mellow, late night, rooftop at dusk, instrumental",
+  "bpm": 87,
+  "duration": 180,
+  "seed": 1595689136
+ },
+ {
+  "name": "Hazy Corner",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, mellow, late night, city at night, instrumental",
+  "bpm": 107,
+  "duration": 270,
+  "seed": 49660083
+ },
+ {
+  "name": "Moonlit Pages",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, bright, easy, city at night, instrumental",
+  "bpm": 114,
+  "duration": 180,
+  "seed": 538635455
+ },
+ {
+  "name": "Soft Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, warm, relaxed, city at night, instrumental",
+  "bpm": 60,
+  "duration": 180,
+  "seed": 1556773643
+ },
+ {
+  "name": "Warm Letters",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, mellow, late night, city at night, instrumental",
+  "bpm": 117,
+  "duration": 240,
+  "seed": 1137365265
+ },
+ {
+  "name": "Blue Stairs",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, bright, easy, elegant hotel lobby, instrumental",
+  "bpm": 82,
+  "duration": 210,
+  "seed": 1988058388
+ },
+ {
+  "name": "Crimson Evening",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, bright, easy, candlelit restaurant, instrumental",
+  "bpm": 91,
+  "duration": 240,
+  "seed": 587622813
+ },
+ {
+  "name": "Hazy Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, bright, easy, cozy cafe, instrumental",
+  "bpm": 91,
+  "duration": 210,
+  "seed": 1301719487
+ },
+ {
+  "name": "Late Stairs",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, nostalgic, soft, cozy cafe, instrumental",
+  "bpm": 106,
+  "duration": 270,
+  "seed": 1212125617
+ },
+ {
+  "name": "Early Hours",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, nostalgic, soft, quiet bookstore, instrumental",
+  "bpm": 99,
+  "duration": 240,
+  "seed": 1179232830
+ },
+ {
+  "name": "Misty Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, warm, relaxed, rooftop at dusk, instrumental",
+  "bpm": 74,
+  "duration": 180,
+  "seed": 376124730
+ },
+ {
+  "name": "Soft Umbrella",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, cozy, intimate, sunday morning, instrumental",
+  "bpm": 107,
+  "duration": 180,
+  "seed": 537755964
+ },
+ {
+  "name": "Late Ribbon",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, mellow, late night, autumn afternoon, instrumental",
+  "bpm": 89,
+  "duration": 270,
+  "seed": 1522292689
+ },
+ {
+  "name": "Dusty Carousel",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, bright, easy, cozy cafe, instrumental",
+  "bpm": 130,
+  "duration": 240,
+  "seed": 1169847549
+ },
+ {
+  "name": "Velvet Hours",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, mellow, late night, autumn afternoon, instrumental",
+  "bpm": 101,
+  "duration": 210,
+  "seed": 334519494
+ },
+ {
+  "name": "Blue Balcony",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, romantic, gentle, candlelit restaurant, instrumental",
+  "bpm": 125,
+  "duration": 240,
+  "seed": 784027254
+ },
+ {
+  "name": "Crimson Window",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, romantic, gentle, rainy evening, instrumental",
+  "bpm": 112,
+  "duration": 270,
+  "seed": 1789133462
+ },
+ {
+  "name": "Lazy Avenue",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, nostalgic, soft, cozy cafe, instrumental",
+  "bpm": 94,
+  "duration": 210,
+  "seed": 579296214
+ },
+ {
+  "name": "Dusty Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, warm, relaxed, snowy window, instrumental",
+  "bpm": 115,
+  "duration": 180,
+  "seed": 1975000272
+ },
+ {
+  "name": "Lazy Lobby",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, nostalgic, soft, snowy window, instrumental",
+  "bpm": 61,
+  "duration": 270,
+  "seed": 65210917
+ },
+ {
+  "name": "Soft Lobby",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, nostalgic, soft, quiet bookstore, instrumental",
+  "bpm": 108,
+  "duration": 270,
+  "seed": 872165700
+ },
+ {
+  "name": "Paper Corner",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, warm, relaxed, cozy cafe, instrumental",
+  "bpm": 90,
+  "duration": 180,
+  "seed": 1387452707
+ },
+ {
+  "name": "Warm Stairs",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, warm, relaxed, cozy cafe, instrumental",
+  "bpm": 98,
+  "duration": 210,
+  "seed": 1139119753
+ },
+ {
+  "name": "Velvet Umbrella",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, mellow, late night, rooftop at dusk, instrumental",
+  "bpm": 122,
+  "duration": 270,
+  "seed": 1760310305
+ },
+ {
+  "name": "Misty Letters",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, cozy, intimate, cozy cafe, instrumental",
+  "bpm": 125,
+  "duration": 240,
+  "seed": 1872598949
+ },
+ {
+  "name": "Quiet Tides",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, elegant, calm, elegant hotel lobby, instrumental",
+  "bpm": 68,
+  "duration": 270,
+  "seed": 1889275658
+ },
+ {
+  "name": "Paper Window",
+  "dir": "jazz/ai-acestep",
+  "caption": "piano bar jazz, warm grand piano, light swing, walking bass, mellow, late night, elegant hotel lobby, instrumental",
+  "bpm": 139,
+  "duration": 270,
+  "seed": 891066742
+ },
+ {
+  "name": "Golden Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, bright, easy, quiet bookstore, instrumental",
+  "bpm": 106,
+  "duration": 270,
+  "seed": 1714103909
+ },
+ {
+  "name": "Blue Station",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, romantic, gentle, elegant hotel lobby, instrumental",
+  "bpm": 111,
+  "duration": 180,
+  "seed": 1914230597
+ },
+ {
+  "name": "Warm Balcony",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, dreamy, peaceful, city at night, instrumental",
+  "bpm": 61,
+  "duration": 180,
+  "seed": 1031341856
+ },
+ {
+  "name": "Golden Ribbon",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, nostalgic, soft, rainy evening, instrumental",
+  "bpm": 115,
+  "duration": 210,
+  "seed": 214096592
+ },
+ {
+  "name": "Amber Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, bright, easy, city at night, instrumental",
+  "bpm": 105,
+  "duration": 270,
+  "seed": 1595550437
+ },
+ {
+  "name": "Misty Hours",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, bright, easy, autumn afternoon, instrumental",
+  "bpm": 95,
+  "duration": 210,
+  "seed": 927694045
+ },
+ {
+  "name": "Blue Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, nostalgic, soft, snowy window, instrumental",
+  "bpm": 78,
+  "duration": 270,
+  "seed": 1990225447
+ },
+ {
+  "name": "Misty Balcony",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, romantic, gentle, rainy evening, instrumental",
+  "bpm": 85,
+  "duration": 270,
+  "seed": 890383298
+ },
+ {
+  "name": "Silver Harbor",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, warm, relaxed, cozy cafe, instrumental",
+  "bpm": 115,
+  "duration": 270,
+  "seed": 1645138211
+ },
+ {
+  "name": "Velvet Rooftops",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, mellow, late night, rainy evening, instrumental",
+  "bpm": 94,
+  "duration": 180,
+  "seed": 2033199018
+ },
+ {
+  "name": "Gentle Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, warm, relaxed, autumn afternoon, instrumental",
+  "bpm": 97,
+  "duration": 210,
+  "seed": 1154770240
+ },
+ {
+  "name": "Amber Carousel",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, warm, relaxed, snowy window, instrumental",
+  "bpm": 100,
+  "duration": 270,
+  "seed": 1948296903
+ },
+ {
+  "name": "Amber Garden",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, romantic, gentle, city at night, instrumental",
+  "bpm": 65,
+  "duration": 180,
+  "seed": 1664342101
+ },
+ {
+  "name": "Velvet Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, romantic, gentle, sunday morning, instrumental",
+  "bpm": 76,
+  "duration": 180,
+  "seed": 1101913091
+ },
+ {
+  "name": "Candlelit Parlor",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, nostalgic, soft, candlelit restaurant, instrumental",
+  "bpm": 92,
+  "duration": 210,
+  "seed": 1503895378
+ },
+ {
+  "name": "Velvet Avenue",
+  "dir": "jazz/ai-acestep",
+  "caption": "bossa nova, nylon string guitar, soft brushes, mellow flute, cozy, intimate, sunday morning, instrumental",
+  "bpm": 134,
+  "duration": 270,
+  "seed": 255751212
+ },
+ {
+  "name": "Copper Streets",
+  "dir": "jazz/ai-acestep",
+  "caption": "smooth lounge jazz, soft piano trio, upright bass, brushed drums, nostalgic, soft, cozy cafe, instrumental",
+  "bpm": 97,
+  "duration": 180,
+  "seed": 1377474057
+ },
+ {
+  "name": "Misty Lanterns",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, warm, relaxed, snowy window, instrumental",
+  "bpm": 82,
+  "duration": 180,
+  "seed": 44777339
+ },
+ {
+  "name": "Silver Porch",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, dreamy, peaceful, quiet bookstore, instrumental",
+  "bpm": 108,
+  "duration": 270,
+  "seed": 357981474
+ },
+ {
+  "name": "Silver Avenue",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, bright, easy, snowy window, instrumental",
+  "bpm": 72,
+  "duration": 270,
+  "seed": 1189319112
+ },
+ {
+  "name": "Paper Station",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, nostalgic, soft, sunday morning, instrumental",
+  "bpm": 64,
+  "duration": 270,
+  "seed": 1754319495
+ },
+ {
+  "name": "Midnight Terrace",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, bright, easy, rainy evening, instrumental",
+  "bpm": 93,
+  "duration": 240,
+  "seed": 1814287418
+ },
+ {
+  "name": "Crimson Station",
+  "dir": "jazz/ai-acestep",
+  "caption": "late night jazz ballad, solo piano, spacious, elegant, calm, city at night, instrumental",
+  "bpm": 68,
+  "duration": 210,
+  "seed": 555056812
+ },
+ {
+  "name": "Golden Mornings",
+  "dir": "jazz/ai-acestep",
+  "caption": "hotel lobby jazz, vibraphone, piano, soft upright bass, mellow, late night, city at night, instrumental",
+  "bpm": 97,
+  "duration": 240,
+  "seed": 1214334535
+ },
+ {
+  "name": "Slow Tides",
+  "dir": "jazz/ai-acestep",
+  "caption": "saxophone lounge, breathy tenor saxophone, rhodes piano, soft groove, warm, relaxed, rainy evening, instrumental",
+  "bpm": 79,
+  "duration": 240,
+  "seed": 485149619
+ },
+ {
+  "name": "Rainy Window",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, elegant, calm, rooftop at dusk, instrumental",
+  "bpm": 124,
+  "duration": 210,
+  "seed": 1166109468
+ },
+ {
+  "name": "Dusty Station",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, cozy, intimate, rooftop at dusk, instrumental",
+  "bpm": 93,
+  "duration": 270,
+  "seed": 840349164
+ },
+ {
+  "name": "Golden Pages",
+  "dir": "jazz/ai-acestep",
+  "caption": "cool jazz quartet, muted trumpet, piano, upright bass, brushed snare, elegant, calm, cozy cafe, instrumental",
+  "bpm": 99,
+  "duration": 180,
+  "seed": 64984283
+ },
+ {
+  "name": "Golden Lanterns",
+  "dir": "jazz/ai-acestep",
+  "caption": "jazz guitar trio, hollow body guitar, hammond organ, soft drums, nostalgic, soft, sunday morning, instrumental",
+  "bpm": 93,
+  "duration": 210,
+  "seed": 1444587119
+ },
+ {
+  "name": "Moonlit Lanterns",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, elegant, calm, candlelit restaurant, instrumental",
+  "bpm": 72,
+  "duration": 210,
+  "seed": 613474171
+ },
+ {
+  "name": "Blue Corner",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, nostalgic, soft, city at night, instrumental",
+  "bpm": 80,
+  "duration": 210,
+  "seed": 639609164
+ },
+ {
+  "name": "Crimson Harbor",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, bright, easy, autumn afternoon, instrumental",
+  "bpm": 92,
+  "duration": 240,
+  "seed": 190231322
+ },
+ {
+  "name": "Gentle Hours",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, mellow, late night, candlelit restaurant, instrumental",
+  "bpm": 74,
+  "duration": 180,
+  "seed": 623405468
+ },
+ {
+  "name": "Silver Stairs",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, elegant, calm, rooftop at dusk, instrumental",
+  "bpm": 71,
+  "duration": 270,
+  "seed": 547386201
+ },
+ {
+  "name": "Crimson Carousel",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, warm, relaxed, elegant hotel lobby, instrumental",
+  "bpm": 70,
+  "duration": 210,
+  "seed": 1744338969
+ },
+ {
+  "name": "Faded Window",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, elegant, calm, cozy cafe, instrumental",
+  "bpm": 88,
+  "duration": 210,
+  "seed": 1599163997
+ },
+ {
+  "name": "Rainy Corner",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, nostalgic, soft, cozy cafe, instrumental",
+  "bpm": 81,
+  "duration": 270,
+  "seed": 1419171666
+ },
+ {
+  "name": "Candlelit Rooftops",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, romantic, gentle, rooftop at dusk, instrumental",
+  "bpm": 68,
+  "duration": 180,
+  "seed": 1541271788
+ },
+ {
+  "name": "Gentle Porch",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, cozy, intimate, rooftop at dusk, instrumental",
+  "bpm": 82,
+  "duration": 270,
+  "seed": 1170371233
+ },
+ {
+  "name": "Rainy Ribbon",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, cozy, intimate, quiet bookstore, instrumental",
+  "bpm": 61,
+  "duration": 210,
+  "seed": 1442189740
+ },
+ {
+  "name": "Hazy Umbrella",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, cozy, intimate, sunday morning, instrumental",
+  "bpm": 68,
+  "duration": 270,
+  "seed": 855871366
+ },
+ {
+  "name": "Hazy Streets",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, dreamy, peaceful, cozy cafe, instrumental",
+  "bpm": 69,
+  "duration": 210,
+  "seed": 1201544810
+ },
+ {
+  "name": "Midnight Harbor",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, dreamy, peaceful, elegant hotel lobby, instrumental",
+  "bpm": 85,
+  "duration": 210,
+  "seed": 845981088
+ },
+ {
+  "name": "Velvet Carousel",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, bright, easy, candlelit restaurant, instrumental",
+  "bpm": 63,
+  "duration": 180,
+  "seed": 1456244766
+ },
+ {
+  "name": "Rainy Parlor",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, nostalgic, soft, autumn afternoon, instrumental",
+  "bpm": 76,
+  "duration": 210,
+  "seed": 1278434605
+ },
+ {
+  "name": "Late Evening",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, cozy, intimate, snowy window, instrumental",
+  "bpm": 72,
+  "duration": 240,
+  "seed": 423214460
+ },
+ {
+  "name": "Soft Avenue",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, bright, easy, rooftop at dusk, instrumental",
+  "bpm": 77,
+  "duration": 240,
+  "seed": 1945355357
+ },
+ {
+  "name": "Late Porch",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, dreamy, peaceful, elegant hotel lobby, instrumental",
+  "bpm": 89,
+  "duration": 210,
+  "seed": 1914003858
+ },
+ {
+  "name": "Paper Umbrella",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, mellow, late night, autumn afternoon, instrumental",
+  "bpm": 76,
+  "duration": 180,
+  "seed": 2127229561
+ },
+ {
+  "name": "Silver Carousel",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, nostalgic, soft, cozy cafe, instrumental",
+  "bpm": 72,
+  "duration": 240,
+  "seed": 846927472
+ },
+ {
+  "name": "Midnight Avenue",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, bright, easy, autumn afternoon, instrumental",
+  "bpm": 66,
+  "duration": 270,
+  "seed": 37421299
+ },
+ {
+  "name": "Silver Lanterns",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, mellow, late night, rooftop at dusk, instrumental",
+  "bpm": 90,
+  "duration": 210,
+  "seed": 1280174907
+ },
+ {
+  "name": "Paper Tides",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, mellow, late night, cozy cafe, instrumental",
+  "bpm": 71,
+  "duration": 270,
+  "seed": 839699362
+ },
+ {
+  "name": "Quiet Balcony",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, warm, relaxed, rooftop at dusk, instrumental",
+  "bpm": 78,
+  "duration": 180,
+  "seed": 79322441
+ },
+ {
+  "name": "Dusty Mornings",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, warm, relaxed, cozy cafe, instrumental",
+  "bpm": 70,
+  "duration": 240,
+  "seed": 2003352225
+ },
+ {
+  "name": "Early Mornings",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, warm, relaxed, city at night, instrumental",
+  "bpm": 83,
+  "duration": 180,
+  "seed": 1041368969
+ },
+ {
+  "name": "Velvet Harbor",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, dreamy, peaceful, city at night, instrumental",
+  "bpm": 86,
+  "duration": 180,
+  "seed": 1981256177
+ },
+ {
+  "name": "Quiet Stairs",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, bright, easy, city at night, instrumental",
+  "bpm": 81,
+  "duration": 210,
+  "seed": 1924166709
+ },
+ {
+  "name": "Paper Hours",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, romantic, gentle, rooftop at dusk, instrumental",
+  "bpm": 63,
+  "duration": 270,
+  "seed": 681183888
+ },
+ {
+  "name": "Late Balcony",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, nostalgic, soft, city at night, instrumental",
+  "bpm": 70,
+  "duration": 240,
+  "seed": 1307468796
+ },
+ {
+  "name": "Golden Streets",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, warm, relaxed, cozy cafe, instrumental",
+  "bpm": 85,
+  "duration": 210,
+  "seed": 1760683854
+ },
+ {
+  "name": "Velvet Garden",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, nostalgic, soft, snowy window, instrumental",
+  "bpm": 74,
+  "duration": 180,
+  "seed": 160877011
+ },
+ {
+  "name": "Golden Harbor",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, mellow, late night, sunday morning, instrumental",
+  "bpm": 77,
+  "duration": 210,
+  "seed": 606511532
+ },
+ {
+  "name": "Candlelit Carousel",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, mellow, late night, candlelit restaurant, instrumental",
+  "bpm": 66,
+  "duration": 180,
+  "seed": 595130849
+ },
+ {
+  "name": "Crimson Garden",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, warm, relaxed, snowy window, instrumental",
+  "bpm": 89,
+  "duration": 210,
+  "seed": 1765266710
+ },
+ {
+  "name": "Hazy Stairs",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, elegant, calm, snowy window, instrumental",
+  "bpm": 70,
+  "duration": 240,
+  "seed": 1988109847
+ },
+ {
+  "name": "Gentle Balcony",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, romantic, gentle, elegant hotel lobby, instrumental",
+  "bpm": 79,
+  "duration": 240,
+  "seed": 1715960273
+ },
+ {
+  "name": "Moonlit Ribbon",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, warm, relaxed, city at night, instrumental",
+  "bpm": 83,
+  "duration": 210,
+  "seed": 1904539185
+ },
+ {
+  "name": "Blue Umbrella",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, warm, relaxed, rooftop at dusk, instrumental",
+  "bpm": 76,
+  "duration": 270,
+  "seed": 395933166
+ },
+ {
+  "name": "Quiet Rooftops",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, cozy, intimate, cozy cafe, instrumental",
+  "bpm": 79,
+  "duration": 180,
+  "seed": 1549505877
+ },
+ {
+  "name": "Lazy Harbor",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, dreamy, peaceful, candlelit restaurant, instrumental",
+  "bpm": 66,
+  "duration": 240,
+  "seed": 2066702335
+ },
+ {
+  "name": "Blue Hours",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, bright, easy, rooftop at dusk, instrumental",
+  "bpm": 91,
+  "duration": 210,
+  "seed": 1987741112
+ },
+ {
+  "name": "Candlelit Umbrella",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, warm, relaxed, autumn afternoon, instrumental",
+  "bpm": 71,
+  "duration": 210,
+  "seed": 543986263
+ },
+ {
+  "name": "Quiet Garden",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, warm, relaxed, elegant hotel lobby, instrumental",
+  "bpm": 67,
+  "duration": 180,
+  "seed": 1125933366
+ },
+ {
+  "name": "Blue Window",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, warm, relaxed, snowy window, instrumental",
+  "bpm": 81,
+  "duration": 210,
+  "seed": 951313373
+ },
+ {
+  "name": "Lazy Ribbon",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, cozy, intimate, autumn afternoon, instrumental",
+  "bpm": 81,
+  "duration": 240,
+  "seed": 697715611
+ },
+ {
+  "name": "Crimson Mornings",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, elegant, calm, candlelit restaurant, instrumental",
+  "bpm": 85,
+  "duration": 210,
+  "seed": 1469724938
+ },
+ {
+  "name": "Late Harbor",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, mellow, late night, rooftop at dusk, instrumental",
+  "bpm": 73,
+  "duration": 270,
+  "seed": 780561651
+ },
+ {
+  "name": "Gentle Lanterns",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, dreamy, peaceful, elegant hotel lobby, instrumental",
+  "bpm": 73,
+  "duration": 270,
+  "seed": 1776645502
+ },
+ {
+  "name": "Warm Corner",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, bright, easy, city at night, instrumental",
+  "bpm": 62,
+  "duration": 270,
+  "seed": 419389696
+ },
+ {
+  "name": "Copper Lobby",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, dreamy, peaceful, rooftop at dusk, instrumental",
+  "bpm": 78,
+  "duration": 270,
+  "seed": 1288420083
+ },
+ {
+  "name": "Early Balcony",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, dreamy, peaceful, rooftop at dusk, instrumental",
+  "bpm": 75,
+  "duration": 210,
+  "seed": 1786876691
+ },
+ {
+  "name": "Lazy Balcony",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, mellow, late night, rooftop at dusk, instrumental",
+  "bpm": 77,
+  "duration": 240,
+  "seed": 548435700
+ },
+ {
+  "name": "Gentle Tides",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, warm, relaxed, rooftop at dusk, instrumental",
+  "bpm": 66,
+  "duration": 270,
+  "seed": 982553422
+ },
+ {
+  "name": "Amber Corner",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, cozy, intimate, snowy window, instrumental",
+  "bpm": 79,
+  "duration": 210,
+  "seed": 1502174667
+ },
+ {
+  "name": "Rainy Terrace",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, bright, easy, rainy evening, instrumental",
+  "bpm": 92,
+  "duration": 270,
+  "seed": 116501463
+ },
+ {
+  "name": "Paper Mornings",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, bright, easy, elegant hotel lobby, instrumental",
+  "bpm": 78,
+  "duration": 180,
+  "seed": 658075019
+ },
+ {
+  "name": "Quiet Carousel",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, warm, relaxed, city at night, instrumental",
+  "bpm": 90,
+  "duration": 240,
+  "seed": 1265266900
+ },
+ {
+  "name": "Amber Hours",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, cozy, intimate, cozy cafe, instrumental",
+  "bpm": 80,
+  "duration": 180,
+  "seed": 1441996345
+ },
+ {
+  "name": "Rainy Carousel",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, romantic, gentle, quiet bookstore, instrumental",
+  "bpm": 83,
+  "duration": 240,
+  "seed": 499444775
+ },
+ {
+  "name": "Dusty Umbrella",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, romantic, gentle, snowy window, instrumental",
+  "bpm": 88,
+  "duration": 240,
+  "seed": 649646452
+ },
+ {
+  "name": "Amber Parlor",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, nostalgic, soft, sunday morning, instrumental",
+  "bpm": 81,
+  "duration": 270,
+  "seed": 1740928026
+ },
+ {
+  "name": "Rainy Umbrella",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, cozy, intimate, sunday morning, instrumental",
+  "bpm": 77,
+  "duration": 180,
+  "seed": 1326135123
+ },
+ {
+  "name": "Gentle Letters",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, cozy, intimate, candlelit restaurant, instrumental",
+  "bpm": 87,
+  "duration": 270,
+  "seed": 451290283
+ },
+ {
+  "name": "Copper Carousel",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, romantic, gentle, quiet bookstore, instrumental",
+  "bpm": 71,
+  "duration": 180,
+  "seed": 1530441713
+ },
+ {
+  "name": "Late Tides",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, dreamy, peaceful, autumn afternoon, instrumental",
+  "bpm": 70,
+  "duration": 210,
+  "seed": 66973325
+ },
+ {
+  "name": "Warm Lobby",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, nostalgic, soft, snowy window, instrumental",
+  "bpm": 75,
+  "duration": 270,
+  "seed": 682004809
+ },
+ {
+  "name": "Slow Balcony",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, elegant, calm, rooftop at dusk, instrumental",
+  "bpm": 69,
+  "duration": 240,
+  "seed": 922416505
+ },
+ {
+  "name": "Slow Lobby",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, mellow, late night, cozy cafe, instrumental",
+  "bpm": 90,
+  "duration": 270,
+  "seed": 246887597
+ },
+ {
+  "name": "Velvet Window",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, cozy, intimate, rooftop at dusk, instrumental",
+  "bpm": 68,
+  "duration": 270,
+  "seed": 800443582
+ },
+ {
+  "name": "Moonlit Mornings",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, warm, relaxed, cozy cafe, instrumental",
+  "bpm": 91,
+  "duration": 210,
+  "seed": 278582162
+ },
+ {
+  "name": "Velvet Stairs",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, warm, relaxed, cozy cafe, instrumental",
+  "bpm": 71,
+  "duration": 180,
+  "seed": 1444046436
+ },
+ {
+  "name": "Warm Umbrella",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, nostalgic, soft, elegant hotel lobby, instrumental",
+  "bpm": 72,
+  "duration": 180,
+  "seed": 19246381
+ },
+ {
+  "name": "Quiet Parlor",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, bright, easy, city at night, instrumental",
+  "bpm": 70,
+  "duration": 180,
+  "seed": 1200505760
+ },
+ {
+  "name": "Moonlit Parlor",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, dreamy, peaceful, candlelit restaurant, instrumental",
+  "bpm": 83,
+  "duration": 240,
+  "seed": 1249214019
+ },
+ {
+  "name": "Slow Station",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, mellow, late night, candlelit restaurant, instrumental",
+  "bpm": 65,
+  "duration": 210,
+  "seed": 840638119
+ },
+ {
+  "name": "Dusty Rooftops",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, cozy, intimate, snowy window, instrumental",
+  "bpm": 84,
+  "duration": 180,
+  "seed": 711686730
+ },
+ {
+  "name": "Hazy Ribbon",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, nostalgic, soft, cozy cafe, instrumental",
+  "bpm": 65,
+  "duration": 210,
+  "seed": 1085796500
+ },
+ {
+  "name": "Gentle Corner",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, romantic, gentle, candlelit restaurant, instrumental",
+  "bpm": 77,
+  "duration": 210,
+  "seed": 653233382
+ },
+ {
+  "name": "Late Lobby",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, warm, relaxed, city at night, instrumental",
+  "bpm": 74,
+  "duration": 180,
+  "seed": 1788798888
+ },
+ {
+  "name": "Early Streets",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, romantic, gentle, candlelit restaurant, instrumental",
+  "bpm": 81,
+  "duration": 240,
+  "seed": 2065416502
+ },
+ {
+  "name": "Slow Avenue",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, warm, relaxed, rooftop at dusk, instrumental",
+  "bpm": 67,
+  "duration": 270,
+  "seed": 429989202
+ },
+ {
+  "name": "Midnight Streets",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, romantic, gentle, cozy cafe, instrumental",
+  "bpm": 76,
+  "duration": 210,
+  "seed": 116060372
+ },
+ {
+  "name": "Slow Evening",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, elegant, calm, candlelit restaurant, instrumental",
+  "bpm": 79,
+  "duration": 240,
+  "seed": 1132170378
+ },
+ {
+  "name": "Warm Evening",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, cozy, intimate, elegant hotel lobby, instrumental",
+  "bpm": 88,
+  "duration": 210,
+  "seed": 699575861
+ },
+ {
+  "name": "Faded Lanterns",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, bright, easy, autumn afternoon, instrumental",
+  "bpm": 84,
+  "duration": 270,
+  "seed": 1856561922
+ },
+ {
+  "name": "Gentle Garden",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, elegant, calm, sunday morning, instrumental",
+  "bpm": 87,
+  "duration": 270,
+  "seed": 1884117754
+ },
+ {
+  "name": "Quiet Letters",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, romantic, gentle, rooftop at dusk, instrumental",
+  "bpm": 85,
+  "duration": 180,
+  "seed": 514788571
+ },
+ {
+  "name": "Hazy Carousel",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, nostalgic, soft, quiet bookstore, instrumental",
+  "bpm": 87,
+  "duration": 240,
+  "seed": 1977332989
+ },
+ {
+  "name": "Midnight Evening",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, bright, easy, sunday morning, instrumental",
+  "bpm": 79,
+  "duration": 240,
+  "seed": 755665307
+ },
+ {
+  "name": "Late Avenue",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, nostalgic, soft, autumn afternoon, instrumental",
+  "bpm": 81,
+  "duration": 180,
+  "seed": 795188818
+ },
+ {
+  "name": "Rainy Avenue",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, mellow, late night, rainy evening, instrumental",
+  "bpm": 84,
+  "duration": 210,
+  "seed": 1871766862
+ },
+ {
+  "name": "Moonlit Carousel",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, romantic, gentle, rainy evening, instrumental",
+  "bpm": 74,
+  "duration": 210,
+  "seed": 290320553
+ },
+ {
+  "name": "Hazy Parlor",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, elegant, calm, rooftop at dusk, instrumental",
+  "bpm": 83,
+  "duration": 210,
+  "seed": 764402370
+ },
+ {
+  "name": "Misty Stairs",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, romantic, gentle, quiet bookstore, instrumental",
+  "bpm": 80,
+  "duration": 240,
+  "seed": 165920479
+ },
+ {
+  "name": "Rainy Mornings",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, romantic, gentle, snowy window, instrumental",
+  "bpm": 91,
+  "duration": 270,
+  "seed": 1967905540
+ },
+ {
+  "name": "Late Pages",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, romantic, gentle, city at night, instrumental",
+  "bpm": 72,
+  "duration": 210,
+  "seed": 1029892807
+ },
+ {
+  "name": "Rainy Hours",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, warm, relaxed, elegant hotel lobby, instrumental",
+  "bpm": 66,
+  "duration": 240,
+  "seed": 1579207394
+ },
+ {
+  "name": "Faded Corner",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, bright, easy, snowy window, instrumental",
+  "bpm": 85,
+  "duration": 240,
+  "seed": 734604952
+ },
+ {
+  "name": "Golden Terrace",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, romantic, gentle, sunday morning, instrumental",
+  "bpm": 71,
+  "duration": 240,
+  "seed": 1901064369
+ },
+ {
+  "name": "Crimson Rooftops",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, cozy, intimate, elegant hotel lobby, instrumental",
+  "bpm": 67,
+  "duration": 240,
+  "seed": 702369005
+ },
+ {
+  "name": "Rainy Porch",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, nostalgic, soft, candlelit restaurant, instrumental",
+  "bpm": 71,
+  "duration": 180,
+  "seed": 497685850
+ },
+ {
+  "name": "Warm Hours",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, warm, relaxed, candlelit restaurant, instrumental",
+  "bpm": 68,
+  "duration": 210,
+  "seed": 478372137
+ },
+ {
+  "name": "Midnight Tides",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, mellow, late night, rainy evening, instrumental",
+  "bpm": 70,
+  "duration": 210,
+  "seed": 161913358
+ },
+ {
+  "name": "Soft Evening",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, nostalgic, soft, autumn afternoon, instrumental",
+  "bpm": 83,
+  "duration": 270,
+  "seed": 392733435
+ },
+ {
+  "name": "Candlelit Letters",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, bright, easy, candlelit restaurant, instrumental",
+  "bpm": 73,
+  "duration": 180,
+  "seed": 594687926
+ },
+ {
+  "name": "Quiet Pages",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, cozy, intimate, rainy evening, instrumental",
+  "bpm": 79,
+  "duration": 210,
+  "seed": 45525535
+ },
+ {
+  "name": "Silver Rooftops",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, dreamy, peaceful, city at night, instrumental",
+  "bpm": 80,
+  "duration": 180,
+  "seed": 1682229330
+ },
+ {
+  "name": "Midnight Lobby",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, elegant, calm, rooftop at dusk, instrumental",
+  "bpm": 72,
+  "duration": 210,
+  "seed": 186997897
+ },
+ {
+  "name": "Dusty Porch",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, cozy, intimate, rooftop at dusk, instrumental",
+  "bpm": 90,
+  "duration": 210,
+  "seed": 1235080880
+ },
+ {
+  "name": "Slow Pages",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, cozy, intimate, city at night, instrumental",
+  "bpm": 85,
+  "duration": 180,
+  "seed": 1935431886
+ },
+ {
+  "name": "Copper Rooftops",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, bright, easy, autumn afternoon, instrumental",
+  "bpm": 87,
+  "duration": 240,
+  "seed": 291016296
+ },
+ {
+  "name": "Blue Lanterns",
+  "dir": "lofi/ai-acestep",
+  "caption": "jazzy lofi beat, muted trumpet, swung drums, upright bass, elegant, calm, snowy window, instrumental",
+  "bpm": 90,
+  "duration": 240,
+  "seed": 1299451398
+ },
+ {
+  "name": "Moonlit Harbor",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, elegant, calm, autumn afternoon, instrumental",
+  "bpm": 75,
+  "duration": 270,
+  "seed": 1827664876
+ },
+ {
+  "name": "Paper Avenue",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi hip hop, dusty jazz chords, mellow rhodes piano, laid-back boom bap drums, vinyl crackle, mellow, late night, cozy cafe, instrumental",
+  "bpm": 90,
+  "duration": 240,
+  "seed": 40905743
+ },
+ {
+  "name": "Paper Ribbon",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, bright, easy, candlelit restaurant, instrumental",
+  "bpm": 85,
+  "duration": 240,
+  "seed": 1791422940
+ },
+ {
+  "name": "Amber Lanterns",
+  "dir": "lofi/ai-acestep",
+  "caption": "lofi piano, tape saturation, gentle drums, soft pads, mellow, late night, autumn afternoon, instrumental",
+  "bpm": 78,
+  "duration": 180,
+  "seed": 632466053
+ },
+ {
+  "name": "Velvet Ribbon",
+  "dir": "lofi/ai-acestep",
+  "caption": "chill lofi jazz guitar, soft kick and snare, warm bass, mellow, late night, elegant hotel lobby, instrumental",
+  "bpm": 78,
+  "duration": 270,
+  "seed": 924750965
+ },
+ {
+  "name": "Amber Stairs",
+  "dir": "lofi/ai-acestep",
+  "caption": "ambient lofi, warm synth pads, soft rhodes, slow drums, cozy, intimate, quiet bookstore, instrumental",
+  "bpm": 71,
+  "duration": 270,
+  "seed": 1237018321
+ }
+]

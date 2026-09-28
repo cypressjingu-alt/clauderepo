@@ -37,6 +37,18 @@ incompetech:
   attribution_required: true
   credit: "{title} Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
 
+# Generated on the desktop with ACE-Step 1.5 (generate/music.py). Code and weights are MIT, and the model card
+# allows commercial use of the output. Owner approved the sound, 2026-09-28.
+ai-acestep:
+  name: ACE-Step 1.5 (AI-generated)
+  terms_url: https://huggingface.co/ACE-Step/Ace-Step1.5
+  checked: 2026-09-28
+  license: AI-generated (ACE-Step 1.5, MIT)
+  compilation_ok: true
+  attribution_required: false
+  ai_generated: true     # for YouTube's disclosure step (M3)
+  credit: "{title}"
+
 # Freesound licenses per sound. Only CC0 1.0 sounds go in freesound-cc0/ folders (these are the public HQ previews).
 freesound-cc0:
   name: Freesound

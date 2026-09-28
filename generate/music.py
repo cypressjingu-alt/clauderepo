@@ -2,8 +2,9 @@
 
 Runs in ACE-Step's own venv, on the desktop's GPU (the laptop can't run it):
   <ace-step>\\.venv\\Scripts\\python.exe generate\\music.py <out_dir> <prompts.json>
-prompts.json: [{"name": "Lobby Piano 1", "caption": "...", "bpm": 90, "duration": 240, "seed": 7}, ...]
-Each track lands as <out_dir>/<name>.flac, tagged with title and artist so ingest credits it without guessing.
+prompts.json: [{"name": "Lobby Piano 1", "dir": "jazz/ai-acestep", "caption": "...", "bpm": 90, "duration": 240, "seed": 7}, ...]
+(make_prompts.py writes these.) Each track lands as <out_dir>/<dir>/<name>.flac, tagged with title and artist
+so ingest credits it without guessing. Tracks already on disk are skipped, so an interrupted batch just resumes.
 """
 import json
 import os
@@ -42,9 +43,10 @@ def main(out_dir, prompts_file):
         sys.exit(f"LM init failed: {msg}")
     with tempfile.TemporaryDirectory() as tmp:
         for p in prompts:
-            target = out / f"{p['name']}.flac"
+            target = out / p.get("dir", "") / f"{p['name']}.flac"
             if target.exists():
                 continue
+            target.parent.mkdir(parents=True, exist_ok=True)
             seed = p.get("seed", 1)
             params = GenerationParams(caption=p["caption"], lyrics="[Instrumental]", instrumental=True, bpm=p.get("bpm"),
                                       duration=p.get("duration", 240), shift=3.0, seed=seed)

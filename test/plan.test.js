@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { open } from '../src/db.js';
 import { plan, camelot } from '../src/plan.js';
 import { normalizeNiche } from '../src/config.js';
+import { FLASH_LEAD, flashOffsets, segmentLength } from '../src/video.js';
 
 const reg = {
   good: { name: 'Good', license: 'CC0', compilation_ok: true, credit: '{title} by {artist}' },
@@ -107,6 +108,21 @@ test('quiet masters are loudness-matched only as far as 3 dB of limiting allows'
   const quiet = p.music.segments.find(s => s.title === 'Quiet');
   assert.equal(quiet.gain_db, 10); // -2 ceiling + 3 dB limiting - (-9 peak), not the 16 dB full match
   assert.ok(p.music.segments.filter(s => s.title === 'Loud').every(s => s.gain_db === 0));
+});
+
+test('flashing thunder lands on the lightning grid, one flash per segment', () => {
+  const r = recipe({ format: 'ambience', length: ['30m', '30m'], motion: 'effects', effects: { sky: 0.5 },
+    ambience: { bed: 'rain', events: [{ type: 'cups', every: ['20s', '60s'], gain_db: [-6, 0], flash: true }] } });
+  const p = plan(pool(), { recipe: r, channel, reg, seed: 4 });
+  const L = segmentLength(p.visual), offs = flashOffsets(L);
+  assert.equal(L, 120); // drifting sky doubles the segment
+  const flashes = p.events.filter(e => e.flash);
+  assert.ok(flashes.length >= 5, `${flashes.length} flashes`);
+  for (const e of flashes) {
+    assert.ok(offs.includes(e.flash.o));
+    assert.ok(Math.abs(e.at - FLASH_LEAD - (e.flash.seg * L + e.flash.o)) < 0.01, 'thunder follows its flash by the lead');
+  }
+  assert.equal(new Set(flashes.map(e => e.flash.seg)).size, flashes.length);
 });
 
 test('camelot numbers', () => {

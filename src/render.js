@@ -4,7 +4,7 @@ import { DATA, FFMPEG, POOL, rng } from './config.js';
 import { addAlert } from './db.js';
 import { run, waitForRoblox } from './ff.js';
 import { loopPath, makeLoop, mix } from './audio.js';
-import { mux, segment, thumbnail } from './video.js';
+import { FLASH_LEAD, flashVariant, mux, segment, shortFlashArgs, thumbnail } from './video.js';
 import { qa } from './qa.js';
 
 // M1 placeholder until the magenta engine writes titles (M2).
@@ -28,7 +28,9 @@ export function shortWindows(plan, count) {
   } else {
     for (const e of [...plan.events].sort((x, y) => y.level_db - x.level_db).slice(0, count)) {
       const len = Math.round(r.range(20, 40));
-      out.push({ start: +Math.max(3, Math.min(e.at - len * 0.3, plan.duration - len - 10)).toFixed(3), dur: len });
+      const start = +Math.max(3, Math.min(e.at - len * 0.3, plan.duration - len - 10)).toFixed(3);
+      const flashAt = e.flash ? +(e.at - FLASH_LEAD - start).toFixed(3) : -1; // the Short burns its own flash in
+      out.push({ start, dur: len, ...(flashAt >= 0 && flashAt < len && { flash_at: flashAt }) });
     }
     if (!out.length) out.push({ start: Math.round(plan.duration / 2), dur: 30 });
   }
@@ -54,8 +56,18 @@ export async function render(db, plan, { dryRun = false, log = console.log } = {
     step('video segment');
     const seg = path.join(work, 'seg.mp4');
     const segSecs = await segment(abs(plan.visual.path), plan.visual, 1920, 1080, seg);
-    step('muxing video.mp4');
-    await mux(seg, segSecs, audio, path.join(dir, 'video.mp4'), { t: plan.duration });
+    // One slot per segment; slots whose segment holds a lightning flash use a flash variant instead.
+    const slots = Array(Math.ceil(plan.duration / segSecs) + 1).fill(seg), variants = new Map();
+    for (const e of (plan.events ?? []).filter(x => x.flash)) {
+      if (!variants.has(e.flash.o)) {
+        const f = path.join(work, `flash-${e.flash.o}.mp4`);
+        await flashVariant(seg, segSecs, e.flash.o, f);
+        variants.set(e.flash.o, f);
+      }
+      slots[e.flash.seg] = variants.get(e.flash.o);
+    }
+    step(`muxing video.mp4 (${slots.filter(s => s !== seg).length} lightning flashes)`);
+    await mux(slots, segSecs, audio, path.join(dir, 'video.mp4'), { t: plan.duration });
     const title = placeholderTitle(plan);
     const thumb = await thumbnail(seg, title, plan.recipe.thumbnail, dir);
     const wins = shortWindows(plan, plan.shorts ?? 2);
@@ -64,7 +76,8 @@ export async function render(db, plan, { dryRun = false, log = console.log } = {
       const vseg = path.join(work, 'vseg.mp4');
       const vsecs = await segment(abs(plan.visual.path), plan.visual, 1080, 1920, vseg);
       for (const [i, w] of wins.entries()) {
-        await mux(vseg, vsecs, audio, path.join(dir, `short-${i + 1}.mp4`), { ss: w.start, t: w.dur,
+        await mux([vseg], vsecs, audio, path.join(dir, `short-${i + 1}.mp4`), { ss: w.start, t: w.dur,
+          ...(w.flash_at != null && { videoArgs: shortFlashArgs(w.flash_at) }),
           audioArgs: ['-af', `afade=t=in:d=0.5,afade=t=out:st=${w.dur - 1.5}:d=1.5`, '-c:a', 'aac', '-b:a', '256k'] });
       }
     }

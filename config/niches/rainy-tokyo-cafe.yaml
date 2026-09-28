@@ -7,9 +7,10 @@ ambience:
   bed_level_db: -16          # relative to the music
   events:
     - { type: cafe-cups, every: [40s, 150s], gain_db: [-18, -8] }
-    - { type: distant-thunder, every: [120s, 480s], gain_db: [-14, -6] }
+    - { type: distant-thunder, every: [120s, 480s], gain_db: [-14, -6], flash: true }
 visual: tokyo-night
-motion: still
+motion: effects
+effects: { rain: 0.25, flicker: 0.015 }
 length: [1h15m, 1h45m]     # owner: 1 h minimum, 1 h 30 ideal
 loudness: -16              # jazz: see lobby-jazz
 weight: 3

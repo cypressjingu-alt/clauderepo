@@ -1,8 +1,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { FFPROBE } from './config.js';
-import { measure, probe, run } from './ff.js';
+import { ffmpeg, measure, probe, run } from './ff.js';
 import { SR, loopPath } from './audio.js';
+import { segmentLength } from './video.js';
+
+// PSNR between the frame just before time t and the one after it (2 frames decoded, 30 fps).
+async function stepPsnr(video, t) {
+  const { err } = await ffmpeg(['-ss', t - 1.5 / 30, '-t', 0.06, '-i', video, '-lavfi',
+    '[0:v]split[a][b];[a]trim=end_frame=1[a1];[b]trim=start_frame=1,setpts=PTS-STARTPTS[b1];[a1][b1]psnr', '-f', 'null', '-']);
+  const m = err.match(/average:([\d.]+|inf)/);
+  return m ? (m[1] === 'inf' ? Infinity : +m[1]) : null;
+}
 
 // A bed loop's wrap point must look like any other moment of the bed: no sample jump bigger than
 // 3x the bed's own 99.9th-percentile step (a click), and the 250 ms around it within 6 dB of the
@@ -56,6 +65,15 @@ export async function qa(dir, plan) {
   check('true_peak', m.truePeak != null && m.truePeak <= -1, `${m.truePeak} dBTP, limit -1`);
   const gaps = m.silences.filter(s => s.start > 3 && (s.end ?? dur) < dur - 10); // the master fades are allowed to be quiet
   check('silence', !gaps.length, gaps.length ? `silent at ${gaps.map(s => `${s.start.toFixed(1)}-${s.end?.toFixed(1)}`).join(', ')}` : `no gap over ${maxSilence} s`);
+
+  // The picture's loop point must be no bigger a jump than an ordinary frame step (within 4 dB of PSNR),
+  // or visually identical anyway (40 dB+). The reference step is a quarter in: mid-loop the zoom stands still.
+  const L = segmentLength(plan.visual);
+  if (dur > L + 1) {
+    const seamDb = await stepPsnr(video, L), normalDb = await stepPsnr(video, L / 4);
+    check('video_seam', seamDb != null && normalDb != null && (seamDb >= 40 || seamDb >= normalDb - 4),
+      `wrap ${seamDb} dB vs normal step ${normalDb} dB`);
+  }
 
   for (const sha of new Set((plan.bed ?? []).map(s => s.sha256))) {
     const s = seam(loopPath(sha));

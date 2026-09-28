@@ -1,4 +1,5 @@
 import { hms, rng } from './config.js';
+import { FLASH_LEAD, flashOffsets, segmentLength } from './video.js';
 
 // A plan is everything a render needs, fixed up front: which files, where, how loud.
 // It's pure data (saved in the manifest), so `rebuild` just renders the same plan again.
@@ -71,26 +72,34 @@ function planMusic(db, { recipe, channel, reg, r, target, now, loudness, alerts 
     alerts.push({ type: 'cooldown_relaxed', payload: { niche: recipe.id, reused } });
   }
 
-  // Smooth flow: walk from a random start to one of the 3 nearest unused tracks that keep
-  // the ±5% window reachable: either it lands inside, or a shorter track can still finish.
-  // ponytail: one step of lookahead, no backtracking; overshoots only when nothing left fits.
-  const avail = [...fresh];
-  const picked = [avail.splice(Math.floor(r() * avail.length), 1)[0]];
-  const xfs = [0];
-  let end = body(picked[0]);
-  while (end < target * 0.95 && avail.length) {
-    const xf = Math.round(r.range(3, 6) * 10) / 10;
-    const ranked = avail.map(t => [distance(picked.at(-1), t), t]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
-    const shortest = t => Math.min(...avail.filter(o => o !== t).map(body));
-    const fits = ranked.filter(t => {
-      const e = end + body(t) - xf;
-      return e <= target * 1.05 && (e >= target * 0.95 || e + shortest(t) - 6 <= target * 1.05);
-    });
-    const next = fits.length ? fits[Math.floor(r() * Math.min(3, fits.length))] : ranked[0];
-    avail.splice(avail.indexOf(next), 1);
-    picked.push(next); xfs.push(xf);
-    end += body(next) - xf;
+  // 1. Choose the set: random tracks until the length reaches the window, and if that overshoots,
+  //    swap one chosen track for an unused one that lands inside. The inner ±4% leaves room for the
+  //    random 3-6 s crossfades to land inside ±5%. A small pool can miss, so retry a few seeded
+  //    shuffles and keep the first hit (or the closest).
+  const lo = target * 0.96, hi = target * 1.04;
+  const len = s => s.reduce((a, t) => a + body(t), 0) - 4.5 * (s.length - 1);
+  let set = [];
+  for (let attempt = 0, best = Infinity; attempt < 30; attempt++) {
+    const avail = [...fresh], s = [];
+    while (avail.length && len(s) < lo) s.push(avail.splice(Math.floor(r() * avail.length), 1)[0]);
+    swap: for (let i = s.length - 1; i >= 0 && len(s) > hi; i--) {
+      for (let j = 0; j < avail.length; j++) {
+        const l = len(s) - body(s[i]) + body(avail[j]);
+        if (l >= lo && l <= hi) { [s[i], avail[j]] = [avail[j], s[i]]; break swap; }
+      }
+    }
+    const miss = Math.abs(len(s) - target);
+    if (miss < best) { best = miss; set = s; }
+    if (len(s) >= lo && len(s) <= hi) break;
   }
+  // 2. Order it for smooth flow: from a random start, step to one of the 3 nearest remaining tracks.
+  const picked = set.splice(Math.floor(r() * set.length), 1);
+  while (set.length) {
+    const near = set.map(t => [distance(picked.at(-1), t), t]).sort((x, y) => x[0] - y[0]).slice(0, 3);
+    picked.push(set.splice(set.indexOf(near[Math.floor(r() * near.length)][1]), 1)[0]);
+  }
+  const xfs = picked.map((_, i) => (i ? Math.round(r.range(3, 6) * 10) / 10 : 0));
+  const end = picked.reduce((a, t, i) => a + body(t) - xfs[i], 0);
 
   let start = 0;
   const segments = picked.map((t, i) => {
@@ -131,7 +140,13 @@ function planBeds(db, { recipe, reg, r, duration, loudness, level }) {
   });
 }
 
-function planEvents(db, { recipe, reg, r, duration, loudness, alerts }) {
+// Next lightning slot at or after flash time t: the video has flash variants of its segment at fixed offsets.
+function flashSlot(t, L) {
+  const offs = flashOffsets(L);
+  for (let k = Math.max(0, Math.floor(t / L)); ; k++) for (const o of offs) if (k * L + o >= t) return { seg: k, o };
+}
+
+function planEvents(db, { recipe, reg, r, duration, loudness, alerts, L }) {
   const all = [];
   for (const spec of recipe.ambience.events ?? []) {
     const files = candidates(db, 'event', [spec.type], reg);
@@ -143,14 +158,23 @@ function planEvents(db, { recipe, reg, r, duration, loudness, alerts }) {
       const level = r.range(...spec.gain_db); // relative to the program loudness
       // Clips too short for a gated loudness reading fall back to true peak minus 10 dB.
       const lufs = f.lufs ?? (f.true_peak ?? -10) - 10;
-      all.push({ ...credit(f), at: t, len: f.duration ?? 1, level_db: r3(level), gain_db: r3(loudness + level - lufs), pan: r3(r.range(-0.7, 0.7)) });
+      all.push({ ...credit(f), at: t, len: f.duration ?? 1, level_db: r3(level), gain_db: r3(loudness + level - lufs), pan: r3(r.range(-0.7, 0.7)),
+        ...(spec.flash && { flash: true }) });
     }
   }
   all.sort((a, b) => a.at - b.at);
-  const out = [];
+  const out = [], flashed = new Set();
   let free = -Infinity;
   for (const e of all) {
     e.at = r3(Math.max(e.at, free + EVENT_GAP));
+    if (e.flash) {
+      // Move the thunder (later only) so its flash lands on a flash slot, at most one flash per segment.
+      let s = flashSlot(Math.max(0, e.at - FLASH_LEAD), L);
+      while (flashed.has(s.seg)) s = flashSlot((s.seg + 1) * L, L);
+      flashed.add(s.seg);
+      e.flash = s;
+      e.at = r3(s.seg * L + s.o + FLASH_LEAD);
+    }
     if (e.at + e.len > duration - 10) continue; // keep the final fade-out clear
     out.push(e);
     free = e.at + e.len;
@@ -165,7 +189,8 @@ function pickVisual(db, { recipe, channel, reg, r }) {
   const last = lastUsed(db, channel.id);
   const oldest = Math.min(...all.map(v => last.get(v.id) ?? 0));
   const v = r.pick(all.filter(x => (last.get(x.id) ?? 0) === oldest)); // least recently used, ties at random
-  return { ...credit(v), sha256: v.sha256, clip: wantClip, duration: v.duration, motion: recipe.motion, effect: recipe.effect };
+  return { ...credit(v), sha256: v.sha256, clip: wantClip, duration: v.duration, motion: recipe.motion,
+    ...(recipe.motion === 'effects' && { effects: recipe.effects ?? { zoom: 0.06 } }) };
 }
 
 export function plan(db, { recipe, channel, reg, seed = Math.floor(Math.random() * 2 ** 31), length, now = Date.now() }) {
@@ -176,6 +201,7 @@ export function plan(db, { recipe, channel, reg, seed = Math.floor(Math.random()
   const ctx = { recipe, channel, reg, r, target, now, loudness, alerts };
   const p = { version: 1, channel: channel.id, niche: recipe.id, seed, recipe, loudness, target, created_at: new Date(now).toISOString() };
 
+  p.visual = pickVisual(db, ctx); // first: its segment length sets the lightning grid
   let duration = target;
   if (recipe.format !== 'ambience') {
     const m = planMusic(db, ctx);
@@ -185,9 +211,8 @@ export function plan(db, { recipe, channel, reg, seed = Math.floor(Math.random()
   if (recipe.format !== 'playlist') {
     const level = recipe.format === 'layered' ? recipe.ambience.bed_level_db ?? -16 : 0;
     p.bed = planBeds(db, { ...ctx, duration, level });
-    p.events = planEvents(db, { ...ctx, duration });
+    p.events = planEvents(db, { ...ctx, duration, L: segmentLength(p.visual) });
   }
-  p.visual = pickVisual(db, ctx);
   p.duration = duration;
   p.alerts = alerts;
 

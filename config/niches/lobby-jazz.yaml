@@ -3,8 +3,8 @@ name: Lobby Jazz
 format: playlist
 music: [jazz]
 visual: hotel-lobby
-motion: effects            # slow zoom in and back out
-effect: { zoom: 0.06 }
+motion: effects
+effects: { zoom: 0.04, flicker: 0.02 }   # slow zoom in and back out; warm light breathing
 length: [1h15m, 1h45m]     # owner: 1 h minimum, 1 h 30 ideal
 loudness: -16              # acoustic jazz masters peak near 0 dBTP at -16..-18 LUFS; -14 would need heavy limiting
 weight: 2
