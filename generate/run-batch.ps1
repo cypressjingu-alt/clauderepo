@@ -14,6 +14,8 @@ $script = Join-Path $PSScriptRoot 'music.py'
 $total = (Get-Content $Prompts -Raw | ConvertFrom-Json).Count
 $count = { (Get-ChildItem $Out -Recurse -Filter *.flac | Where-Object { $_.DirectoryName -like '*ai-acestep' }).Count }
 $marks = { Get-ChildItem (Join-Path $Out '.acestep') -Filter *.started -ErrorAction SilentlyContinue }
+$wlog = Join-Path (Split-Path $AceRoot) 'batch-watchdog.log'
+function Say($msg) { $line = "$(Get-Date -Format 'yyyy-MM-dd HH:mm') $msg"; $line; Add-Content -Encoding utf8 $wlog $line }
 $stalledMarks = @()
 for ($run = 1; $run -le 25; $run++) {
   $log = Join-Path (Split-Path $AceRoot) "batch-run$run.log"
@@ -25,7 +27,7 @@ for ($run = 1; $run -le 25; $run++) {
     $now = & $count
     if ($now -ne $last) { $last = $now; $since = Get-Date; $stalledMarks = @() }
     elseif (((Get-Date) - $since).TotalMinutes -ge $StallMinutes) {
-      "run $run stalled at $now tracks" | Tee-Object -Append (Join-Path (Split-Path $AceRoot) 'batch-watchdog.log')
+      Say "run $run stalled at $now tracks"
       taskkill /PID $p.Id /T /F | Out-Null; Start-Sleep -Seconds 5  # /T: the venv python.exe is a launcher with a child
       $stalled = $true; break
     }
@@ -34,10 +36,10 @@ for ($run = 1; $run -le 25; $run++) {
     $stalledMarks += @(& $marks | Where-Object { $_.LastWriteTime -ge $since.AddMinutes(-$StallMinutes) })
     if ($stalledMarks.Count -ge 2) {
       $stalledMarks | ForEach-Object { [IO.File]::Delete($_.FullName) }
-      "two stalls in a row: is another app using the GPU? Stopped; the stalled prompts will run next time." | Tee-Object -Append (Join-Path (Split-Path $AceRoot) 'batch-watchdog.log')
+      Say "two stalls in a row: is another app using the GPU (e.g. Wallpaper Engine)? Stopped; the stalled prompts will run next time."
       exit 1
     }
     continue
   }
-  if ($p.HasExited -and $p.ExitCode -eq 0) { "batch finished: $(& $count) tracks on disk (of $total prompts plus earlier ones)"; break }
+  if ($p.HasExited -and $p.ExitCode -eq 0) { Say "batch finished: $(& $count) tracks on disk (of $total prompts plus earlier ones)"; break }
 }

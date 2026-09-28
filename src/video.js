@@ -10,8 +10,9 @@ const FPS = 30;
 
 const cover = (W, H) => `scale=${W}:${H}:force_original_aspect_ratio=increase,crop=${W}:${H},setsar=1`;
 // 4 threads and a short lookahead keep x264 near 400 MB (default threading took 1.5 GB on 16 cores).
-// Moving segments use a faster preset: full-frame rain at "slow" took 3 min for 2 min of video on the desktop.
-const x264 = (frames, out, preset = 'slow') => ['-c:v', 'libx264', '-preset', preset, '-crf', '18', '-pix_fmt', 'yuv420p', '-threads', 4, '-rc-lookahead', 10,
+// Moving segments use a faster preset (full-frame rain at "slow" took 3 min for 2 min of video on the desktop)
+// and CRF 23: rain and clouds at CRF 18 ran 7.1 Mbit/s (~40 GB per 10 h); CRF 23 is 3.5 Mbit/s at SSIM 0.986.
+const x264 = (frames, out, preset = 'slow', crf = 18) => ['-c:v', 'libx264', '-preset', preset, '-crf', crf, '-pix_fmt', 'yuv420p', '-threads', 4, '-rc-lookahead', 10,
   '-g', frames, '-bf', '0', '-an', '-video_track_timescale', FPS * 512, out];
 
 // Segment length in seconds. Images loop every 60 s, or 120 s when the sky drifts (half the speed
@@ -111,13 +112,13 @@ export async function segment(src, visual, W, H, out) {
   const flicker = fx.flicker ? `,eq=brightness='${fx.flicker}*(sin(2*PI*t*7/${L})+0.6*sin(2*PI*t*13/${L}+1.3)+0.4*sin(2*PI*t*29/${L}+0.7))/2':eval=frame` : '';
   graph.push(`[${v}]format=yuv420p${flicker}[out]`);
   const still = !fx.zoom && !fx.sky && !fx.rain && !fx.flicker;
-  await ffmpeg([...inputs, '-filter_complex', graph.join(';'), '-map', '[out]', ...(still ? ['-tune', 'stillimage'] : []), ...x264(n, out, still ? 'slow' : 'medium')]);
+  await ffmpeg([...inputs, '-filter_complex', graph.join(';'), '-map', '[out]', ...(still ? ['-tune', 'stillimage'] : []), ...(still ? x264(n, out) : x264(n, out, 'medium', 23))]);
   return L;
 }
 
 // A copy of the segment with a lightning flash at offset o. Only a few frames differ, so a fast preset is fine.
 export async function flashVariant(seg, L, o, out) {
-  await ffmpeg(['-i', seg, '-vf', flashFilter(o), ...x264(L * FPS, out, 'veryfast')]);
+  await ffmpeg(['-i', seg, '-vf', flashFilter(o), ...x264(L * FPS, out, 'veryfast', 23)]);
 }
 
 // A Short whose window holds a flashing thunder event re-encodes its video with the flash burned in.

@@ -23,11 +23,14 @@ MODEL = os.path.join(ROOT, "split_files", "diffusion_models", "z_image_turbo_bf1
 def load():
     transformer = ZImageTransformer2DModel.from_single_file(MODEL, config=ROOT, subfolder="transformer", torch_dtype=torch.bfloat16)
     pipe = ZImagePipeline.from_pretrained(ROOT, transformer=transformer, torch_dtype=torch.bfloat16)
-    # The 11.5 GB transformer and 7.5 GB text encoder don't fit an 8 GB card: stream their layers
-    # from system RAM as they run. The small VAE stays on the GPU.
-    for model in (pipe.transformer, pipe.text_encoder):
-        apply_group_offloading(model, onload_device=torch.device("cuda"), offload_type="leaf_level", use_stream=True)
-    pipe.vae.to("cuda")
+    # The 11.5 GB transformer and 7.5 GB text encoder don't fit an 8 GB card: their layers load from
+    # system RAM as they run. Only the transformer (9 passes per image) gets async streams; low_cpu_mem_usage
+    # pins each group as it goes, because Windows refuses to page-lock the whole 11.5 GB at once ("CUDA out of
+    # memory"). The text encoder runs once per image. The small VAE stays on the GPU.
+    cuda = torch.device("cuda")
+    apply_group_offloading(pipe.transformer, onload_device=cuda, offload_type="leaf_level", use_stream=True, low_cpu_mem_usage=True)
+    apply_group_offloading(pipe.text_encoder, onload_device=cuda, offload_type="leaf_level")
+    pipe.vae.to(cuda)
     return pipe
 
 
