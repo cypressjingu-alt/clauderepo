@@ -31,7 +31,7 @@ downloads.check_main_model_exists = lambda p: all((Path(p) / c).is_dir() for c i
 def main(out_dir, prompts_file):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    prompts = json.loads(Path(prompts_file).read_text(encoding="utf-8"))
+    prompts = json.loads(Path(prompts_file).read_text(encoding="utf-8-sig"))  # -sig: Windows tools often add a BOM
     dit, lm = AceStepHandler(), LLMHandler()
     # 8 GB card: park whichever model is idle in system RAM, or a 4-minute track runs out of VRAM.
     msg, ok = dit.initialize_service(project_root=ACE, config_path="acestep-v15-turbo", device="cuda", offload_to_cpu=True)
@@ -41,12 +41,18 @@ def main(out_dir, prompts_file):
                             device="cuda", offload_to_cpu=True)
     if not ok:
         sys.exit(f"LM init failed: {msg}")
+    # A prompt can occasionally hang the generator. Each one is marked "started" first; a mark left over
+    # from a killed run (see run-batch.ps1) means it hung, so it's skipped for good instead of retried.
+    started = out / ".acestep"
+    started.mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         for p in prompts:
             target = out / p.get("dir", "") / f"{p['name']}.flac"
-            if target.exists():
+            mark = started / f"{p['name']}.started"
+            if target.exists() or mark.exists():
                 continue
             target.parent.mkdir(parents=True, exist_ok=True)
+            mark.touch()
             seed = p.get("seed", 1)
             params = GenerationParams(caption=p["caption"], lyrics="[Instrumental]", instrumental=True, bpm=p.get("bpm"),
                                       duration=p.get("duration", 240), shift=3.0, seed=seed)
@@ -54,9 +60,11 @@ def main(out_dir, prompts_file):
             result = generate_music(dit, lm, params, config, save_dir=tmp)
             if not result.success:
                 print(json.dumps({"name": p["name"], "error": result.error}), flush=True)
+                mark.unlink()  # a clean failure may be worth a retry next run
                 continue
             subprocess.run([FFMPEG, "-hide_banner", "-v", "error", "-y", "-i", result.audios[0]["path"], "-map_metadata", "-1",
                             "-metadata", f"title={p['name']}", "-metadata", f"artist={ARTIST}", "-c", "copy", str(target)], check=True)
+            mark.unlink()
             print(json.dumps({"name": p["name"], "file": str(target), "seed": seed}), flush=True)
 
 

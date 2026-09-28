@@ -1,0 +1,20 @@
+[
+  { "name": "Grand Lobby 01", "dir": "hotel-lobby/ai-zimage", "seed": 101,
+    "prompt": "grand hotel lobby at night, warm golden chandelier light, polished marble floor, velvet armchairs, tall potted palms, curved balcony with brass railings, elegant and quiet, cinematic lighting, soft glow, highly detailed photograph, 35mm, no people, no text" },
+  { "name": "Grand Lobby 02", "dir": "hotel-lobby/ai-zimage", "seed": 102,
+    "prompt": "art deco hotel lounge in the evening, warm amber lamps, dark wood paneling, leather sofas, a grand piano in the corner, soft reflections on a marble floor, cinematic, cozy, highly detailed photograph, no people, no text" },
+  { "name": "Grand Lobby 03", "dir": "hotel-lobby/ai-zimage", "seed": 103,
+    "prompt": "luxurious old hotel lobby with a sweeping double staircase, crystal chandeliers, cream and gold interior, velvet chairs around small tables, warm evening light, cinematic, highly detailed photograph, no people, no text" },
+  { "name": "Rainy Tokyo 01", "dir": "tokyo-night/ai-zimage", "seed": 201,
+    "prompt": "narrow Tokyo side street at night in the rain, glowing neon signs in Japanese reflected on wet pavement, a small cafe with warm steamy windows, lanterns, moody cinematic lighting, highly detailed photograph, no people" },
+  { "name": "Rainy Tokyo 02", "dir": "tokyo-night/ai-zimage", "seed": 202,
+    "prompt": "cozy Tokyo cafe interior at night, large window with rain streaks and blurred neon city lights outside, warm pendant lamps, wooden counter, coffee cups, plants, cinematic, highly detailed photograph, no people" },
+  { "name": "Rainy Tokyo 03", "dir": "tokyo-night/ai-zimage", "seed": 203,
+    "prompt": "rainy night in a quiet Tokyo alley, vending machine glow, paper lanterns, puddles reflecting pink and blue neon, soft mist, cinematic, highly detailed photograph, no people" },
+  { "name": "Storm Night 01", "dir": "storm-window/ai-zimage", "seed": 301,
+    "prompt": "dramatic stormy night sky filling the upper half of the frame, heavy dark clouds over a quiet countryside, a small farmhouse with one warm lit window, wet fields, rain, cinematic, moody, highly detailed photograph" },
+  { "name": "Storm Night 02", "dir": "storm-window/ai-zimage", "seed": 302,
+    "prompt": "wide view of a thunderstorm at dusk over rolling hills, towering dark clouds in the sky above, a lonely cabin with glowing windows below, rain falling, cinematic, highly detailed photograph" },
+  { "name": "Storm Night 03", "dir": "storm-window/ai-zimage", "seed": 303,
+    "prompt": "stormy night over a calm lake, dark churning clouds across the sky, faint distant lightning glow, a wooden dock and a small lit cottage on the shore, rain, cinematic, highly detailed photograph" }
+]
