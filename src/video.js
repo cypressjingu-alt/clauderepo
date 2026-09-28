@@ -53,17 +53,36 @@ function clouds(W, H, seed = 7) {
   return px;
 }
 
-// Procedural textures, made once per size. Rain: sparse bright dots from geq's seeded random, blurred into
-// vertical streaks. Clouds: the noise above. Both come out identical every run.
-async function texture(kind, W, H, dir) {
-  const f = path.join(dir, `${kind}-${W}x${H}.png`);
-  if (fs.existsSync(f)) return f;
-  if (kind === 'rain') {
-    await ffmpeg(['-f', 'lavfi', '-i', `color=black:s=${W}x${H}:d=1,format=gray,geq=lum='255*lt(random(1),0.0009)',gblur=sigma=0.5:sigmaV=${Math.round(H / 100)},lut=c0='clip(val*12,0,255)'`,
-      '-frames:v', 1, '-update', 1, f]);
-  } else {
-    await ffmpeg(['-f', 'rawvideo', '-pix_fmt', 'gray', '-s', `${W}x${H}`, '-i', 'pipe:0', '-frames:v', 1, '-update', 1, f], { input: clouds(W, H) });
+// Rain in three depth layers, like real footage: far = many short faint streaks falling slowly, near = a few
+// long soft (defocused) streaks falling fast. Sizes and speeds are for 1080p and scale with the frame.
+// Streaks lean ~5° and each layer moves along that same slant.
+const RAIN_LAYERS = [
+  { drops: 2600, len: [10, 24], sigma: 0.5, bright: [0.25, 0.5], speed: 36 }, // far; speed in px/frame
+  { drops: 900, len: [30, 60], sigma: 0.9, bright: [0.35, 0.7], speed: 54 },  // mid
+  { drops: 160, len: [80, 150], sigma: 2.2, bright: [0.3, 0.6], speed: 80 },  // near
+];
+
+// One layer's texture, wrapping both ways so it scrolls seamlessly. Anti-aliased streaks, brightest mid-length.
+function rainLayer(W, H, layer, tan, seed) {
+  const r = rng(seed), acc = new Float32Array(W * H), s = H / 1080;
+  const drops = Math.round(layer.drops * (W * H) / (1920 * 1080)), sig = layer.sigma * s, reach = Math.ceil(3 * sig);
+  for (let d = 0; d < drops; d++) {
+    const x0 = r() * W, y0 = r() * H, len = r.range(...layer.len) * s, b = r.range(...layer.bright);
+    for (let t = 0; t < len; t++) {
+      const x = x0 + t * tan, row = (Math.floor(y0 + t) % H) * W, a = b * Math.sin((Math.PI * t) / len);
+      for (let dx = -reach; dx <= reach; dx++) {
+        const xi = Math.floor(x) + dx;
+        acc[row + ((xi % W) + W) % W] += a * Math.exp(-((xi - x) ** 2) / (2 * sig * sig));
+      }
+    }
   }
+  return Buffer.from(acc.map(v => Math.min(255, v * 255)));
+}
+
+// Procedural textures, made once per size and identical every run: the rain layers and the clouds above.
+async function texture(kind, W, H, dir, make) {
+  const f = path.join(dir, `${kind}-${W}x${H}.png`);
+  if (!fs.existsSync(f)) await ffmpeg(['-f', 'rawvideo', '-pix_fmt', 'gray', '-s', `${W}x${H}`, '-i', 'pipe:0', '-frames:v', 1, '-update', 1, f], { input: make() });
   return f;
 }
 
@@ -93,7 +112,7 @@ export async function segment(src, visual, W, H, out) {
   if (fx.sky) {
     // Clouds drift sideways across the top of the frame, exactly one texture width per segment, so the
     // loop is seamless. The gradient mask fades them out by the middle of the frame.
-    inputs.push(...loop(await texture('clouds', W, H, dir)));
+    inputs.push(...loop(await texture('clouds', W, H, dir, () => clouds(W, H))));
     const c = i++, step = W / n;
     graph.push(`[${c}:v]format=gray,split[ca][cb];[ca][cb]hstack,crop=${W}:${H}:'mod(n*${step},${W})':0,format=gbrp[cl]`,
       `color=black:s=${W}x${H}:r=${FPS}:d=${L},format=gray,geq=lum='255*${fx.sky}*clip((0.6-Y/H)/0.45,0,1)',format=gbrp[mask]`,
@@ -101,11 +120,20 @@ export async function segment(src, visual, W, H, out) {
     v = 'v1';
   }
   if (fx.rain) {
-    // Streaks fall a whole number of frame heights per segment, so the loop is seamless.
-    inputs.push(...loop(await texture('rain', W, H, dir)));
-    const r = i++, step = (Math.round(n * 54 / H) * H) / n;
-    graph.push(`[${r}:v]format=gray,split[r1][r2];[r1][r2]vstack,crop=${W}:${H}:0:'${H}-mod(n*${step},${H})',format=gbrp[rn]`,
-      `[${v}][rn]blend=all_mode=screen:all_opacity=${fx.rain}[v2]`);
+    // Each layer scrolls a whole number of texture heights (and widths, for the slant) per segment, so the
+    // loop is seamless; ffmpeg's scroll wraps around, and negative speeds move content down and right.
+    const layers = [];
+    for (const [j, layer] of RAIN_LAYERS.entries()) {
+      const down = Math.max(1, Math.round((layer.speed * (H / 1080) * n) / H)), across = Math.max(1, Math.round((Math.tan(0.087) * down * H) / W));
+      inputs.push(...loop(await texture(`rain${j}`, W, H, dir, () => rainLayer(W, H, layer, (across * W) / (down * H), 11 + j))));
+      graph.push(`[${i++}:v]format=gray,scroll=horizontal=${-across / n}:vertical=${-down / n},format=gbrp[rl${j}]`);
+      layers.push(`rl${j}`);
+    }
+    // Rain shows where it catches light: a blurred brightness map of the scene sets how visible it is,
+    // faint against darkness and strongest around lamps and windows.
+    graph.push(`[rl0][rl1]blend=all_mode=screen[rl01];[rl01][rl2]blend=all_mode=screen[rn]`,
+      `[${v}]split=3[b1][b2][b3];[b3]format=gray,gblur=sigma=${Math.round(H / 20)},lut=c0='clip(${2 * fx.rain}*(60+val),0,255)',format=gbrp[rmask]`,
+      `[b1][rn]blend=all_mode=screen[wet];[b2][wet][rmask]maskedmerge[v2]`);
     v = 'v2';
   }
   // Warm light "breathing": a few sines whose periods divide the segment, so it loops too.
