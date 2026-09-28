@@ -10,7 +10,7 @@ ambience:
     - { type: distant-thunder, every: [120s, 480s], gain_db: [-14, -6], flash: true }
 visual: tokyo-night
 motion: effects
-effects: { rain: 0.25, flicker: 0.015 }
+effects: { flicker: 0.015 }   # warm light breathing (rain lives in the image and the sound)
 length: [1h15m, 1h45m]     # owner: 1 h minimum, 1 h 30 ideal
 loudness: -16              # jazz: see lobby-jazz
 weight: 3

@@ -49,6 +49,18 @@ ai-acestep:
   ai_generated: true     # for YouTube's disclosure step (M3)
   credit: "{title}"
 
+# Generated on the desktop with Z-Image-Turbo (generate/images.py). Apache-2.0 model. Owner approved the look,
+# 2026-09-28. Tick YouTube's "altered or synthetic content" box when these are used (M3).
+ai-zimage:
+  name: Z-Image-Turbo (AI-generated)
+  terms_url: https://huggingface.co/Tongyi-MAI/Z-Image-Turbo
+  checked: 2026-09-28
+  license: AI-generated (Z-Image-Turbo, Apache-2.0)
+  compilation_ok: true
+  attribution_required: false
+  ai_generated: true
+  credit: "{title}"
+
 # Freesound licenses per sound. Only CC0 1.0 sounds go in freesound-cc0/ folders (these are the public HQ previews).
 freesound-cc0:
   name: Freesound

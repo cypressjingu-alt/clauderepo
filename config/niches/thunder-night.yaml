@@ -8,7 +8,7 @@ ambience:
     - { type: distant-thunder, every: [120s, 480s], gain_db: [-6, 2], flash: true }
 visual: storm-window
 motion: effects
-effects: { sky: 0.5, rain: 0.3 }   # clouds drift across the top half; rain streaks over everything
+effects: { sky: 0.5 }      # clouds drift across the top half (rain lives in the image and the sound)
 length: [8h, 10h]
 loudness: -24              # sleep ambience; rain's sharp drop transients sit ~28 dB above its loudness, so -20 needs heavy limiting
 weight: 2

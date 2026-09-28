@@ -28,7 +28,7 @@ put('config/sources.yaml', 'dev:\n  name: Dev fixtures\n  license: CC0\n  compil
 put('config/channels/showcase.yaml', 'id: showcase\nloudness_lufs: -14\ncooldown_days: 30\nshorts_per_video: 2\n');
 const niche = (id, y) => put(`config/niches/${id}.yaml`, `id: ${id}\nname: Test ${id}\nvisual: tokyo-night\nweight: 1\n${y}`);
 niche('t-playlist', 'format: playlist\nmusic: [jazz]\nmotion: effects\nlength: [2m, 2m]\n');
-niche('t-ambience', 'format: ambience\nambience:\n  bed: rain\n  events:\n    - { type: thunder, every: [15s, 30s], gain_db: [-6, 0], flash: true }\nmotion: effects\neffects: { rain: 0.3, flicker: 0.02 }\nlength: [3m, 3m]\nloudness: -20\n');
+niche('t-ambience', 'format: ambience\nambience:\n  bed: rain\n  events:\n    - { type: thunder, every: [15s, 30s], gain_db: [-6, 0], flash: true }\nmotion: effects\neffects: { flicker: 0.02 }\nlength: [3m, 3m]\nloudness: -20\n');
 niche('t-layered', 'format: layered\nmusic: [jazz]\nambience:\n  bed: rain\n  bed_level_db: -16\n  events:\n    - { type: cups, every: [8s, 20s], gain_db: [-18, -8] }\nmotion: loop\nlength: [2m, 2m]\n');
 niche('t-long', 'format: ambience\nambience:\n  bed: rain\n  events:\n    - { type: thunder, every: [60s, 120s], gain_db: [-6, 0] }\nmotion: still\nlength: [30m, 30m]\nloudness: -20\n');
 

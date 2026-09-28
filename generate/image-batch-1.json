@@ -1,0 +1,272 @@
+[
+ {
+  "name": "Grand Lobby 04",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1000,
+  "prompt": "grand hotel rotunda lobby with a crystal chandelier, marble floor, velvet armchairs and tall palms, warm golden evening light, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 05",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1001,
+  "prompt": "grand hotel rotunda lobby with a crystal chandelier, marble floor, velvet armchairs and tall palms, soft candlelit glow late at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 06",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1002,
+  "prompt": "grand hotel rotunda lobby with a crystal chandelier, marble floor, velvet armchairs and tall palms, dim amber lamps, quiet midnight atmosphere, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 07",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1003,
+  "prompt": "art deco hotel lounge with a black grand piano, dark wood paneling and leather sofas, warm golden evening light, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 08",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1004,
+  "prompt": "art deco hotel lounge with a black grand piano, dark wood paneling and leather sofas, soft candlelit glow late at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 09",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1005,
+  "prompt": "art deco hotel lounge with a black grand piano, dark wood paneling and leather sofas, dim amber lamps, quiet midnight atmosphere, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 10",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1006,
+  "prompt": "old hotel lobby with a sweeping double staircase, cream and gold walls, velvet chairs around small tables, warm golden evening light, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 11",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1007,
+  "prompt": "old hotel lobby with a sweeping double staircase, cream and gold walls, velvet chairs around small tables, soft candlelit glow late at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 12",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1008,
+  "prompt": "old hotel lobby with a sweeping double staircase, cream and gold walls, velvet chairs around small tables, dim amber lamps, quiet midnight atmosphere, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 13",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1009,
+  "prompt": "hotel lobby lounge beside tall windows with city lights outside, brass lamps, low armchairs, warm golden evening light, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 14",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1010,
+  "prompt": "hotel lobby lounge beside tall windows with city lights outside, brass lamps, low armchairs, soft candlelit glow late at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 15",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1011,
+  "prompt": "hotel lobby lounge beside tall windows with city lights outside, brass lamps, low armchairs, dim amber lamps, quiet midnight atmosphere, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 16",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1012,
+  "prompt": "old-world hotel bar with velvet booths, brass details and a mirrored back bar, warm golden evening light, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 17",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1013,
+  "prompt": "old-world hotel bar with velvet booths, brass details and a mirrored back bar, soft candlelit glow late at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Grand Lobby 18",
+  "dir": "hotel-lobby/ai-zimage",
+  "seed": 1014,
+  "prompt": "old-world hotel bar with velvet booths, brass details and a mirrored back bar, dim amber lamps, quiet midnight atmosphere, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Rainy Tokyo 04",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1015,
+  "prompt": "empty narrow Tokyo alley at night with paper lanterns and wet stone pavement reflecting warm light, light rain, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 05",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1016,
+  "prompt": "empty narrow Tokyo alley at night with paper lanterns and wet stone pavement reflecting warm light, heavy rain with glowing reflections, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 06",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1017,
+  "prompt": "empty narrow Tokyo alley at night with paper lanterns and wet stone pavement reflecting warm light, misty drizzle, soft haze, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 07",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1018,
+  "prompt": "cozy Tokyo cafe interior at night, large window with rain and blurred city lights outside, warm pendant lamps, coffee cups, light rain, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 08",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1019,
+  "prompt": "cozy Tokyo cafe interior at night, large window with rain and blurred city lights outside, warm pendant lamps, coffee cups, heavy rain with glowing reflections, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 09",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1020,
+  "prompt": "cozy Tokyo cafe interior at night, large window with rain and blurred city lights outside, warm pendant lamps, coffee cups, misty drizzle, soft haze, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 10",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1021,
+  "prompt": "view over Tokyo rooftops at night in the rain from a small balcony, distant glowing windows, light rain, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 11",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1022,
+  "prompt": "view over Tokyo rooftops at night in the rain from a small balcony, distant glowing windows, heavy rain with glowing reflections, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 12",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1023,
+  "prompt": "view over Tokyo rooftops at night in the rain from a small balcony, distant glowing windows, misty drizzle, soft haze, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 13",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1024,
+  "prompt": "quiet covered shopping street after closing time, shutters down, wet reflective floor, a few warm lamps, light rain, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 14",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1025,
+  "prompt": "quiet covered shopping street after closing time, shutters down, wet reflective floor, a few warm lamps, heavy rain with glowing reflections, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 15",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1026,
+  "prompt": "quiet covered shopping street after closing time, shutters down, wet reflective floor, a few warm lamps, misty drizzle, soft haze, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 16",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1027,
+  "prompt": "small jazz kissa coffee shop interior at night, shelves of vinyl records, warm lamps, rain on the window, light rain, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 17",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1028,
+  "prompt": "small jazz kissa coffee shop interior at night, shelves of vinyl records, warm lamps, rain on the window, heavy rain with glowing reflections, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Rainy Tokyo 18",
+  "dir": "tokyo-night/ai-zimage",
+  "seed": 1029,
+  "prompt": "small jazz kissa coffee shop interior at night, shelves of vinyl records, warm lamps, rain on the window, misty drizzle, soft haze, empty and quiet, cinematic, highly detailed photograph, signs dim and out of focus"
+ },
+ {
+  "name": "Storm Night 04",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1030,
+  "prompt": "dramatic storm clouds filling the upper half of the sky over a quiet countryside farmhouse with one warm window, at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 05",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1031,
+  "prompt": "dramatic storm clouds filling the upper half of the sky over a quiet countryside farmhouse with one warm window, at dusk, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 06",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1032,
+  "prompt": "dramatic storm clouds filling the upper half of the sky over a quiet countryside farmhouse with one warm window, at blue hour, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 07",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1033,
+  "prompt": "dark thunderstorm clouds over a calm lake, a small lit cabin and wooden dock on the shore, at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 08",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1034,
+  "prompt": "dark thunderstorm clouds over a calm lake, a small lit cabin and wooden dock on the shore, at dusk, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 09",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1035,
+  "prompt": "dark thunderstorm clouds over a calm lake, a small lit cabin and wooden dock on the shore, at blue hour, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 10",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1036,
+  "prompt": "lighthouse on a cliff under heavy storm clouds, sea below, the lamp glowing, at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 11",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1037,
+  "prompt": "lighthouse on a cliff under heavy storm clouds, sea below, the lamp glowing, at dusk, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 12",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1038,
+  "prompt": "lighthouse on a cliff under heavy storm clouds, sea below, the lamp glowing, at blue hour, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 13",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1039,
+  "prompt": "wide view of rolling hills under towering storm clouds, a lone house with glowing windows, at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 14",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1040,
+  "prompt": "wide view of rolling hills under towering storm clouds, a lone house with glowing windows, at dusk, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 15",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1041,
+  "prompt": "wide view of rolling hills under towering storm clouds, a lone house with glowing windows, at blue hour, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 16",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1042,
+  "prompt": "old town rooftops and chimneys under thunderstorm clouds, a few lit windows, at night, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 17",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1043,
+  "prompt": "old town rooftops and chimneys under thunderstorm clouds, a few lit windows, at dusk, empty and quiet, cinematic, highly detailed photograph"
+ },
+ {
+  "name": "Storm Night 18",
+  "dir": "storm-window/ai-zimage",
+  "seed": 1044,
+  "prompt": "old town rooftops and chimneys under thunderstorm clouds, a few lit windows, at blue hour, empty and quiet, cinematic, highly detailed photograph"
+ }
+]
