@@ -4,7 +4,7 @@ import { DATA, FFMPEG, POOL, rng } from './config.js';
 import { addAlert } from './db.js';
 import { run, waitForRoblox } from './ff.js';
 import { loopPath, makeLoop, mix } from './audio.js';
-import { FLASH_LEAD, flashVariant, mux, segment, shortFlashArgs, thumbnail } from './video.js';
+import { FLASH_LEAD, flashVariant, mux, segment, segmentCrf, shortFlashArgs, thumbnail } from './video.js';
 import { qa } from './qa.js';
 
 // M1 placeholder until the magenta engine writes titles (M2).
@@ -61,7 +61,7 @@ export async function render(db, plan, { dryRun = false, log = console.log } = {
     for (const e of (plan.events ?? []).filter(x => x.flash)) {
       if (!variants.has(e.flash.o)) {
         const f = path.join(work, `flash-${e.flash.o}.mp4`);
-        await flashVariant(seg, segSecs, e.flash.o, f);
+        await flashVariant(seg, segSecs, e.flash.o, f, segmentCrf(plan.visual));
         variants.set(e.flash.o, f);
       }
       slots[e.flash.seg] = variants.get(e.flash.o);

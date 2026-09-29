@@ -50,10 +50,13 @@ async function examine(abs, kind) {
   row.lead_silence = first && first.start <= 0.05 ? (first.end ?? d) : 0;
   row.trail_silence = last && (last.end == null || last.end >= d - 0.05) && last.start > row.lead_silence ? d - last.start : 0;
   if (row.lead_silence + row.trail_silence >= d) row.lead_silence = row.trail_silence = 0; // all silent: leave it for QA to catch
+  // Generated tracks sometimes stop mid-way for seconds at a time; the planner skips those.
+  const inner = m.silences.filter(s => s.start > row.lead_silence + 0.01 && (s.end ?? d) < d - row.trail_silence - 0.01);
+  row.max_gap = Math.max(0, ...inner.map(s => s.end - s.start));
   return row;
 }
 
-const COLS = ['kind', 'tag', 'source_id', 'path', 'size', 'mtime', 'sha256', 'duration', 'lufs', 'true_peak', 'peak_p99', 'lead_silence',
+const COLS = ['kind', 'tag', 'source_id', 'path', 'size', 'mtime', 'sha256', 'duration', 'lufs', 'true_peak', 'peak_p99', 'max_gap', 'lead_silence',
   'trail_silence', 'width', 'height', 'artist', 'title', 'credit_guessed'];
 const bind = row => Object.fromEntries(COLS.map(c => [c, row[c] ?? null]));
 
@@ -66,7 +69,9 @@ export async function ingest(db, { log = console.log, now = Date.now() } = {}) {
   const byPath = db.prepare('SELECT id, size, mtime, missing FROM assets WHERE path = ?');
   const bySha = db.prepare('SELECT id, path FROM assets WHERE sha256 = ? AND path != ?');
   const insert = db.prepare(`INSERT INTO assets (${COLS.join(', ')}, added_at) VALUES (${COLS.map(c => ':' + c).join(', ')}, :added_at)`);
-  const update = db.prepare(`UPDATE assets SET ${COLS.map(c => `${c} = :${c}`).join(', ')}, analyzed = 0, missing = 0 WHERE id = :id`);
+  // Re-analysis only when the content changed (SET expressions see the row's old sha256).
+  const update = db.prepare(`UPDATE assets SET ${COLS.map(c => `${c} = :${c}`).join(', ')},
+    analyzed = CASE WHEN sha256 = :sha256 THEN analyzed ELSE 0 END, missing = 0 WHERE id = :id`);
 
   for (const [kind, dir] of KINDS) {
     const base = path.join(root, dir);

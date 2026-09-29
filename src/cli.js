@@ -64,8 +64,9 @@ try {
       for (const r of db.prepare('SELECT source_id, COUNT(*) n FROM assets WHERE missing = 0 GROUP BY source_id').all())
         if (!reg[r.source_id]?.compilation_ok) console.log(`unusable source "${r.source_id}": ${r.n} files (not registered with compilation_ok)`);
       const c = db.prepare(`SELECT SUM(missing) missing, SUM(blocked) blocked, SUM(credit_guessed AND NOT missing) guessed,
-        SUM(kind = 'music' AND analyzed = 0 AND NOT missing) unanalyzed FROM assets`).get();
-      console.log(`missing ${c.missing ?? 0}, blocked ${c.blocked ?? 0}, guessed credits ${c.guessed ?? 0}, unanalyzed ${c.unanalyzed ?? 0}`);
+        SUM(kind = 'music' AND analyzed = 0 AND NOT missing) unanalyzed, SUM(kind = 'music' AND max_gap >= 5 AND NOT missing) gappy FROM assets`).get();
+      console.log(`missing ${c.missing ?? 0}, blocked ${c.blocked ?? 0}, guessed credits ${c.guessed ?? 0}, unanalyzed ${c.unanalyzed ?? 0}, ` +
+        `tracks skipped for a mid-track silence of 5 s+ ${c.gappy ?? 0}`);
       for (const g of db.prepare('SELECT path, artist, title FROM assets WHERE credit_guessed = 1 AND missing = 0 LIMIT 50').all())
         console.log(`  guessed: ${g.path} -> "${g.title}" by ${g.artist ?? '?'}`);
       break;

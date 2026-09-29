@@ -20,6 +20,7 @@ export function open(file) {
       duration REAL,                   -- null for still images
       lufs REAL, true_peak REAL,
       peak_p99 REAL,                   -- sample peak exceeded in only 1% of 1-second windows
+      max_gap REAL,                    -- longest silence inside the file (not at its ends), seconds
       lead_silence REAL DEFAULT 0, trail_silence REAL DEFAULT 0,
       bpm REAL, key TEXT, energy REAL, analyzed INTEGER DEFAULT 0,
       width INTEGER, height INTEGER,
@@ -42,9 +43,11 @@ export function open(file) {
       created_at TEXT, delivered_at TEXT
     );
   `);
-  // Added after the first dev DBs existed: add the column, and clear mtimes so the next ingest re-measures every file.
-  if (!db.prepare('PRAGMA table_info(assets)').all().some(c => c.name === 'peak_p99')) {
-    db.exec('ALTER TABLE assets ADD COLUMN peak_p99 REAL; UPDATE assets SET mtime = NULL;');
+  // Columns added after the first DBs existed: add them, and clear mtimes so the next ingest re-measures every
+  // file (re-measuring an unchanged file keeps its BPM/key analysis).
+  const have = new Set(db.prepare('PRAGMA table_info(assets)').all().map(c => c.name));
+  for (const col of ['peak_p99', 'max_gap']) {
+    if (!have.has(col)) db.exec(`ALTER TABLE assets ADD COLUMN ${col} REAL; UPDATE assets SET mtime = NULL;`);
   }
   return db;
 }

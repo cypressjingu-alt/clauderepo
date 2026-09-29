@@ -57,7 +57,8 @@ const r3 = x => Math.round(x * 1000) / 1000;
 const credit = a => ({ asset_id: a.id, path: a.path, source_id: a.source_id, artist: a.artist, title: a.title });
 
 function planMusic(db, { recipe, channel, reg, r, target, now, loudness, alerts }) {
-  const pool = candidates(db, 'music', recipe.music, reg);
+  // Tracks that go silent mid-way for longer than the niche allows would fail QA's silence check.
+  const pool = candidates(db, 'music', recipe.music, reg).filter(t => !(t.max_gap >= (recipe.max_silence ?? 5)));
   const last = lastUsed(db, channel.id);
   const cutoff = now - channel.cooldown_days * 864e5;
   const enough = list => list.reduce((s, t) => s + body(t) - 4.5, 0) >= target * 0.95; // 4.5 s = average crossfade

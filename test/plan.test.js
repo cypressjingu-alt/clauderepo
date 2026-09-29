@@ -125,6 +125,15 @@ test('flashing thunder lands on the lightning grid, one flash per segment', () =
   assert.equal(new Set(flashes.map(e => e.flash.seg)).size, flashes.length);
 });
 
+test('tracks that go silent mid-way are skipped', () => {
+  const db = pool();
+  db.prepare('UPDATE assets SET max_gap = 8 WHERE id IN (1, 2, 3)').run();
+  for (let seed = 1; seed <= 10; seed++) {
+    const ids = plan(db, { recipe: recipe({ format: 'playlist' }), channel, reg, seed }).music.segments.map(s => s.asset_id);
+    assert.ok(ids.every(id => id > 3), `seed ${seed} used a gappy track: ${ids}`);
+  }
+});
+
 test('camelot numbers', () => {
   assert.deepEqual(camelot('C major'), { num: 8, minor: false });
   assert.deepEqual(camelot('A minor'), { num: 8, minor: true });
