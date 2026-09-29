@@ -3,7 +3,7 @@ import path from 'node:path';
 import { DATA, FFMPEG, POOL, rng } from './config.js';
 import { addAlert } from './db.js';
 import { run, waitForRoblox } from './ff.js';
-import { loopPath, makeLoop, mix } from './audio.js';
+import { AAC, loopPath, makeLoop, mix } from './audio.js';
 import { FLASH_LEAD, flashVariant, mux, segment, segmentCrf, shortFlashArgs, thumbnail } from './video.js';
 import { qa } from './qa.js';
 
@@ -78,7 +78,7 @@ export async function render(db, plan, { dryRun = false, log = console.log } = {
       for (const [i, w] of wins.entries()) {
         await mux([vseg], vsecs, audio, path.join(dir, `short-${i + 1}.mp4`), { ss: w.start, t: w.dur,
           ...(w.flash_at != null && { videoArgs: shortFlashArgs(w.flash_at) }),
-          audioArgs: ['-af', `afade=t=in:d=0.5,afade=t=out:st=${w.dur - 1.5}:d=1.5`, '-c:a', 'aac', '-b:a', '256k'] });
+          audioArgs: ['-af', `afade=t=in:d=0.5,afade=t=out:st=${w.dur - 1.5}:d=1.5`, ...AAC, '-b:a', '256k'] });
       }
     }
     step('QA');

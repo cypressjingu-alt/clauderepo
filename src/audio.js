@@ -9,6 +9,13 @@ import { DATA, FFMPEG, hms } from './config.js';
 
 export const SR = 48000;
 export const LIMIT_DB = -3; // the master limiter's ceiling (sample peak), dBFS
+
+// AAC-LC via ffmpeg's fast coder: at 288k it really delivers ~290 kbps at ~130x realtime (asked for 320k+ it caps
+// near 250 kbps and runs 5x slower; the default twoloop coder does a true 384k but only at ~9x, over an hour
+// per 10 h mix). 290 kbps is transparent, and YouTube re-encodes to ~130 kbps anyway.
+// Mid/side and intensity stereo are off: on a sharp transient in one channel they put a +2.5 dB overshoot into the
+// other (the café sample decoded at -0.66 dBTP from a -3.4 dBFS source). At 288k there are bits to spare.
+export const AAC = ['-c:a', 'aac', '-aac_coder', 'fast', '-aac_ms', '0', '-aac_is', '0'];
 const dB = x => 10 ** (x / 20);
 export const loopPath = sha => path.join(DATA(), 'cache', 'loops', `${sha}.f32`);
 
@@ -167,14 +174,12 @@ export async function mix(plan, pool, out, log = () => {}) {
   if (plan.bed) layers.push(new Sequence(plan.bed.map(frames), s => new LoopReader(loopPath(s.sha256), s.offset)));
   if (plan.events?.length) layers.push(new Events(plan.events, abs));
 
-  // ponytail: sample-peak limiter at LIMIT_DB as headroom for -1 dBTP after AAC. At -2 dBFS, hot AI masters came out at
-  // -0.8 dBTP (AAC overshoots ~1.2 dB). QA measures the real true peak; an oversampled limiter is the next upgrade.
+  // ponytail: sample-peak limiter at LIMIT_DB as headroom for -1 dBTP after AAC (hard-limited audio overshoots
+  // between samples, ~1.5 dB when driven hard). QA measures the real true peak. (An oversampled limiter was tried:
+  // resampling back down after limiting rang worse, -0.1 dBTP.)
   const enc = spawn(FFMPEG, ['-hide_banner', '-nostats', '-v', 'error', '-y', '-f', 'f32le', '-ar', String(SR), '-ac', '2', '-i', 'pipe:0',
     '-af', `alimiter=limit=${dB(LIMIT_DB).toFixed(4)}:level=false:attack=5:release=100:latency=true`,
-    // ffmpeg's fast AAC coder at 288k: really ~290 kbps at ~130x realtime. Asked for 320k or more it caps near
-    // 250 kbps and runs 5x slower; the default twoloop coder does a true 384k but at only ~9x (a 10-hour mix
-    // takes over an hour). 290 kbps AAC-LC is transparent; YouTube re-encodes to ~130 kbps anyway.
-    '-c:a', 'aac', '-aac_coder', 'fast', '-b:a', '288k', '-ar', String(SR), out], { stdio: ['pipe', 'ignore', 'pipe'] });
+    ...AAC, '-b:a', '288k', '-ar', String(SR), out], { stdio: ['pipe', 'ignore', 'pipe'] });
   let err = '';
   enc.stderr.on('data', d => (err += d));
   enc.stdin.on('error', () => {}); // a dead encoder surfaces through its exit code below
