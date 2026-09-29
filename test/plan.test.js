@@ -106,7 +106,7 @@ test('quiet masters are loudness-matched only as far as 3 dB of limiting allows'
   for (let i = 0; i < 5; i++) ins.run(`music/jazz/good/q${i}.mp3`, `q${i}`, i ? -14 : -30, i ? -1 : -9, i ? 'Loud' : 'Quiet');
   const p = plan(db, { recipe: recipe({ format: 'playlist' }), channel, reg, seed: 1 });
   const quiet = p.music.segments.find(s => s.title === 'Quiet');
-  assert.equal(quiet.gain_db, 10); // -2 ceiling + 3 dB limiting - (-9 peak), not the 16 dB full match
+  assert.equal(quiet.gain_db, 9); // -3 ceiling + 3 dB limiting - (-9 peak), not the 16 dB full match
   assert.ok(p.music.segments.filter(s => s.title === 'Loud').every(s => s.gain_db === 0));
 });
 

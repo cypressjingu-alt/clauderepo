@@ -8,6 +8,7 @@ import { DATA, FFMPEG, hms } from './config.js';
 // the layers, and one ffmpeg process limits and encodes. Memory stays flat whatever the length.
 
 export const SR = 48000;
+export const LIMIT_DB = -3; // the master limiter's ceiling (sample peak), dBFS
 const dB = x => 10 ** (x / 20);
 export const loopPath = sha => path.join(DATA(), 'cache', 'loops', `${sha}.f32`);
 
@@ -166,10 +167,10 @@ export async function mix(plan, pool, out, log = () => {}) {
   if (plan.bed) layers.push(new Sequence(plan.bed.map(frames), s => new LoopReader(loopPath(s.sha256), s.offset)));
   if (plan.events?.length) layers.push(new Events(plan.events, abs));
 
-  // ponytail: sample-peak limiter at -2 dBFS as headroom for -1 dBTP after AAC (a 10 h noise bed measured -1.4 at -1.5);
-  // QA measures the real true peak. A true-peak limiter (oversampled) is the upgrade if music renders fail it.
+  // ponytail: sample-peak limiter at LIMIT_DB as headroom for -1 dBTP after AAC. At -2 dBFS, hot AI masters came out at
+  // -0.8 dBTP (AAC overshoots ~1.2 dB). QA measures the real true peak; an oversampled limiter is the next upgrade.
   const enc = spawn(FFMPEG, ['-hide_banner', '-nostats', '-v', 'error', '-y', '-f', 'f32le', '-ar', String(SR), '-ac', '2', '-i', 'pipe:0',
-    '-af', `alimiter=limit=${dB(-2).toFixed(4)}:level=false:attack=5:release=100:latency=true`,
+    '-af', `alimiter=limit=${dB(LIMIT_DB).toFixed(4)}:level=false:attack=5:release=100:latency=true`,
     // ffmpeg's fast AAC coder at 288k: really ~290 kbps at ~130x realtime. Asked for 320k or more it caps near
     // 250 kbps and runs 5x slower; the default twoloop coder does a true 384k but at only ~9x (a 10-hour mix
     // takes over an hour). 290 kbps AAC-LC is transparent; YouTube re-encodes to ~130 kbps anyway.

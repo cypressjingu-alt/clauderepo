@@ -1,5 +1,6 @@
 import { hms, rng } from './config.js';
 import { FLASH_LEAD, flashOffsets, segmentLength } from './video.js';
+import { LIMIT_DB } from './audio.js';
 
 // A plan is everything a render needs, fixed up front: which files, where, how loud.
 // It's pure data (saved in the manifest), so `rebuild` just renders the same plan again.
@@ -44,14 +45,14 @@ const lastUsed = (db, channel) => new Map(db.prepare(
   .map(r => [r.asset_id, Date.parse(r.t)]));
 
 const body = a => Math.max(0, (a.duration ?? 0) - (a.lead_silence ?? 0) - (a.trail_silence ?? 0));
-// Loudness-match, but never push a quiet master so hard that the -2 dBFS limiter shaves more than
+// Loudness-match, but never push a quiet master so hard that the master limiter shaves more than
 // 3 dB off its usual peaks: such a track plays a little under target instead of sounding squashed.
 // "Usual" = the 1%-of-seconds peak, so a single stray spike (a bump in a rain recording) can't hold a file back.
 // Beds may take 6 dB: shaving drop transients off noise-like rain is far less audible than on music.
 const MAX_LIMITING_DB = { music: 3, bed: 6 };
 const gainFor = (a, target) => {
   const peak = a.peak_p99 ?? a.true_peak;
-  return Math.min(target - (a.lufs ?? target), peak == null ? Infinity : -2 + MAX_LIMITING_DB[a.kind] - peak);
+  return Math.min(target - (a.lufs ?? target), peak == null ? Infinity : LIMIT_DB + MAX_LIMITING_DB[a.kind] - peak);
 };
 const r3 = x => Math.round(x * 1000) / 1000;
 const credit = a => ({ asset_id: a.id, path: a.path, source_id: a.source_id, artist: a.artist, title: a.title });

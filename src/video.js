@@ -74,15 +74,19 @@ export async function segment(src, visual, W, H, out) {
     return segmentLength(visual);
   }
   const L = segmentLength(visual), n = L * FPS, fx = visual.motion === 'effects' ? visual.effects ?? { zoom: 0.06 } : {};
-  const dir = path.dirname(out), k = fx.zoom ? 2 : 1;
+  const dir = path.dirname(out);
   // The image is decoded once per frame, so scale it to size once first: a 4K source otherwise adds ~450 MB.
   const sized = out.replace(/\.mp4$/, '.png');
-  await ffmpeg(['-i', src, '-vf', cover(k * W, k * H), '-frames:v', 1, '-update', 1, sized]);
+  await ffmpeg(['-i', src, '-vf', cover(W, H), '-frames:v', 1, '-update', 1, sized]);
   const loop = f => ['-loop', 1, '-framerate', FPS, '-t', L, '-i', f];
   const inputs = [...loop(sized)], graph = [];
-  // Slow zoom in and back out over one segment, so it ends where it began. Working at 2x keeps the motion smooth.
+  // Slow zoom in and back out over one segment, starting and ending at rest, so the loop is seamless.
+  // perspective pulls the four corners in by a fraction of a pixel per frame (bicubic): smooth motion. zoompan
+  // moved only in whole-pixel steps (stutter), and its exact zoom=1 first frame popped at every loop.
+  const inset = `${fx.zoom / 2}*(1-cos(2*PI*in/${n}))/2`;
   graph.push(fx.zoom
-    ? `[0:v]format=yuv420p,zoompan=z='1+${fx.zoom}*(1-cos(2*PI*on/${n}))/2':x='iw/2-iw/zoom/2':y='ih/2-ih/zoom/2':d=1:s=${W}x${H}:fps=${FPS},setsar=1,format=gbrp[v0]`
+    ? `[0:v]perspective=x0='W*${inset}':y0='H*${inset}':x1='W-W*${inset}':y1='H*${inset}':x2='W*${inset}':y2='H-H*${inset}':` +
+      `x3='W-W*${inset}':y3='H-H*${inset}':interpolation=cubic:eval=frame,format=gbrp[v0]`
     : '[0:v]format=gbrp[v0]');
   let v = 'v0', i = 1;
   if (fx.sky) {
