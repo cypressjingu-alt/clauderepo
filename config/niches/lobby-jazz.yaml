@@ -8,4 +8,8 @@ effects: { zoom: 0.04, flicker: 0.02 }   # slow zoom in and back out; warm light
 length: [1h15m, 1h45m]     # owner: 1 h minimum, 1 h 30 ideal
 loudness: -16              # acoustic jazz masters peak near 0 dBTP at -16..-18 LUFS; -14 would need heavy limiting
 weight: 2
+metadata:                  # steers the LLM (M2): search = the YouTube keyword research query
+  search: hotel lobby jazz music
+  scene: a grand hotel lobby at night, chandeliers, marble floors, velvet armchairs
+  audience: work, study, reading, hosting a dinner
 thumbnail: { font: "C:/Windows/Fonts/georgiab.ttf", colors: ["#f5e6c8", "#1a1208"] }

@@ -14,4 +14,8 @@ effects: { flicker: 0.015 }   # warm light breathing (rain lives in the image an
 length: [1h15m, 1h45m]     # owner: 1 h minimum, 1 h 30 ideal
 loudness: -16              # jazz: see lobby-jazz
 weight: 3
+metadata:
+  search: rainy tokyo cafe jazz ambience
+  scene: a cozy Tokyo cafe on a rainy night, lanterns and neon reflected on wet streets
+  audience: study, work, relaxing on a rainy evening
 thumbnail: { font: "C:/Windows/Fonts/segoeuib.ttf", colors: ["#ffe9f3", "#1b0f24"] }

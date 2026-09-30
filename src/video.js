@@ -152,6 +152,7 @@ export async function thumbnail(seg, title, style = {}, dir) {
   // ponytail: text width estimated from character count; measure glyphs (e.g. @napi-rs/canvas) if titles overflow.
   const size = Math.min(120, Math.floor(1150 / (Math.max(...lines.map(l => l.length)) * 0.56)));
   const txt = path.join(dir, 'work', 'title.txt');
+  fs.mkdirSync(path.dirname(txt), { recursive: true }); // work/ is gone when re-titling a finished render
   fs.writeFileSync(txt, lines.join('\n'));
   const vf = `scale=1280:720,drawtext=fontfile='${esc(font)}':textfile='${esc(txt)}':fontsize=${size}:fontcolor=${fg}` +
     `:borderw=${Math.max(2, Math.round(size / 16))}:bordercolor=${shadow}:shadowx=5:shadowy=5:shadowcolor=${shadow}@0.6` +

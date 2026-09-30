@@ -6,12 +6,17 @@ import { run, waitForRoblox } from './ff.js';
 import { AAC, loopPath, makeLoop, mix } from './audio.js';
 import { FLASH_LEAD, flashVariant, mux, segment, segmentCrf, shortFlashArgs, thumbnail } from './video.js';
 import { qa } from './qa.js';
+import { metadata } from './metadata.js';
 
-// M1 placeholder until the magenta engine writes titles (M2).
-export function placeholderTitle(plan) {
-  const h = plan.duration / 3600;
-  const len = h >= 1 ? `${Math.round(h)} Hour${Math.round(h) === 1 ? '' : 's'}` : `${Math.round(plan.duration / 60)} Minutes`;
-  return `${plan.recipe.name} · ${len}`;
+// Put every file a render used on this channel's cooldown. Assets are matched by pool path, so a render made on
+// the other machine (different DB ids) can be adopted too. Returns how many files matched.
+export function recordUsage(db, plan, renderId) {
+  const paths = new Set([...(plan.music?.segments ?? []), ...(plan.bed ?? []), ...(plan.events ?? []), plan.visual].map(a => a.path));
+  const find = db.prepare('SELECT id FROM assets WHERE path = ?'), ins = db.prepare('INSERT INTO usage (asset_id, channel_id, render_id, used_at) VALUES (?, ?, ?, ?)');
+  const at = new Date().toISOString();
+  let n = 0;
+  for (const p of paths) { const a = find.get(p); if (a) { ins.run(a.id, plan.channel, renderId, at); n++; } }
+  return n;
 }
 
 // Shorts audio: a clean stretch of an energetic track (away from crossfades), or for
@@ -68,9 +73,12 @@ export async function render(db, plan, { dryRun = false, log = console.log } = {
     }
     step(`muxing video.mp4 (${slots.filter(s => s !== seg).length} lightning flashes)`);
     await mux(slots, segSecs, audio, path.join(dir, 'video.mp4'), { t: plan.duration });
-    const title = placeholderTitle(plan);
-    const thumb = await thumbnail(seg, title, plan.recipe.thumbnail, dir);
     const wins = shortWindows(plan, plan.shorts ?? 2);
+    step('metadata (magenta engine, template fallback)');
+    const meta = await metadata(db, plan, { shorts: wins.length, log });
+    fs.writeFileSync(path.join(dir, 'metadata.json'), JSON.stringify(meta, null, 2));
+    const title = meta.title;
+    const thumb = await thumbnail(seg, meta.thumbnail_text, plan.recipe.thumbnail, dir);
     if (wins.length) {
       step(`${wins.length} short(s)`);
       const vseg = path.join(work, 'vseg.mp4');
@@ -93,12 +101,7 @@ export async function render(db, plan, { dryRun = false, log = console.log } = {
     setStatus(result.pass ? 'passed' : 'failed', result);
     if (result.pass) {
       fs.rmSync(work, { recursive: true, force: true }); // everything needed to rebuild is in the manifest
-      if (!dryRun) {
-        const used = new Set([...(plan.music?.segments ?? []), ...(plan.bed ?? []), ...(plan.events ?? []), plan.visual].map(a => a.asset_id));
-        const ins = db.prepare('INSERT INTO usage (asset_id, channel_id, render_id, used_at) VALUES (?, ?, ?, ?)');
-        const at = new Date().toISOString();
-        for (const a of used) ins.run(a, plan.channel, id, at);
-      }
+      if (!dryRun) recordUsage(db, plan, id);
     }
     step(`done: QA ${result.pass ? 'passed' : 'FAILED'}`);
     return { id, dir, qa: result };

@@ -33,7 +33,7 @@ incompetech:
   terms_url: https://incompetech.com/music/royalty-free/faq.html
   checked: 2026-09-27
   license: CC BY 4.0
-  compilation_ok: true
+  compilation_ok: false    # owner, 2026-09-30: out of use (Content ID + attribution risk); the files stay in the pool
   attribution_required: true
   credit: "{title} Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
 

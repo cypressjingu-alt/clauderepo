@@ -6,7 +6,9 @@ import { DATA, hms, loadChannel, loadNiche, loadSources, secs } from './config.j
 import { addAlert, open } from './db.js';
 import { ingest } from './ingest.js';
 import { plan } from './plan.js';
-import { render } from './render.js';
+import { recordUsage, render } from './render.js';
+import { metadata } from './metadata.js';
+import { thumbnail } from './video.js';
 import { qa } from './qa.js';
 
 const USAGE = `ambient <command>
@@ -16,6 +18,8 @@ const USAGE = `ambient <command>
   render <plan.json> | --niche <id> [--length] [--seed]
   qa <render-id>                           re-run QA on a finished render
   rebuild <manifest.json>                  render the exact same plan again
+  metadata <render-id | render dir>        (re)write title, description, tags and thumbnail text
+  adopt <render-id | render dir>           a dry-run render becomes a real video: its files go on cooldown
 options: --channel <id> (default showcase), --dry-run (don't touch cooldowns or alerts)`;
 
 const { values: o, positionals: [cmd, ...args] } = parseArgs({
@@ -24,6 +28,13 @@ const { values: o, positionals: [cmd, ...args] } = parseArgs({
 });
 const db = open(path.join(DATA(), 'ambient.db'));
 const readJson = f => JSON.parse(fs.readFileSync(f, 'utf8'));
+// A render id known to this machine's DB, or a render folder (e.g. one copied from the other machine).
+function renderDir(arg) {
+  if (arg && fs.existsSync(path.join(arg, 'manifest.json'))) return path.resolve(arg);
+  const row = db.prepare('SELECT dir FROM renders WHERE id = ?').get(arg);
+  if (!row) throw new Error(`no render ${arg}`);
+  return row.dir;
+}
 
 function makePlan() {
   if (!o.niche) throw new Error('--niche is required');
@@ -97,6 +108,25 @@ try {
       db.prepare('UPDATE renders SET status = ?, qa = ? WHERE id = ?').run(r.pass ? 'passed' : 'failed', JSON.stringify(r), args[0]);
       for (const c of r.checks) console.log(`  ${c.pass ? 'pass' : 'FAIL'} ${c.name}: ${c.detail}`);
       process.exitCode = r.pass ? 0 : 1;
+      break;
+    }
+    case 'metadata':
+    case 'adopt': {
+      const dir = renderDir(args[0]), mf = path.join(dir, 'manifest.json'), m = readJson(mf);
+      if (cmd === 'adopt') {
+        const n = recordUsage(db, m.plan, m.render_id);
+        Object.assign(m, { dry_run: false, adopted_at: new Date().toISOString() });
+        console.log(`${m.render_id}: ${n} files put on cooldown for channel ${m.plan.channel}`);
+      } else {
+        const meta = await metadata(db, m.plan, { shorts: m.outputs.shorts.length, log: console.log });
+        fs.writeFileSync(path.join(dir, 'metadata.json'), JSON.stringify(meta, null, 2));
+        for (const f of ['thumb.png', 'thumb.jpg']) if (fs.existsSync(path.join(dir, f))) fs.unlinkSync(path.join(dir, f));
+        m.outputs.thumbnail = path.basename(await thumbnail(path.join(dir, 'video.mp4'), meta.thumbnail_text, m.plan.recipe.thumbnail, dir));
+        fs.rmSync(path.join(dir, 'work'), { recursive: true, force: true });
+        m.title = meta.title;
+        console.log(`${meta.title}\n  thumbnail: "${meta.thumbnail_text}"  fields from: ${JSON.stringify(meta.fields_from)}`);
+      }
+      fs.writeFileSync(mf, JSON.stringify(m, null, 2));
       break;
     }
     default:

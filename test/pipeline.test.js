@@ -15,7 +15,8 @@ import { loadChannel, loadNiche, loadSources } from '../src/config.js';
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ambient-test-'));
 const POOL = path.join(tmp, 'pool');
-Object.assign(process.env, { AMBIENT_POOL: POOL, AMBIENT_DATA: path.join(tmp, 'data'), AMBIENT_CONFIG: path.join(tmp, 'config') });
+Object.assign(process.env, { AMBIENT_POOL: POOL, AMBIENT_DATA: path.join(tmp, 'data'), AMBIENT_CONFIG: path.join(tmp, 'config'),
+  MAGENTA_ENGINE_URL: 'http://127.0.0.1:9', YOUTUBE_API_KEY: '' }); // offline: metadata falls back to templates
 const put = (rel, text) => { fs.mkdirSync(path.dirname(path.join(tmp, rel)), { recursive: true }); fs.writeFileSync(path.join(tmp, rel), text); };
 const dir = rel => { const d = path.join(POOL, rel); fs.mkdirSync(d, { recursive: true }); return d; };
 const lavfi = (src, out, extra = []) => ffmpeg(['-v', 'error', '-f', 'lavfi', '-i', src, ...extra, out]);
@@ -89,6 +90,8 @@ for (const id of ['t-playlist', 't-ambience', 't-layered', 't-long']) {
     const m = JSON.parse(fs.readFileSync(path.join(r.dir, 'manifest.json'), 'utf8'));
     assert.equal(m.plan.seed, 11);
     if (id === 't-playlist') assert.ok(m.chapters.length >= 3);
+    const meta = JSON.parse(fs.readFileSync(path.join(r.dir, 'metadata.json'), 'utf8'));
+    assert.ok(meta.title && meta.description && meta.tags.length && Object.values(meta.fields_from).every(v => v === 'template'));
     if (id === 't-ambience') {
       assert.ok(m.plan.events.some(e => e.flash), 'lightning planned');
       assert.ok(r.qa.checks.some(c => c.name === 'video_seam'), 'video seam checked');

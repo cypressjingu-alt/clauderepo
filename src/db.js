@@ -38,6 +38,9 @@ export function open(file) {
       id TEXT PRIMARY KEY, channel_id TEXT NOT NULL, niche_id TEXT NOT NULL, status TEXT NOT NULL,
       seed INTEGER, target_length REAL, dir TEXT, qa TEXT, created_at TEXT
     );
+    CREATE TABLE IF NOT EXISTS keyword_cache (   -- YouTube keyword research per niche, refreshed weekly (search costs 100 quota units)
+      niche_id TEXT PRIMARY KEY, fetched_at TEXT NOT NULL, data TEXT NOT NULL
+    );
     CREATE TABLE IF NOT EXISTS alerts (
       id INTEGER PRIMARY KEY, channel_id TEXT NOT NULL, type TEXT NOT NULL, payload TEXT,
       created_at TEXT, delivered_at TEXT
