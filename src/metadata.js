@@ -1,4 +1,6 @@
+import fs from 'node:fs';
 import http from 'node:http';
+import path from 'node:path';
 import { hms } from './config.js';
 
 // Titles, descriptions and tags (M2). The magenta engine's LLM writes the words, steered by keyword research
@@ -104,13 +106,25 @@ function describe(plan) {
   };
 }
 
-export function prompt(plan, research, shorts) {
+// Titles and thumbnail texts of this niche's latest videos on the channel, so a new one doesn't echo them.
+function recent(db, plan, limit = 6) {
+  const out = [];
+  if (!plan.niche || !plan.channel) return out;
+  for (const { dir } of db.prepare(`SELECT dir FROM renders WHERE niche_id = ? AND channel_id = ? AND status = 'passed' ORDER BY created_at DESC LIMIT ?`)
+    .all(plan.niche, plan.channel, limit)) {
+    try { const m = JSON.parse(fs.readFileSync(path.join(dir, 'metadata.json'), 'utf8')); out.push(`${m.title} [thumbnail: ${m.thumbnail_text}]`); } catch { /* no metadata yet */ }
+  }
+  return out;
+}
+
+export function prompt(plan, research, shorts, previous = []) {
   const d = describe(plan);
   return [
     { role: 'system', content: 'You write YouTube metadata for long ambient and music videos. Answer with one JSON object and nothing else.' },
     { role: 'user', content: `Video: ${JSON.stringify(d)}
 ${research ? `Phrases people search for, from popular similar videos: ${research.keywords.join(', ')}
 Popular titles in this niche, for style only (never copy): ${research.top_titles.slice(0, 6).join(' | ')}` : 'No keyword research is available.'}
+${previous.length ? `This channel's recent videos in the same niche. Make the title and thumbnail_text clearly different from all of them (another angle, other words), so the channel never looks repetitive: ${previous.join(' | ')}` : ''}
 
 Return: {"title": string, "thumbnail_text": string, "description": string, "tags": [string], "short_titles": [string x ${shorts}]}
 Rules:
@@ -193,9 +207,10 @@ export function assemble(plan, fields) {
 export async function metadata(db, plan, { shorts = 2, llm = chat, log = () => {} } = {}) {
   const research = await keywords(db, plan.recipe).catch(() => null);
   const fallback = templates(plan, research, shorts);
+  const previous = recent(db, plan);
   let parsed = null;
   try {
-    const text = await llm(prompt(plan, research, shorts));
+    const text = await llm(prompt(plan, research, shorts, previous));
     parsed = JSON.parse(String(text).replace(/^[\s\S]*?(\{[\s\S]*\})[\s\S]*$/, '$1'));
   } catch (e) {
     log(`metadata: magenta engine unavailable or unreadable (${e.message}); using templates`);

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { open } from '../src/db.js';
 import { normalizeNiche } from '../src/config.js';
-import { assemble, keywords, lengthLabel, metadata, phrases, templates, validate } from '../src/metadata.js';
+import { assemble, keywords, lengthLabel, metadata, phrases, prompt, templates, validate } from '../src/metadata.js';
 
 const recipe = normalizeNiche({
   id: 'rainy-tokyo-cafe', name: 'Rainy Tokyo Café', format: 'layered', music: ['jazz', 'lofi'], visual: 'tokyo-night', motion: 'effects',
@@ -80,6 +80,12 @@ test('a dead or rambling engine still yields complete metadata from templates', 
   const m = await metadata(db, plan, { llm: async () => '```json\n' + JSON.stringify(good) + '\n```' });
   assert.equal(m.title, good.title);
   assert.equal(m.shorts[1].title, 'Late-night jazz in Tokyo #shorts');
+});
+
+test('the prompt lists this niche\'s recent titles so a new video doesn\'t echo them', () => {
+  const p = prompt({ ...plan, niche: 'rainy-tokyo-cafe', channel: 'showcase' }, null, 2, ['Rainy Tokyo Café Ambience (1 Hour) [thumbnail: RAINY TOKYO CAFE]']);
+  assert.match(p[1].content, /clearly different[\s\S]*RAINY TOKYO CAFE/);
+  assert.doesNotMatch(prompt(plan, null, 2)[1].content, /clearly different/);
 });
 
 test('keyword research is cached for a week and sends the key only in a header', async () => {
