@@ -99,18 +99,8 @@ async function fillAndSave(page, dlg, titleBox, id, { title, description, tags, 
   const blocked = /block|mute/i.test(checks) && !/no issues/i.test(checks);
 
   if (publishAt && !blocked) {
-    const t = Date.parse(publishAt), day = fmt(t, tz, { month: 'short', day: 'numeric', year: 'numeric' }), time = fmt(t, tz, { hour: 'numeric', minute: '2-digit', hour12: true });
     await dlg.locator('#second-container-expand-button').click();
-    await dlg.locator('#datepicker-trigger').click();
-    const dateInput = page.locator('ytcp-date-picker input').first();
-    await dateInput.fill(day);
-    await dateInput.press('Enter');
-    const timeInput = dlg.locator('#time-of-day-container input').first();
-    await timeInput.fill(time);
-    await timeInput.press('Enter');
-    await page.waitForTimeout(1000);
-    const shown = `${(await dlg.locator('#datepicker-trigger').innerText()).trim()} ${await timeInput.inputValue()}`;
-    if (shown !== `${day} ${time}`) throw new Error(`schedule shows "${shown}", wanted "${day} ${time}" (${id})`);
+    await setSchedule(page, dlg, publishAt, tz);
   } else {
     await dlg.locator('#privacy-radios [name=PRIVATE]').click();
   }
@@ -119,14 +109,92 @@ async function fillAndSave(page, dlg, titleBox, id, { title, description, tags, 
   return { checks, blocked };
 }
 
+// Fills Studio's scheduler (the same widget in the upload dialog and on a video's page) and checks what it shows.
+async function setSchedule(page, scope, publishAt, tz) {
+  const t = Date.parse(publishAt), day = fmt(t, tz, { month: 'short', day: 'numeric', year: 'numeric' }), time = fmt(t, tz, { hour: 'numeric', minute: '2-digit', hour12: true });
+  await scope.locator('#datepicker-trigger').click();
+  const dateInput = page.locator('tp-yt-paper-dialog:has(ytcp-scrollable-calendar) #textbox input').last(); // the date picker's own box
+  await dateInput.fill(day);
+  await dateInput.press('Enter');
+  const timeInput = scope.locator('#time-of-day-container input').first();
+  await timeInput.fill(time);
+  await timeInput.press('Enter');
+  await page.waitForTimeout(1000);
+  const norm = s => s.replace(/\s+/g, ' ').trim(); // Studio writes "6:00 PM" with a narrow no-break space
+  const shown = norm(`${await scope.locator('#datepicker-trigger').innerText()} ${await timeInput.inputValue()}`);
+  if (shown !== norm(`${day} ${time}`)) throw new Error(`schedule shows "${shown}", wanted "${norm(`${day} ${time}`)}"`);
+}
+
+// Moves an already-saved (private) video onto the schedule from its Studio page.
+async function scheduleExisting(page, id, publishAt, tz) {
+  await page.goto(`${STUDIO}/video/${id}/edit`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.locator('ytcp-video-metadata-visibility').first().click({ timeout: 60000 });
+  const pop = page.getByRole('dialog', { name: 'Select video privacy' });
+  await pop.getByText('Schedule', { exact: true }).first().click();
+  await setSchedule(page, pop, publishAt, tz);
+  await pop.locator('#save-button').click(); // "Done"
+  const save = page.getByRole('button', { name: 'Save', exact: true }).first();
+  await save.click();
+  if (!await until(async () => await save.isDisabled() || await save.getAttribute('aria-disabled') === 'true', 60000)) throw new Error(`Save didn't finish on ${id}`);
+}
+
 // Confirms on the video's own Studio page that it's saved the way we left it.
 async function readBack(page, id, { title, publishAt }) {
   await page.goto(`${STUDIO}/video/${id}/edit`, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  const text = await until(async () => { const t = await page.locator('body').innerText(); return t.includes(title) ? t : null; }, 60000);
-  if (!text) return `title not found on ${id}'s page`;
+  // The visibility box loads after the title, so wait for both.
+  const text = await until(async () => { const t = await page.locator('body').innerText(); return t.includes(title) && /\nVisibility\s*\n\s*\S/.test(t) ? t : null; }, 60000);
+  if (!text) return `title or visibility not found on ${id}'s page`;
   if (/draft state/i.test(text)) return `${id} is still a draft`;
-  if (publishAt ? !/scheduled/i.test(text) : !/private/i.test(text)) return `${id} isn't ${publishAt ? 'scheduled' : 'private'}`;
+  const shown = text.match(/\nVisibility\s*\n\s*([^\n]+)/)[1].trim();
+  if (!(publishAt ? /^Scheduled/i : /^Private/i).test(shown)) return `${id} shows "${shown}", wanted ${publishAt ? 'Scheduled' : 'Private'}`;
   return null;
+}
+
+// Re-reads a render's uploads from Studio and records what they show (e.g. after an `unverified`).
+export async function verifyRender(db, dir, { channel, log = console.log }) {
+  const m = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
+  const meta = JSON.parse(fs.readFileSync(path.join(dir, 'metadata.json'), 'utf8'));
+  const titles = { [m.outputs.video]: meta.title, ...Object.fromEntries(meta.shorts.map(s => [s.file, s.title])) };
+  const rows = db.prepare(`SELECT file, video_id, publish_at FROM uploads WHERE render_id = ? AND video_id IS NOT NULL AND status != 'failed'`).all(m.render_id);
+  const { ctx, page } = await openStudio(db, channel);
+  try {
+    for (const r of rows) {
+      const problem = await readBack(page, r.video_id, { title: titles[r.file], publishAt: r.publish_at });
+      db.prepare('UPDATE uploads SET status = ?, detail = ? WHERE video_id = ?').run(problem ? 'unverified' : r.publish_at ? 'verified' : 'private', problem, r.video_id);
+      log(`  ${r.file} ${r.video_id}: ${problem ?? (r.publish_at ? 'scheduled, verified' : 'private, verified')}`);
+    }
+  } finally {
+    await ctx.close();
+  }
+}
+
+const shortAt = (publishAt, i) => new Date(Date.parse(publishAt) + SHORT_OFFSETS_H[i % SHORT_OFFSETS_H.length] * 3600e3).toISOString();
+
+// Puts a render that was uploaded private (e.g. for the owner to check first) into the next free slot.
+export async function scheduleRender(db, dir, { channel, log = console.log }) {
+  const m = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
+  const rows = db.prepare(`SELECT kind, file, video_id, claims FROM uploads WHERE render_id = ? AND status = 'private' ORDER BY kind DESC, file`).all(m.render_id);
+  if (!rows.some(r => r.kind === 'video')) throw new Error('no private upload of this render to schedule');
+  const hit = rows.find(r => /block|mute/i.test(r.claims ?? '') && !/no issues/i.test(r.claims ?? ''));
+  if (hit) throw new Error(`${hit.video_id} has a blocking copyright claim; re-render without that track instead`);
+  await waitForRoblox(log);
+  const tz = channel.timezone ?? 'UTC', publishAt = nextSlot(db, channel);
+  log(`${m.render_id}: scheduling for ${fmt(Date.parse(publishAt), tz, { dateStyle: 'medium', timeStyle: 'short' })} (${tz})`);
+  const { ctx, page } = await openStudio(db, channel);
+  try {
+    let s = 0;
+    for (const r of rows) {
+      const at = r.kind === 'video' ? publishAt : shortAt(publishAt, s++);
+      await scheduleExisting(page, r.video_id, at, tz);
+      db.prepare(`UPDATE uploads SET publish_at = ?, status = 'scheduled' WHERE video_id = ?`).run(at, r.video_id);
+      const problem = await readBack(page, r.video_id, { title: '', publishAt: at });
+      db.prepare('UPDATE uploads SET status = ?, detail = ? WHERE video_id = ?').run(problem ? 'unverified' : 'verified', problem, r.video_id);
+      if (problem) addAlert(db, channel.id, 'upload_unverified', { render: m.render_id, video: r.video_id, problem });
+      log(`  ${r.file} ${r.video_id}: ${problem ?? `scheduled ${fmt(Date.parse(at), tz, { dateStyle: 'medium', timeStyle: 'short' })}, verified`}`);
+    }
+  } finally {
+    await ctx.close();
+  }
 }
 
 // Uploads a render's video and Shorts. mode: 'private' (owner checks first) or 'schedule' (next free daily slot).
@@ -149,7 +217,7 @@ export async function publishRender(db, dir, { channel, mode = 'schedule', log =
   const items = [
     { kind: 'video', file: m.outputs.video, title: meta.title, description: meta.description, thumb: path.join(dir, m.outputs.thumbnail), publishAt, waitChecks: 60 * 60e3 },
     ...meta.shorts.map((s, i) => ({ kind: 'short', file: s.file, title: s.title, description: s.description,
-      publishAt: publishAt && new Date(Date.parse(publishAt) + SHORT_OFFSETS_H[i % SHORT_OFFSETS_H.length] * 3600e3).toISOString(), waitChecks: 10 * 60e3 })),
+      publishAt: publishAt && shortAt(publishAt, i), waitChecks: 10 * 60e3 })),
   ];
   log(`${m.render_id}: ${publishAt ? `scheduling for ${fmt(Date.parse(publishAt), tz, { dateStyle: 'medium', timeStyle: 'short' })} (${tz})` : 'uploading as private'}`);
   const { ctx, page, base } = await openStudio(db, channel);

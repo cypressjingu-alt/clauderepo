@@ -21,6 +21,8 @@ const USAGE = `ambient <command>
   metadata <render-id | render dir>        (re)write title, description, tags and thumbnail text
   adopt <render-id | render dir>           a dry-run render becomes a real video: its files go on cooldown
   publish <render-id | render dir> [--private]   upload the video and Shorts to Studio, scheduled into the next free slot
+  schedule <render-id | render dir>        put a render uploaded with --private into the next free slot
+  verify <render-id | render dir>          re-read its uploads from Studio and record what they show
 options: --channel <id> (default showcase), --dry-run (don't touch cooldowns or alerts)`;
 
 const { values: o, positionals: [cmd, ...args] } = parseArgs({
@@ -133,10 +135,14 @@ try {
       fs.writeFileSync(mf, JSON.stringify(m, null, 2));
       break;
     }
-    case 'publish': {
-      const dir = renderDir(args[0]), m = readJson(path.join(dir, 'manifest.json'));
-      const { publishRender } = await import('./studio.js'); // loads Playwright only when publishing
-      await publishRender(db, dir, { channel: loadChannel(m.plan.channel), mode: o.private ? 'private' : 'schedule' });
+    case 'publish':
+    case 'schedule':
+    case 'verify': {
+      const dir = renderDir(args[0]), channel = loadChannel(readJson(path.join(dir, 'manifest.json')).plan.channel);
+      const studio = await import('./studio.js'); // loads Playwright only when needed
+      if (cmd === 'verify') await studio.verifyRender(db, dir, { channel });
+      else if (cmd === 'schedule') await studio.scheduleRender(db, dir, { channel });
+      else await studio.publishRender(db, dir, { channel, mode: o.private ? 'private' : 'schedule' });
       break;
     }
     default:
