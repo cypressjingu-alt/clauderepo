@@ -20,11 +20,12 @@ const USAGE = `ambient <command>
   rebuild <manifest.json>                  render the exact same plan again
   metadata <render-id | render dir>        (re)write title, description, tags and thumbnail text
   adopt <render-id | render dir>           a dry-run render becomes a real video: its files go on cooldown
+  publish <render-id | render dir> [--private]   upload the video and Shorts to Studio, scheduled into the next free slot
 options: --channel <id> (default showcase), --dry-run (don't touch cooldowns or alerts)`;
 
 const { values: o, positionals: [cmd, ...args] } = parseArgs({
   allowPositionals: true,
-  options: { niche: { type: 'string' }, length: { type: 'string' }, seed: { type: 'string' }, channel: { type: 'string', default: 'showcase' }, 'dry-run': { type: 'boolean' } },
+  options: { niche: { type: 'string' }, length: { type: 'string' }, seed: { type: 'string' }, channel: { type: 'string', default: 'showcase' }, 'dry-run': { type: 'boolean' }, private: { type: 'boolean' } },
 });
 const db = open(path.join(DATA(), 'ambient.db'));
 const readJson = f => JSON.parse(fs.readFileSync(f, 'utf8'));
@@ -130,6 +131,12 @@ try {
         console.log(`${meta.title}\n  thumbnail: "${meta.thumbnail_text}"  fields from: ${JSON.stringify(meta.fields_from)}`);
       }
       fs.writeFileSync(mf, JSON.stringify(m, null, 2));
+      break;
+    }
+    case 'publish': {
+      const dir = renderDir(args[0]), m = readJson(path.join(dir, 'manifest.json'));
+      const { publishRender } = await import('./studio.js'); // loads Playwright only when publishing
+      await publishRender(db, dir, { channel: loadChannel(m.plan.channel), mode: o.private ? 'private' : 'schedule' });
       break;
     }
     default:

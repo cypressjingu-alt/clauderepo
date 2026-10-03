@@ -41,6 +41,13 @@ export function open(file) {
     CREATE TABLE IF NOT EXISTS keyword_cache (   -- YouTube keyword research per niche, refreshed weekly (search costs 100 quota units)
       niche_id TEXT PRIMARY KEY, fetched_at TEXT NOT NULL, data TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS uploads (         -- one row per file sent to Studio (the long video and each Short)
+      render_id TEXT NOT NULL, channel_id TEXT NOT NULL, kind TEXT NOT NULL,   -- video | short
+      file TEXT NOT NULL, video_id TEXT, publish_at TEXT,                     -- publish_at: UTC ISO
+      status TEXT NOT NULL,            -- scheduled | verified (read back from Studio) | unverified | private | failed (frees the slot)
+      claims TEXT, detail TEXT, created_at TEXT,
+      PRIMARY KEY (render_id, file)
+    );
     CREATE TABLE IF NOT EXISTS alerts (
       id INTEGER PRIMARY KEY, channel_id TEXT NOT NULL, type TEXT NOT NULL, payload TEXT,
       created_at TEXT, delivered_at TEXT
