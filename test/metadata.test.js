@@ -106,6 +106,8 @@ test('keyword research is cached for a week and sends the key only in a header',
     assert.ok(a.keywords.includes('rain sounds') && a.top_titles[0] === 'Tokyo Cafe Jazz | Rain Sounds');
     await keywords(db, recipe, { fetchImpl, now: 8 * 864e5 });
     assert.equal(calls.length, 4); // a week later it refreshes
+    await keywords(db, { ...recipe, metadata: { search: 'another phrase' } }, { fetchImpl, now: 8 * 864e5 });
+    assert.equal(calls.length, 6); // a new search phrase refreshes at once
   } finally {
     delete process.env.YOUTUBE_API_KEY;
   }

@@ -50,10 +50,10 @@ export function phrases(videos, limit = 25) {
 
 export async function keywords(db, recipe, { now = Date.now(), fetchImpl = fetch } = {}) {
   const row = db.prepare('SELECT fetched_at, data FROM keyword_cache WHERE niche_id = ?').get(recipe.id);
-  if (row && now - Date.parse(row.fetched_at) < WEEK) return JSON.parse(row.data);
+  const q = recipe.metadata?.search ?? recipe.name;
+  if (row && now - Date.parse(row.fetched_at) < WEEK && JSON.parse(row.data).query === q) return JSON.parse(row.data);
   const key = process.env.YOUTUBE_API_KEY;
   if (!key) return row ? JSON.parse(row.data) : null; // no key: stale cache or nothing
-  const q = recipe.metadata?.search ?? recipe.name;
   const get = async url => {
     const r = await fetchImpl(url, { headers: { 'X-Goog-Api-Key': key } }); // key in a header, never in the URL
     if (!r.ok) throw new Error(`YouTube API ${r.status}`);

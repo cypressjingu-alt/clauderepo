@@ -118,6 +118,7 @@ try {
         Object.assign(m, { dry_run: false, adopted_at: new Date().toISOString() });
         console.log(`${m.render_id}: ${n} files put on cooldown for channel ${m.plan.channel}`);
       } else {
+        m.plan.recipe.metadata = loadNiche(m.plan.niche).metadata; // the niche's current wording, not the render-time snapshot
         const meta = await metadata(db, m.plan, { shorts: m.outputs.shorts.length, log: console.log });
         const mdf = path.join(dir, 'metadata.json'), fromLlm = x => Object.values(x.fields_from ?? {}).includes('llm');
         if (fs.existsSync(mdf) && fromLlm(readJson(mdf)) && !fromLlm(meta)) throw new Error('the magenta engine wrote nothing, so the existing metadata.json is kept; start the engine and re-run');
