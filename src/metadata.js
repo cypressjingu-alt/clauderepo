@@ -191,12 +191,9 @@ export function assemble(plan, fields) {
   const parts = [fields.description];
   const ch = plan.music?.chapters ?? [];
   if (ch.length) parts.push(['Tracklist', ...ch.map(c => `${stamp(c.at)} ${c.title.replace(/^.* – /, '')}`)].join('\n'));
-  const credits = plan.credits ?? [];
-  const required = [...new Set(credits.filter(c => c.attribution_required).map(c => c.text))];
-  const others = [...new Set(credits.filter(c => !c.attribution_required).map(c => plan.sources?.[c.source_id]?.name ?? c.source_id))];
-  const credit = [...(required.length ? ['Music credits:', ...required] : []), ...(others.length ? [`Sources: ${others.join(', ')}.`] : [])];
-  if (credit.length) parts.push(credit.join('\n'));
-  if (credits.some(c => plan.sources?.[c.source_id]?.ai_generated)) parts.push('Music and visuals in this video were created with AI tools.');
+  // Only credits a license requires. No AI note: Studio's AI-use answer already labels the video (owner, 2026-10-03).
+  const required = [...new Set((plan.credits ?? []).filter(c => c.attribution_required).map(c => c.text))];
+  if (required.length) parts.push(['Music credits:', ...required].join('\n'));
   parts.push(fields.tags.slice(0, 3).map(t => `#${t.replace(/\s+/g, '')}`).join(' '));
   let text = parts.filter(Boolean).join('\n\n');
   if (text.length > DESC_MAX) text = text.slice(0, DESC_MAX - 1).replace(/\s+\S*$/, '') + '…';

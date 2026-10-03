@@ -60,12 +60,11 @@ test('tags fit YouTube\'s 500-character budget and strip unsafe characters', () 
   assert.ok(fields.tags.every(t => !/[<>,#]/.test(t)));
 });
 
-test('description: LLM words, then tracklist, credits, AI note and hashtags', () => {
+test('description: LLM words, then tracklist, required credits and hashtags; no AI wording', () => {
   const d = assemble(plan, validate(good, templates(plan, null, 2), 2).fields);
   assert.match(d, /Tracklist\n0:00 Velvet Hours\n3:10 Lobby Time\n6:40 Amber Lobby/);
   assert.match(d, /Music credits:\nLobby Time Kevin MacLeod/);
-  assert.match(d, /Sources: ACE-Step 1\.5 \(AI-generated\), Freesound\./);
-  assert.match(d, /created with AI tools/);
+  assert.doesNotMatch(d, /Sources:|\bAI\b/); // Studio's AI-use answer labels the video instead
   assert.match(d, /#rainytokyocafe #jazzcafeambience #rainsounds$/);
   assert.ok(d.length <= 5000 && !/[<>]/.test(d));
 });
