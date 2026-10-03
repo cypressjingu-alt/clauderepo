@@ -140,9 +140,18 @@ try {
     case 'verify': {
       const dir = renderDir(args[0]), channel = loadChannel(readJson(path.join(dir, 'manifest.json')).plan.channel);
       const studio = await import('./studio.js'); // loads Playwright only when needed
-      if (cmd === 'verify') await studio.verifyRender(db, dir, { channel });
-      else if (cmd === 'schedule') await studio.scheduleRender(db, dir, { channel, now: o.now });
-      else await studio.publishRender(db, dir, { channel, mode: o.private ? 'private' : 'schedule' });
+      // Studio runs can outlive the shell that started them, so they also log to a file.
+      const logFile = path.join(DATA(), 'logs', 'studio.log');
+      fs.mkdirSync(path.dirname(logFile), { recursive: true });
+      const log = line => { console.log(line); fs.appendFileSync(logFile, `${new Date().toISOString()} ${cmd} ${line}\n`); };
+      try {
+        if (cmd === 'verify') await studio.verifyRender(db, dir, { channel, log });
+        else if (cmd === 'schedule') await studio.scheduleRender(db, dir, { channel, now: o.now, log });
+        else await studio.publishRender(db, dir, { channel, mode: o.private ? 'private' : 'schedule', log });
+      } catch (e) {
+        log(`error: ${e.message}`);
+        throw e;
+      }
       break;
     }
     default:

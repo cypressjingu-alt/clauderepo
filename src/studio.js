@@ -39,9 +39,10 @@ export async function openStudio(db, channel) {
 
 const fmt = (t, tz, o) => new Intl.DateTimeFormat('en-US', { timeZone: tz, ...o }).format(t);
 
-// Uploads one file through the dialog (or reopens the draft `draftId` left by a failed run) and saves it
-// private or scheduled. Returns { id, checks, blocked }; a failure after Studio assigned an id carries it as e.videoId.
-async function upload(page, base, { file, draftId, ...it }, log) {
+// Uploads one file through the dialog (or reopens the draft `draftId` left by an interrupted run) and saves it
+// private or scheduled. `onId` runs as soon as Studio assigns the id, so even a killed run leaves a record.
+// Returns { id, checks, blocked }; a failure after Studio assigned an id carries it as e.videoId.
+async function upload(page, base, { file, draftId, onId, ...it }, log) {
   const dlg = page.locator('ytcp-uploads-dialog'), titleBox = dlg.locator('#title-textarea #textbox');
   if (draftId) {
     await page.goto(`${STUDIO}/video/${draftId}/edit`, { waitUntil: 'domcontentloaded', timeout: 60000 });
@@ -53,6 +54,7 @@ async function upload(page, base, { file, draftId, ...it }, log) {
   await titleBox.waitFor({ timeout: 120000 });
   const id = draftId ?? await until(async () => (await dlg.locator('a#video-link').getAttribute('href'))?.match(/(?:youtu\.be|shorts)\/([\w-]{11})/)?.[1], 180000);
   if (!id) throw new Error(`no video id for ${path.basename(file)}`);
+  onId?.(id);
   log(`  ${path.basename(file)} -> ${id}${draftId ? ' (resumed draft)' : ''}`);
   try {
     return { id, ...await fillAndSave(page, dlg, titleBox, id, it) };
@@ -105,7 +107,10 @@ async function fillAndSave(page, dlg, titleBox, id, { title, description, tags, 
     await dlg.locator('#privacy-radios [name=PRIVATE]').click();
   }
   await dlg.locator('#done-button').click();
-  if (!await until(async () => !await dlg.locator('#done-button').isVisible(), 60000)) throw new Error(`the upload dialog didn't close after ${publishAt ? 'Schedule' : 'Save'}`);
+  // Success is Studio's "Video scheduled / saved / published" confirmation (shown over the dialog) or the dialog closing.
+  const confirmed = page.getByText(/^Video (scheduled|saved|published)$/).first();
+  if (!await until(async () => await confirmed.isVisible() || !await dlg.locator('#done-button').isVisible(), 60000))
+    throw new Error(`no confirmation after ${publishAt ? 'Schedule' : 'Save'}`);
   return { checks, blocked };
 }
 
@@ -153,6 +158,15 @@ async function scheduleExisting(page, id, publishAt, tz, description) {
   await save.click();
   if (!await until(async () => await save.isDisabled(), 60000)) throw new Error(`Save didn't finish on ${id}`);
   await page.keyboard.press('Escape'); // closes a "video published" pop-up if Studio shows one
+}
+
+// What Studio shows for a video now: 'draft', or its visibility ('scheduled', 'private', 'public', 'unlisted').
+// Throws when the page can't be read, so nothing acts on a guess.
+async function studioState(page, id) {
+  await page.goto(`${STUDIO}/video/${id}/edit`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  const text = await until(async () => { const t = await page.locator('body').innerText(); return /draft state|\nVisibility\s*\n\s*\S/i.test(t) ? t : null; }, 60000);
+  if (!text) throw new Error(`can't read ${id}'s state on Studio; check it by hand`);
+  return /draft state/i.test(text) ? 'draft' : text.match(/\nVisibility\s*\n\s*(\w+)/)[1].toLowerCase();
 }
 
 // Confirms on the video's own Studio page that it's saved the way we left it:
@@ -220,36 +234,53 @@ export async function scheduleRender(db, dir, { channel, now = false, log = cons
   }
 }
 
+const DONE = new Set(['scheduled', 'verified', 'unverified', 'private']); // saved on Studio; 'uploading' and 'failed' aren't
+
 // Uploads a render's video and Shorts. mode: 'private' (owner checks first) or 'schedule' (next free daily slot).
+// Safe to re-run after a crash, a dropped connection or a failure: it picks up where Studio actually is.
 export async function publishRender(db, dir, { channel, mode = 'schedule', log = console.log }) {
   const m = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
   const meta = JSON.parse(fs.readFileSync(path.join(dir, 'metadata.json'), 'utf8'));
   const qa = JSON.parse(fs.readFileSync(path.join(dir, 'qa.json'), 'utf8'));
   if (!qa.pass) throw new Error('this render failed QA');
   if (m.dry_run) throw new Error('this is a dry run; `adopt` it first so its files go on cooldown');
-  const prior = db.prepare('SELECT kind, file, video_id, status FROM uploads WHERE render_id = ?').all(m.render_id);
-  const done = prior.filter(r => r.status !== 'failed');
-  if (done.length) throw new Error(`already uploaded: ${done.map(r => `${r.file} ${r.video_id} (${r.status})`).join(', ')}`);
-  const drafts = Object.fromEntries(prior.filter(r => r.video_id).map(r => [r.file, r.video_id])); // left by a failed run: resume, don't duplicate
+  const priorRows = () => Object.fromEntries(db.prepare('SELECT * FROM uploads WHERE render_id = ?').all(m.render_id).map(r => [r.file, r]));
+  const files = [m.outputs.video, ...meta.shorts.map(s => s.file)];
+  if (files.every(f => DONE.has(priorRows()[f]?.status))) throw new Error('already uploaded; see `verify`');
 
   await waitForRoblox(log);
-  const tz = channel.timezone ?? 'UTC', publishAt = mode === 'schedule' ? nextSlot(db, channel) : null;
+  const tz = channel.timezone ?? 'UTC', when = t => fmt(Date.parse(t), tz, { dateStyle: 'medium', timeStyle: 'short' });
   const ai = Object.values(m.plan.sources ?? {}).some(s => s.ai_generated);
   const row = db.prepare(`INSERT OR REPLACE INTO uploads (render_id, channel_id, kind, file, video_id, publish_at, status, claims, detail, created_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
-  const items = [
-    { kind: 'video', file: m.outputs.video, title: meta.title, description: meta.description, thumb: path.join(dir, m.outputs.thumbnail), publishAt, waitChecks: 60 * 60e3 },
-    ...meta.shorts.map((s, i) => ({ kind: 'short', file: s.file, title: s.title, description: s.description,
-      publishAt: publishAt && shortAt(publishAt, i), waitChecks: 10 * 60e3 })),
-  ];
-  log(`${m.render_id}: ${publishAt ? `scheduling for ${fmt(Date.parse(publishAt), tz, { dateStyle: 'medium', timeStyle: 'short' })} (${tz})` : 'uploading as private'}`);
   const { ctx, page, base } = await openStudio(db, channel);
   const results = [];
   try {
+    // An interrupted or failed run may have left Studio further along than our rows say: Studio decides.
+    const drafts = {};
+    for (const p of Object.values(priorRows())) {
+      if (!p.video_id || DONE.has(p.status)) continue;
+      const st = await studioState(page, p.video_id);
+      if (st === 'draft') { drafts[p.file] = p.video_id; continue; }
+      const status = st === 'scheduled' || st === 'public' ? 'scheduled' : 'private';
+      db.prepare('UPDATE uploads SET status = ?, publish_at = ?, detail = ? WHERE video_id = ?')
+        .run(status, status === 'private' ? null : p.publish_at, `found ${st} on Studio after an interrupted run`, p.video_id);
+      log(`  ${p.file} ${p.video_id}: already ${st} on Studio; recorded`);
+    }
+    const prior = priorRows(), video = prior[m.outputs.video];
+    // The video's slot: kept from an earlier run, else the next free one.
+    const publishAt = DONE.has(video?.status) ? video.publish_at : mode === 'schedule' ? nextSlot(db, channel) : null;
+    log(`${m.render_id}: ${publishAt ? `video at ${when(publishAt)} (${tz})` : 'private'}`);
+    const items = [
+      { kind: 'video', file: m.outputs.video, title: meta.title, description: meta.description, thumb: path.join(dir, m.outputs.thumbnail), publishAt, waitChecks: 60 * 60e3 },
+      ...meta.shorts.map((s, i) => ({ kind: 'short', file: s.file, title: s.title, description: s.description,
+        publishAt: publishAt && shortAt(publishAt, i), waitChecks: 10 * 60e3 })),
+    ].filter(it => !DONE.has(prior[it.file]?.status));
     for (const it of items) {
       let r;
+      const onId = id => row.run(m.render_id, channel.id, it.kind, it.file, id, it.publishAt, 'uploading', null, null, new Date().toISOString());
       try {
-        r = await upload(page, base, { ...it, file: path.join(dir, it.file), draftId: drafts[it.file], tags: meta.tags, ai, tz }, log);
+        r = await upload(page, base, { ...it, file: path.join(dir, it.file), draftId: drafts[it.file], onId, tags: meta.tags, ai, tz }, log);
       } catch (e) {
         await page.screenshot({ path: path.join(dir, `studio-error-${it.kind}.png`) }).catch(() => {});
         row.run(m.render_id, channel.id, it.kind, it.file, e.videoId ?? drafts[it.file] ?? null, it.publishAt, 'failed', null, e.message, new Date().toISOString());
