@@ -119,7 +119,9 @@ try {
         console.log(`${m.render_id}: ${n} files put on cooldown for channel ${m.plan.channel}`);
       } else {
         const meta = await metadata(db, m.plan, { shorts: m.outputs.shorts.length, log: console.log });
-        fs.writeFileSync(path.join(dir, 'metadata.json'), JSON.stringify(meta, null, 2));
+        const mdf = path.join(dir, 'metadata.json'), fromLlm = x => Object.values(x.fields_from ?? {}).includes('llm');
+        if (fs.existsSync(mdf) && fromLlm(readJson(mdf)) && !fromLlm(meta)) throw new Error('the magenta engine wrote nothing, so the existing metadata.json is kept; start the engine and re-run');
+        fs.writeFileSync(mdf, JSON.stringify(meta, null, 2));
         for (const f of ['thumb.png', 'thumb.jpg']) if (fs.existsSync(path.join(dir, f))) fs.unlinkSync(path.join(dir, f));
         m.outputs.thumbnail = path.basename(await thumbnail(path.join(dir, 'video.mp4'), meta.thumbnail_text, m.plan.recipe.thumbnail, dir));
         fs.rmSync(path.join(dir, 'work'), { recursive: true, force: true });
