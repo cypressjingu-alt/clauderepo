@@ -4,6 +4,11 @@
 import './config.js'; // loads .env
 
 const url = process.env.AMBIENT_PING_URL;
+if (url && /(^|\.)discord(app)?\.com$/.test(new URL(url).host)) {
+  // A webhook can't report its own machine's death; it belongs in healthchecks.io's Discord integration.
+  console.error('AMBIENT_PING_URL is a Discord webhook; it needs the check\'s healthchecks.io ping URL (https://hc-ping.com/...)');
+  process.exit(2);
+}
 if (url) {
   try {
     const r = await fetch(url, { signal: AbortSignal.timeout(15000) });
