@@ -179,7 +179,7 @@ export async function verifyRender(db, dir, { channel, log = console.log }) {
     for (const r of rows) {
       const problem = await readBack(page, r.video_id, { title: titles[r.file], publishAt: r.publish_at });
       db.prepare('UPDATE uploads SET status = ?, detail = ? WHERE video_id = ?').run(problem ? 'unverified' : r.publish_at ? 'verified' : 'private', problem, r.video_id);
-      log(`  ${r.file} ${r.video_id}: ${problem ?? (r.publish_at ? 'scheduled, verified' : 'private, verified')}`);
+      log(`  ${r.file} ${r.video_id}: ${problem ?? `${!r.publish_at ? 'private' : Date.parse(r.publish_at) > Date.now() ? 'scheduled' : 'public'}, verified`}`);
     }
   } finally {
     await ctx.close();
