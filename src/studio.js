@@ -115,7 +115,8 @@ async function fillAndSave(page, dlg, titleBox, id, { title, description, tags, 
   }
   await dlg.locator('#done-button').click();
   // Success is Studio's "Video scheduled / saved / published" confirmation (shown over the dialog) or the dialog closing.
-  const confirmed = page.getByText(/^Video (scheduled|saved|published)$/).first();
+  // Visible only: Studio keeps a hidden copy of this confirmation in the page.
+  const confirmed = page.getByText(/^(Video|Short) (scheduled|saved|published)$/).filter({ visible: true }).first();
   if (!await until(async () => await confirmed.isVisible() || !await dlg.locator('#done-button').isVisible(), 60000))
     throw new Error(`no confirmation after ${publishAt ? 'Schedule' : 'Save'}`);
   return { checks, blocked };
