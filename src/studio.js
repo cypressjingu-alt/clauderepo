@@ -105,7 +105,7 @@ async function fillAndSave(page, dlg, titleBox, id, { title, description, tags, 
     await dlg.locator('#privacy-radios [name=PRIVATE]').click();
   }
   await dlg.locator('#done-button').click();
-  await until(async () => !await dlg.locator('#done-button').isVisible(), 60000);
+  if (!await until(async () => !await dlg.locator('#done-button').isVisible(), 60000)) throw new Error(`the upload dialog didn't close after ${publishAt ? 'Schedule' : 'Save'}`);
   return { checks, blocked };
 }
 
@@ -147,9 +147,11 @@ async function scheduleExisting(page, id, publishAt, tz, description) {
     await pop.locator('[name=PUBLIC]').click();
   }
   await pop.locator('#save-button').click(); // "Done"
+  // Save only enables a moment after Done; clicking it while still disabled silently saves nothing.
   const save = page.getByRole('button', { name: 'Save', exact: true }).first();
+  if (!await until(async () => !await save.isDisabled(), 20000, 500)) throw new Error(`Save never enabled on ${id}; nothing changed`);
   await save.click();
-  if (!await until(async () => await save.isDisabled() || await save.getAttribute('aria-disabled') === 'true', 60000)) throw new Error(`Save didn't finish on ${id}`);
+  if (!await until(async () => await save.isDisabled(), 60000)) throw new Error(`Save didn't finish on ${id}`);
   await page.keyboard.press('Escape'); // closes a "video published" pop-up if Studio shows one
 }
 
@@ -184,7 +186,8 @@ export async function verifyRender(db, dir, { channel, log = console.log }) {
   }
 }
 
-const shortAt = (publishAt, i) => new Date(Date.parse(publishAt) + SHORT_OFFSETS_H[i % SHORT_OFFSETS_H.length] * 3600e3).toISOString();
+const Q = 15 * 60e3; // Shorts land on a quarter hour even when their video went out "now"
+const shortAt = (publishAt, i) => new Date(Math.ceil((Date.parse(publishAt) + SHORT_OFFSETS_H[i % SHORT_OFFSETS_H.length] * 3600e3) / Q) * Q).toISOString();
 
 // Puts a render that was uploaded private (e.g. for the owner to check first) into the next free slot, or with
 // `now` makes its video public right away (Shorts still follow 6 h and 12 h later). Pushes metadata.json's descriptions.
