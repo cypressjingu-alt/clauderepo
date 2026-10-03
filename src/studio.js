@@ -37,6 +37,13 @@ export async function openStudio(db, channel) {
   return { ctx, page, base: m[1] };
 }
 
+// Studio intercepts navigation from inside its own pages, and from a video's edit page a jump to the upload page
+// silently goes nowhere. Leaving through about:blank makes every navigation a fresh page load.
+async function go(page, url) {
+  await page.goto('about:blank');
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+}
+
 const fmt = (t, tz, o) => new Intl.DateTimeFormat('en-US', { timeZone: tz, ...o }).format(t);
 
 // Uploads one file through the dialog (or reopens the draft `draftId` left by an interrupted run) and saves it
@@ -45,10 +52,10 @@ const fmt = (t, tz, o) => new Intl.DateTimeFormat('en-US', { timeZone: tz, ...o 
 async function upload(page, base, { file, draftId, onId, ...it }, log) {
   const dlg = page.locator('ytcp-uploads-dialog'), titleBox = dlg.locator('#title-textarea #textbox');
   if (draftId) {
-    await page.goto(`${STUDIO}/video/${draftId}/edit`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await go(page, `${STUDIO}/video/${draftId}/edit`);
     await page.getByRole('button', { name: /edit draft/i }).first().click({ timeout: 60000 });
   } else {
-    await page.goto(`${base}/videos/upload?d=ud`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await go(page, `${base}/videos/upload?d=ud`);
     await dlg.locator('input[type="file"]').first().setInputFiles(file);
   }
   await titleBox.waitFor({ timeout: 120000 });
@@ -135,7 +142,7 @@ const norm = s => s.replace(/\s+/g, ' ').trim();
 // From a saved (private) video's Studio page: pushes `description` if Studio's copy differs, then schedules it
 // for `publishAt`, or makes it public right away when publishAt is null.
 async function scheduleExisting(page, id, publishAt, tz, description) {
-  await page.goto(`${STUDIO}/video/${id}/edit`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await go(page, `${STUDIO}/video/${id}/edit`);
   const desc = page.locator('#description-textarea #textbox').first();
   await desc.waitFor({ timeout: 60000 });
   if (description && norm(await desc.innerText()) !== norm(description)) {
@@ -163,7 +170,7 @@ async function scheduleExisting(page, id, publishAt, tz, description) {
 // What Studio shows for a video now: 'draft', or its visibility ('scheduled', 'private', 'public', 'unlisted').
 // Throws when the page can't be read, so nothing acts on a guess.
 async function studioState(page, id) {
-  await page.goto(`${STUDIO}/video/${id}/edit`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await go(page, `${STUDIO}/video/${id}/edit`);
   const text = await until(async () => { const t = await page.locator('body').innerText(); return /draft state|\nVisibility\s*\n\s*\S/i.test(t) ? t : null; }, 60000);
   if (!text) throw new Error(`can't read ${id}'s state on Studio; check it by hand`);
   return /draft state/i.test(text) ? 'draft' : text.match(/\nVisibility\s*\n\s*(\w+)/)[1].toLowerCase();
@@ -172,7 +179,7 @@ async function studioState(page, id) {
 // Confirms on the video's own Studio page that it's saved the way we left it:
 // private (no publishAt), scheduled (publishAt ahead) or public (publishAt passed).
 async function readBack(page, id, { title, publishAt }) {
-  await page.goto(`${STUDIO}/video/${id}/edit`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await go(page, `${STUDIO}/video/${id}/edit`);
   // The visibility box loads after the title, so wait for both.
   const text = await until(async () => { const t = await page.locator('body').innerText(); return t.includes(title) && /\nVisibility\s*\n\s*\S/.test(t) ? t : null; }, 60000);
   if (!text) return `title or visibility not found on ${id}'s page`;
