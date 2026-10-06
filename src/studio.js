@@ -55,8 +55,15 @@ async function upload(page, base, { file, draftId, onId, ...it }, log) {
     await go(page, `${STUDIO}/video/${draftId}/edit`);
     await page.getByRole('button', { name: /edit draft/i }).first().click({ timeout: 60000 });
   } else {
+    // Studio sometimes renders a blank page for a long while on the laptop's connection: wait, then reload once.
+    const input = dlg.locator('input[type="file"]').first(), ready = t => input.waitFor({ state: 'attached', timeout: t }).then(() => true, () => false);
     await go(page, `${base}/videos/upload?d=ud`);
-    await dlg.locator('input[type="file"]').first().setInputFiles(file);
+    if (!await ready(90000)) {
+      log('  upload page still blank after 90 s; reloading');
+      await go(page, `${base}/videos/upload?d=ud`);
+      if (!await ready(120000)) throw new Error('Studio\'s upload page never loaded (slow connection?)');
+    }
+    await input.setInputFiles(file);
   }
   await titleBox.waitFor({ timeout: 120000 });
   const id = draftId ?? await until(async () => (await dlg.locator('a#video-link').getAttribute('href'))?.match(/(?:youtu\.be|shorts)\/([\w-]{11})/)?.[1], 180000);
@@ -114,11 +121,12 @@ async function fillAndSave(page, dlg, titleBox, id, { title, description, tags, 
     await dlg.locator('#privacy-radios [name=PRIVATE]').click();
   }
   await dlg.locator('#done-button').click();
-  // Success is Studio's "Video scheduled / saved / published" confirmation (shown over the dialog) or the dialog closing.
-  // Visible only: Studio keeps a hidden copy of this confirmation in the page.
-  const confirmed = page.getByText(/^(Video|Short) (scheduled|saved|published)$/).filter({ visible: true }).first();
-  if (!await until(async () => await confirmed.isVisible() || !await dlg.locator('#done-button').isVisible(), 60000))
-    throw new Error(`no confirmation after ${publishAt ? 'Schedule' : 'Save'}`);
+  // Give Studio time to show its confirmation, then let Studio itself say whether it saved: matching the
+  // confirmation's wording proved unreliable (hidden copies, extra hidden text). Only a draft is a failure.
+  const shown = page.getByText(/will be set to|has been (published|saved)|(Video|Short) (scheduled|saved|published)/).filter({ visible: true }).first();
+  await until(async () => await shown.isVisible() || !await dlg.locator('#done-button').isVisible(), 60000);
+  const st = await studioState(page, id);
+  if (st === 'draft') throw new Error(`still a draft after ${publishAt ? 'Schedule' : 'Save'}`);
   return { checks, blocked };
 }
 
