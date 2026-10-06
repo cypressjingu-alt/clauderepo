@@ -242,6 +242,9 @@ export async function scheduleRender(db, dir, { channel, now = false, log = cons
   }
 }
 
+// A Short finished late (its video already went out) can't be scheduled in the past: at least an hour from now.
+const ahead = iso => new Date(Math.max(Date.parse(iso), Math.ceil((Date.now() + 3600e3) / Q) * Q)).toISOString();
+
 const DONE = new Set(['scheduled', 'verified', 'unverified', 'private']); // saved on Studio; 'uploading' and 'failed' aren't
 
 // Uploads a render's video and Shorts. mode: 'private' (owner checks first) or 'schedule' (next free daily slot).
@@ -282,7 +285,7 @@ export async function publishRender(db, dir, { channel, mode = 'schedule', log =
     const items = [
       { kind: 'video', file: m.outputs.video, title: meta.title, description: meta.description, thumb: path.join(dir, m.outputs.thumbnail), publishAt, waitChecks: 60 * 60e3 },
       ...meta.shorts.map((s, i) => ({ kind: 'short', file: s.file, title: s.title, description: s.description,
-        publishAt: publishAt && shortAt(publishAt, i), waitChecks: 10 * 60e3 })),
+        publishAt: publishAt && ahead(shortAt(publishAt, i)), waitChecks: 10 * 60e3 })),
     ].filter(it => !DONE.has(prior[it.file]?.status));
     for (const it of items) {
       let r;
