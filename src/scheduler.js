@@ -48,6 +48,9 @@ export async function tick(db, { channelId = 'showcase', log = console.log, now 
   const where = await atHome();
   if (!where.home) return log(`not home (${where.why}); nothing to do`);
   if (await robloxRunning()) return log('Roblox is running; skipping this tick');
+  // Studio's daily upload limit: no uploads for 24 h, and no renders either (they'd only pile up behind it).
+  const capped = db.prepare(`SELECT MAX(created_at) t FROM alerts WHERE channel_id = ? AND type = 'upload_limit'`).get(channelId).t;
+  if (capped && Date.parse(capped) > now - 864e5) return log(`Studio's daily upload limit was hit at ${capped}; uploads resume 24 h later`);
   const { publishRender } = await import('./studio.js');
 
   // 1. Unfinished uploads first: a render that passed, isn't a dry run, and has files not yet on Studio.

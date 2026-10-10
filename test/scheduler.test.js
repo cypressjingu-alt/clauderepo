@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { open } from '../src/db.js';
-import { nextNiche } from '../src/scheduler.js';
+import { addAlert, open } from '../src/db.js';
+import { nextNiche, tick } from '../src/scheduler.js';
 
 test('weighted rotation follows the weights and never repeats a niche back to back', () => {
   const db = open(':memory:'), niches = [{ id: 'cafe', weight: 3 }, { id: 'lobby', weight: 2 }, { id: 'thunder', weight: 2 }];
@@ -17,4 +17,12 @@ test('weighted rotation follows the weights and never repeats a niche back to ba
   }
   const share = id => picks.filter(p => p === id).length / picks.length;
   assert.ok(Math.abs(share('cafe') - 3 / 7) < 0.05 && Math.abs(share('lobby') - 2 / 7) < 0.05, JSON.stringify({ cafe: share('cafe'), lobby: share('lobby') }));
+});
+
+test('after Studio\'s daily upload limit, a tick does nothing for 24 h', async () => {
+  process.env.AMBIENT_HOME_WIFI = ''; process.env.AMBIENT_ROBLOX_GATE = 'off'; // home, no Roblox: the tick gets as far as the limit
+  const db = open(':memory:'), lines = [];
+  addAlert(db, 'showcase', 'upload_limit', { error: 'limit' });
+  await tick(db, { log: l => lines.push(l), now: Date.now() + 23 * 3600e3 });
+  assert.match(lines.join('\n'), /daily upload limit was hit/);
 });

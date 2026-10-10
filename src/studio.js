@@ -76,6 +76,8 @@ async function upload(page, base, { file, draftId, onId, ...it }, log) {
   }
   await titleBox.waitFor({ timeout: 120000 });
   const id = draftId ?? await until(async () => (await dlg.locator('a#video-link').getAttribute('href'))?.match(/(?:youtu\.be|shorts)\/([\w-]{11})/)?.[1], 180000);
+  // Until the channel's one-time verification, Studio caps uploads (~10 a day) and then never creates the video.
+  if (!id && await dlg.getByText(/daily upload limit reached/i).count()) throw new Error('Studio\'s daily upload limit reached: verify the channel (Studio\'s "Verify" link) or wait 24 h');
   if (!id) throw new Error(`no video id for ${path.basename(file)}`);
   onId?.(id);
   log(`  ${path.basename(file)} -> ${id}${draftId ? ' (resumed draft)' : ''}`);
@@ -318,7 +320,7 @@ export async function publishRender(db, dir, { channel, mode = 'schedule', log =
       } catch (e) {
         await page.screenshot({ path: path.join(dir, `studio-error-${it.kind}.png`) }).catch(() => {});
         row.run(m.render_id, channel.id, it.kind, it.file, e.videoId ?? drafts[it.file] ?? null, it.publishAt, 'failed', null, e.message, new Date().toISOString());
-        addAlert(db, channel.id, 'upload_failed', { render: m.render_id, file: it.file, error: e.message });
+        addAlert(db, channel.id, /daily upload limit/.test(e.message) ? 'upload_limit' : 'upload_failed', { render: m.render_id, file: it.file, error: e.message });
         throw e;
       }
       const status = r.blocked ? 'private' : it.publishAt ? 'scheduled' : 'private';
