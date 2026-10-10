@@ -18,6 +18,7 @@ const CONFIG = () => path.resolve(ROOT, env('AMBIENT_CONFIG', 'config'));
 const readYaml = f => YAML.parse(fs.readFileSync(f, 'utf8'));
 export const loadSources = () => readYaml(path.join(CONFIG(), 'sources.yaml')) ?? {};
 export const loadChannel = id => readYaml(path.join(CONFIG(), 'channels', `${id}.yaml`));
+export const nicheIds = () => fs.readdirSync(path.join(CONFIG(), 'niches')).filter(f => /\.ya?ml$/.test(f)).map(f => f.replace(/\.ya?ml$/, ''));
 export const loadNiche = id => normalizeNiche(readYaml(path.join(CONFIG(), 'niches', `${id}.yaml`)));
 
 // Durations in recipes are written like 40s, 90m, 1h30m.

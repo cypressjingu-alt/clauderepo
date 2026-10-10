@@ -23,6 +23,7 @@ const USAGE = `ambient <command>
   publish <render-id | render dir> [--private]   upload the video and Shorts to Studio, scheduled into the next free slot
   schedule <render-id | render dir> [--now]   put a render uploaded with --private into the next free slot (--now: public at once)
   verify <render-id | render dir>          re-read its uploads from Studio and record what they show
+  tick                                     one scheduler pass: finish uploads, keep the buffer full, clean up (M4)
 options: --channel <id> (default showcase), --dry-run (don't touch cooldowns or alerts)`;
 
 const { values: o, positionals: [cmd, ...args] } = parseArgs({
@@ -148,6 +149,19 @@ try {
         if (cmd === 'verify') await studio.verifyRender(db, dir, { channel, log });
         else if (cmd === 'schedule') await studio.scheduleRender(db, dir, { channel, now: o.now, log });
         else await studio.publishRender(db, dir, { channel, mode: o.private ? 'private' : 'schedule', log });
+      } catch (e) {
+        log(`error: ${e.message}`);
+        throw e;
+      }
+      break;
+    }
+    case 'tick': {
+      const { tick } = await import('./scheduler.js');
+      const logFile = path.join(DATA(), 'logs', 'scheduler.log');
+      fs.mkdirSync(path.dirname(logFile), { recursive: true });
+      const log = line => { console.log(line); fs.appendFileSync(logFile, `${new Date().toISOString()} ${line}\n`); };
+      try {
+        await tick(db, { channelId: o.channel, log });
       } catch (e) {
         log(`error: ${e.message}`);
         throw e;

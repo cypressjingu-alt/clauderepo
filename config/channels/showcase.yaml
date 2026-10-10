@@ -5,3 +5,4 @@ cooldown_days: 30      # a track isn't reused on this channel for this long; rel
 shorts_per_video: 2
 timezone: Asia/Singapore   # publish_times are wall-clock times here
 publish_times: ["18:00"]   # one long video a day (owner, 2026-10-03); Shorts follow their video
+buffer_days: 7             # the scheduler keeps this many days of videos scheduled ahead (covers trips and bad internet)
