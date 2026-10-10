@@ -5,7 +5,7 @@
 // Either setting empty: that part does nothing.
 import path from 'node:path';
 import { DATA } from './config.js'; // also loads .env
-import { open } from './db.js';
+import { addAlert, open } from './db.js';
 
 const isDiscord = u => /(^|\.)discord(app)?\.com$/.test(new URL(u).host);
 
@@ -20,6 +20,15 @@ if (ping && isDiscord(ping)) {
   } catch {
     process.exitCode = 1; // offline: the missing ping is the alert
   }
+}
+
+// The buffer alarm: fewer than 2 long videos scheduled ahead means something upstream has stalled (scheduler not
+// running, uploads failing, pool empty). Raised at most once a day, then delivered below like any alert.
+{
+  const db = open(path.join(DATA(), 'ambient.db')), now = new Date().toISOString();
+  const ahead = db.prepare(`SELECT COUNT(*) n FROM uploads WHERE kind = 'video' AND status IN ('scheduled', 'verified', 'unverified') AND publish_at > ?`).get(now).n;
+  const recent = db.prepare(`SELECT COUNT(*) n FROM alerts WHERE type = 'buffer_low' AND created_at > ?`).get(new Date(Date.now() - 864e5).toISOString()).n;
+  if (ahead < 2 && !recent) addAlert(db, 'showcase', 'buffer_low', { error: `only ${ahead} video(s) scheduled ahead; check the scheduler log (data/logs/scheduler.log)` });
 }
 
 const hook = process.env.AMBIENT_ALERT_WEBHOOK;

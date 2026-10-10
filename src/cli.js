@@ -62,7 +62,33 @@ function summary(p) {
   return bits.join('\n  ');
 }
 
+// Heavy work (render, Studio) runs one at a time: they share the CPU, the upload link and the Studio browser
+// profile. A lock held by a dead process is taken over.
+const HEAVY = new Set(['render', 'rebuild', 'publish', 'schedule', 'verify', 'tick']);
+function lock() {
+  const f = path.join(DATA(), 'busy.lock');
+  fs.mkdirSync(DATA(), { recursive: true });
+  for (let i = 0; i < 2; i++) {
+    try {
+      fs.writeFileSync(f, `${process.pid} ${cmd}`, { flag: 'wx' });
+      process.on('exit', () => { try { if (fs.readFileSync(f, 'utf8').startsWith(`${process.pid} `)) fs.unlinkSync(f); } catch {} });
+      return true;
+    } catch {
+      const [pid, what] = fs.readFileSync(f, 'utf8').split(' ');
+      try { process.kill(+pid, 0); return what; } catch { fs.unlinkSync(f); } // holder is gone: stale
+    }
+  }
+  return false;
+}
+
 try {
+  if (HEAVY.has(cmd)) {
+    const held = lock();
+    if (held !== true) {
+      if (cmd === 'tick') { console.log(`busy (${held || 'lock'} running); this tick does nothing`); process.exit(0); }
+      throw new Error(`another job is running (${held || 'lock'}); try again when it's done`);
+    }
+  }
   switch (cmd) {
     case 'ingest': {
       const r = await ingest(db);
