@@ -13,6 +13,7 @@ import { plan } from './plan.js';
 import { render } from './render.js';
 
 const DONE = new Set(['scheduled', 'verified', 'unverified', 'private']);
+const RETRY_FAILED_MS = 6 * 3600e3; // a render whose upload failed is retried after this long
 
 // Weighted rotation: the niche furthest below its share of the channel's renders in the last 30 days.
 // Never the same niche twice in a row while another is available; ties go to the one used longest ago.
@@ -56,9 +57,12 @@ export async function tick(db, { channelId = 'showcase', log = console.log, now 
     const m = JSON.parse(fs.readFileSync(mf, 'utf8'));
     if (m.dry_run || !fs.existsSync(path.join(r.dir, m.outputs.video))) continue;
     const files = [m.outputs.video, ...JSON.parse(fs.readFileSync(md, 'utf8')).shorts.map(s => s.file)];
-    const rows = Object.fromEntries(db.prepare('SELECT file, status FROM uploads WHERE render_id = ?').all(r.id).map(u => [u.file, u.status]));
+    const ups = db.prepare('SELECT file, status, created_at FROM uploads WHERE render_id = ?').all(r.id);
+    const rows = Object.fromEntries(ups.map(u => [u.file, u.status]));
     // Only renders whose publishing already began (a manual test render is never published by surprise).
-    if (!Object.keys(rows).length || files.every(f => DONE.has(rows[f]))) continue;
+    if (!ups.length || files.every(f => DONE.has(rows[f]))) continue;
+    // One that failed lately waits its turn, so a stuck upload can't hold up the buffer (and alert every hour).
+    if (ups.some(u => u.status === 'failed' && Date.parse(u.created_at) > now - RETRY_FAILED_MS)) continue;
     log(`finishing ${r.id}`);
     await publishRender(db, r.dir, { channel, log });
     return;

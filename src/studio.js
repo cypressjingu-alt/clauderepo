@@ -80,19 +80,24 @@ async function upload(page, base, { file, draftId, onId, ...it }, log) {
   onId?.(id);
   log(`  ${path.basename(file)} -> ${id}${draftId ? ' (resumed draft)' : ''}`);
   try {
-    return { id, ...await fillAndSave(page, dlg, titleBox, id, it) };
+    return { id, ...await fillAndSave(page, dlg, titleBox, id, { ...it, resumed: !!draftId }) };
   } catch (e) {
     e.videoId = id;
     throw e;
   }
 }
 
-async function fillAndSave(page, dlg, titleBox, id, { title, description, tags, thumb, ai, publishAt, tz, waitChecks }) {
+async function fillAndSave(page, dlg, titleBox, id, { title, description, tags, thumb, ai, publishAt, tz, waitChecks, resumed }) {
   await titleBox.fill(title);
   await dlg.locator('#description-textarea #textbox').fill(description);
   if (thumb) {
-    const [chooser] = await Promise.all([page.waitForEvent('filechooser'), dlg.getByRole('button', { name: 'Upload file' }).click()]);
-    await chooser.setFiles(thumb);
+    const btn = dlg.getByRole('button', { name: 'Upload file' });
+    // A resumed draft usually has its thumbnail already: Studio then shows it in place of the "Upload file" button.
+    if (resumed) await btn.or(dlg.locator('ytcp-thumbnail-uploader[selected]')).first().waitFor({ timeout: 60000 });
+    if (!resumed || await btn.isVisible()) {
+      const [chooser] = await Promise.all([page.waitForEvent('filechooser'), btn.click()]);
+      await chooser.setFiles(thumb);
+    }
   }
   await dlg.locator('[name=VIDEO_MADE_FOR_KIDS_NOT_MFK]').click();
   if (!await dlg.locator('[name=VIDEO_HAS_ALTERED_CONTENT_YES]').isVisible()) await dlg.locator('#toggle-button').click();
@@ -204,7 +209,8 @@ async function readBack(page, id, { title, publishAt }) {
   if (/draft state/i.test(text)) return `${id} is still a draft`;
   const want = !publishAt ? 'Private' : Date.parse(publishAt) > Date.now() ? 'Scheduled' : 'Public';
   const shown = text.match(/\nVisibility\s*\n\s*([^\n]+)/)[1].trim();
-  return shown.toLowerCase().startsWith(want.toLowerCase()) ? null : `${id} shows "${shown}", wanted ${want}`;
+  // "Pending": Studio is still processing (a 9 h video, minutes after its save); it shows the saved visibility once done.
+  return shown.toLowerCase().startsWith(want.toLowerCase()) || /^pending/i.test(shown) ? null : `${id} shows "${shown}", wanted ${want}`;
 }
 
 // Re-reads a render's uploads from Studio and records what they show (e.g. after an `unverified`).
@@ -296,8 +302,8 @@ export async function publishRender(db, dir, { channel, mode = 'schedule', log =
       log(`  ${p.file} ${p.video_id}: already ${st} on Studio; recorded`);
     }
     const prior = priorRows(), video = prior[m.outputs.video];
-    // The video's slot: kept from an earlier run, else the next free one.
-    const publishAt = DONE.has(video?.status) ? video.publish_at : mode === 'schedule' ? nextSlot(db, channel) : null;
+    // The video's slot: kept from an earlier run, else the next free one (a slot this render held but never filled counts as free).
+    const publishAt = DONE.has(video?.status) ? video.publish_at : mode === 'schedule' ? nextSlot(db, channel, { renderId: m.render_id }) : null;
     log(`${m.render_id}: ${publishAt ? `video at ${when(publishAt)} (${tz})` : 'private'}`);
     const items = [
       { kind: 'video', file: m.outputs.video, title: meta.title, description: meta.description, thumb: path.join(dir, m.outputs.thumbnail), publishAt, waitChecks: 60 * 60e3 },

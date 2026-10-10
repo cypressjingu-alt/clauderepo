@@ -16,4 +16,8 @@ test('one slot a day at the channel\'s local time, skipping taken and too-soon s
   add('2026-10-04T10:00:00.000Z', 'failed');      // a failed upload frees its slot
   add('2026-10-05T10:00:00.000Z', 'scheduled', 'short'); // Shorts don't take slots
   assert.equal(nextSlot(db, ch, { now }), '2026-10-04T10:00:00.000Z');
+  db.prepare(`INSERT INTO uploads (render_id, channel_id, kind, file, publish_at, status)
+    VALUES ('r-cut', 'showcase', 'video', 'video.mp4', '2026-10-04T10:00:00.000Z', 'uploading')`).run();
+  assert.equal(nextSlot(db, ch, { now }), '2026-10-05T10:00:00.000Z'); // an interrupted upload holds its slot for others...
+  assert.equal(nextSlot(db, ch, { now, renderId: 'r-cut' }), '2026-10-04T10:00:00.000Z'); // ...but not for itself
 });

@@ -81,6 +81,11 @@ function lock() {
   return false;
 }
 
+// A console signal (Ctrl+C, its window closed) ends a run without an error, and Playwright's own handler exits
+// quietly, so it would leave no trace in the logs. Studio and tick runs swap in their log file below.
+let log = console.log;
+for (const s of ['SIGINT', 'SIGHUP', 'SIGBREAK']) process.on(s, () => { log(`stopped by ${s} (Ctrl+C, or its console window was closed)`); process.exit(130); });
+
 try {
   if (HEAVY.has(cmd)) {
     const held = lock();
@@ -170,7 +175,7 @@ try {
       // Studio runs can outlive the shell that started them, so they also log to a file.
       const logFile = path.join(DATA(), 'logs', 'studio.log');
       fs.mkdirSync(path.dirname(logFile), { recursive: true });
-      const log = line => { console.log(line); fs.appendFileSync(logFile, `${new Date().toISOString()} ${cmd} ${line}\n`); };
+      log = line => { console.log(line); fs.appendFileSync(logFile, `${new Date().toISOString()} ${cmd} ${line}\n`); };
       try {
         if (cmd === 'verify') await studio.verifyRender(db, dir, { channel, log });
         else if (cmd === 'schedule') await studio.scheduleRender(db, dir, { channel, now: o.now, log });
@@ -185,7 +190,7 @@ try {
       const { tick } = await import('./scheduler.js');
       const logFile = path.join(DATA(), 'logs', 'scheduler.log');
       fs.mkdirSync(path.dirname(logFile), { recursive: true });
-      const log = line => { console.log(line); fs.appendFileSync(logFile, `${new Date().toISOString()} ${line}\n`); };
+      log = line => { console.log(line); fs.appendFileSync(logFile, `${new Date().toISOString()} ${line}\n`); };
       try {
         await tick(db, { channelId: o.channel, log });
       } catch (e) {

@@ -11,11 +11,12 @@ function offset(t, tz) {
 export const zoned = (date, time, tz) => { const g = Date.parse(`${date}T${time}:00Z`); return g - offset(g, tz); };
 export const localDate = (t, tz) => new Intl.DateTimeFormat('en-CA', { timeZone: tz }).format(t);
 
-// The first free daily slot at least `leadMs` from now. A slot is taken by any long video not marked failed.
-export function nextSlot(db, channel, { now = Date.now(), leadMs = 2 * 3600e3 } = {}) {
+// The first free daily slot at least `leadMs` from now. A slot is taken by any long video not marked failed,
+// except `renderId`'s own (a resumed upload keeps its slot instead of leaving it empty).
+export function nextSlot(db, channel, { now = Date.now(), leadMs = 2 * 3600e3, renderId = null } = {}) {
   const tz = channel.timezone ?? 'UTC', times = channel.publish_times ?? ['18:00'];
-  const taken = new Set(db.prepare(`SELECT publish_at FROM uploads WHERE channel_id = ? AND kind = 'video' AND status != 'failed'`)
-    .all(channel.id).map(r => r.publish_at));
+  const taken = new Set(db.prepare(`SELECT publish_at FROM uploads WHERE channel_id = ? AND kind = 'video' AND status != 'failed' AND render_id IS NOT ?`)
+    .all(channel.id, renderId).map(r => r.publish_at));
   const day0 = Date.parse(`${localDate(now, tz)}T00:00:00Z`);
   for (let d = 0; d < 366; d++) {
     const date = new Date(day0 + d * 864e5).toISOString().slice(0, 10);
