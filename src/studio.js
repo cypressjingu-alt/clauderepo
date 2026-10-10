@@ -64,6 +64,15 @@ async function upload(page, base, { file, draftId, onId, ...it }, log) {
       if (!await ready(120000)) throw new Error('Studio\'s upload page never loaded (slow connection?)');
     }
     await input.setInputFiles(file);
+    // Studio sometimes puts a notice over the upload ("You're all set ... Try refreshing the page"), and the
+    // details form never comes. Do what it says: refresh, and hand over the file once more.
+    if (!await titleBox.waitFor({ timeout: 60000 }).then(() => true, () => false)) {
+      const notice = (await page.locator('tp-yt-paper-dialog:visible, ytcp-dialog:visible').last().innerText().catch(() => '')).replace(/\s+/g, ' ').slice(0, 120);
+      log(`  details form didn't appear${notice ? ` (Studio showed: "${notice}")` : ''}; refreshing and retrying`);
+      await go(page, `${base}/videos/upload?d=ud`);
+      if (!await ready(120000)) throw new Error('Studio\'s upload page never loaded after a refresh');
+      await input.setInputFiles(file);
+    }
   }
   await titleBox.waitFor({ timeout: 120000 });
   const id = draftId ?? await until(async () => (await dlg.locator('a#video-link').getAttribute('href'))?.match(/(?:youtu\.be|shorts)\/([\w-]{11})/)?.[1], 180000);
