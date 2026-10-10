@@ -62,6 +62,8 @@ Home, Setup, Architecture, Config reference, Milestone 1–4, Build log, Open qu
   - **Success:** a save is judged by Studio's own page (`studioState`), not by confirmation text.
   - **Pop-ups:** a "You're all set … refresh" notice can block the upload; the uploader refreshes and retries.
   - **Re-running `publish` is always safe:** it reconciles with Studio first.
+  - **Daily upload limit:** until a further one-time verification, Studio allows about 10 uploads in 24 h. It only bites when catching up; `tick` then pauses for 24 h (`upload_limit` alert).
+  - **Silent exits:** Playwright exits quietly on Ctrl+C or a closed console. `cli.js` logs `stopped by SIG…` when that happens.
 - **Linking a Short to its video** needs YouTube's advanced-features verification. It's not done yet, so Shorts are unlinked.
 - **The Claude desktop app virtualizes AppData:** put scripts in `C:\Users\Cypress\tools`, not in the scratchpad.
 - **PowerShell 5.1:**
